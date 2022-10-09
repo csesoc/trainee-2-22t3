@@ -1,11 +1,10 @@
-import express from "express";
-
+import express, { application } from "express";
+import { doomUsers, doomCourses, doomTasks } from "./database.js";
+import { ObjectId } from "mongodb";
+import tasksRoutes from "./routes/tasks.js";
 // Setup app
 const app = express();
 
-let dataStore = {
-  tasks: [1, 4, 6, 4, 8],
-};
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -13,15 +12,7 @@ app.get("/", (req, res) => {
   res.send("hi!!!!");
 });
 
-app.get("/tasks/get", (req, res) => {
-  res.send(dataStore.tasks);
-});
-
-app.post("/tasks/post", (req, res) => {
-  let newTask = req.body.taskNum;
-  dataStore.tasks.push(newTask);
-  res.send("success");
-});
+app.use("/tasks", tasksRoutes);
 
 app.listen(5000, async () => {
   console.log("Doom Tracker API started!");
