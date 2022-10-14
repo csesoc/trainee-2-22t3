@@ -1,24 +1,67 @@
-import logo from "./logo.svg";
 import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainPage from "./components/main/MainPage";
+import RegisterPage from "./components/register/RegisterPage";
+import LoginPage from "./components/login/LoginPage";
+import { experimental_sx as sx, ThemeProvider, createTheme } from "@mui/material/styles";
+
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#36393f",
+      light: "#60636a",
+      dark: "#101319",
+    },
+    secondary: {
+      main: "#5865f2",
+      light: "#9291ff",
+      dark: "#0039be",
+    }
+  },
+  typography: {
+    allVariants: {
+      color: "#ffffff",
+    }
+  },
+  components: {
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#36393f",
+          color: "#ffffff",
+          "&.Mui-focused": {
+            backgroundColor: "#0e0e10",
+          },
+
+        },
+      }
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: sx({
+          "& .MuiOutlinedInput-root.Mui-focused": {
+            "& > fieldset": {
+              borderColor: "#5865f2",
+            }
+          }
+        })
+      }
+    },
+  }
+})
 
 function App() {
   return (
-    <div className="Ap">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 
