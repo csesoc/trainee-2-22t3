@@ -1,5 +1,7 @@
 export default function MainPage() {
     return (
-        <div>Welcome to the main page!</div>
+        <div style={{ color: "#fff", textAlign: "center" }}>
+            <h1>Welcome to the main page!</h1>
+        </div >
     );
 }
