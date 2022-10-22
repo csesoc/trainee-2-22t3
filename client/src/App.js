@@ -1,17 +1,23 @@
-import Profile from "./components/Profile";
-import ProfileTracker from "./components/ProfileTracker/ProfileTracker";
-import ProgressBarWhole from "./components/ProgressBarWhole";
-import DoomFactor from "./components/DoomFactor/DoomFactor";
-import HowPrepared from "./components/HowPrepared/HowPrepared";
-import DoomGraph from "./components/DoomGraph/DoomGraph";
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <DoomFactor />
-      <ProfileTracker />
-      <HowPrepared />
-      {/* <DoomGraph /> */}
+    <div className="Ap">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
     </div>
   );
 }
