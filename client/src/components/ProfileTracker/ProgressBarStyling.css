@@ -1,0 +1,27 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.progress {
+  background-color: lightgrey;
+  border-radius: 15px;
+  height: 30px;
+  width: 300px;
+}
+
+.progress-done {
+  background-color: red;
+  box-shadow: 0 2px 5px red;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  opacity: 0;
+  width: 0;
+  transition: 1s ease;
+}
