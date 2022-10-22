@@ -1,7 +1,8 @@
 import { FormLabel, Typography, TextField, Button } from '@mui/material';
 import { styled } from '@mui/system';
 import { useState, useEffect } from 'react';
-import './register.css';
+import { Link } from "react-router-dom";
+import './RegisterLogin.css';
 
 
 
@@ -20,7 +21,6 @@ export default function RegisterPage() {
     // Reminder to customise margin of textfields based on sm, md, lg which are breakpoints for fixed screen width
     // Can clean up styling by using styled function from MUI instead of repeating sx, defining an sxStyle and inserting into sx property
 
-    // TODO: Make useStates into a dictionary with each inputfield being a key e.g. username, disable autocomplete for email
     const StyledFormLabel = styled(FormLabel)({
         fontWeight: "bold",
     })
@@ -30,6 +30,8 @@ export default function RegisterPage() {
         if (inputs.username.trim().length !== 0 && emailRegex.test(inputs.email) && inputs.password.trim().length !== 0 &&
             inputs.password === inputs.confirmPass) {
             setValidRegister(true);
+        } else {
+            setValidRegister(false);
         }
     }, [inputs])
 
@@ -84,6 +86,7 @@ export default function RegisterPage() {
                     <StyledFormLabel>Confirm Password</StyledFormLabel>
                     <TextField variant='outlined' name="confirmPass" onChange={handleChange}
                         autoComplete="new-password" sx={{ mb: 3, mt: 1 }} />
+                    <Link to="../login" className='redirect-text'>Already have an account?</Link>
                     <Button variant="contained" type="submit" disabled={!validRegister} color="secondary" sx={{ fontWeight: "bold" }}>Sign up</Button>
                 </form>
 

@@ -1,8 +1,8 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainPage from "./components/main/MainPage";
-import RegisterPage from "./components/register/RegisterPage";
-import LoginPage from "./components/login/LoginPage";
+import RegisterPage from "./components/RegisterLogin/RegisterPage";
+import LoginPage from "./components/RegisterLogin/LoginPage";
 import { experimental_sx as sx, ThemeProvider, createTheme } from "@mui/material/styles";
 
 
