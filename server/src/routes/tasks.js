@@ -22,16 +22,16 @@ router.post(
     check('duration').exists().withMessage('Duration not inputted').isNumeric().withMessage('Duration is invalid'),
     check('completed').exists().withMessage('Completion status not inputted').isBoolean().withMessage('Completion status is invalid'),
     check('name').exists().withMessage('Name of task not inputted').isString().withMessage('Name of task is invalid'),
-    check('course').exists().withMessage('Course id not inputted').isNumeric().withMessage('Course id is invalid'),
+    check('course').exists().withMessage('Course id not inputted').isString().withMessage('Course id is invalid'),
     check('week').exists().withMessage('Week not inputted').isNumeric({ min: 1, max: 10}).withMessage('Week is invalid'),
     check('term').exists().withMessage('Term not inputted').isNumeric({ min: 1, max: 3}).withMessage('Term is invalid'),
     check('year').exists().withMessage('Year not inputted').isNumeric({ min: 2022 }).withMessage('Year is invalid'),
   ],
-  async (req, res) => {
+  async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(422).send('Task can not be added due to the following issues:' + errors.array());
-    }
+      return res.status(422).send('Task can not be added due to the following issues: ' + errors.array()[0].msg);
+    } 
     doomTasks.insertOne(req.body);
     res.send('Task Added');
   }
@@ -43,17 +43,17 @@ router.post(
 // assumes keys are valid - form for user to fill
 router.put(
   '/put',
-  check('_id').exists().withMessage('Task id not inputted'),
+  check('_id').exists().withMessage('Task id not provided'),
   async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    res.status(400).send({ errors: errors.array() });
+    return res.status(400).send({ errors: errors.array()[0].msg });
   }
 
   // 1. find inside database for matching id - if none return error message
   const id = req.body._id;
   if(doomTasks.find(check => check.id === id) === undefined) {
-    res.send('Task id is invalid and task can not be editted');
+    return res.send('Task id is invalid and task can not be editted');
   }
 
   // 2. check which keys are valid + which are empty 
@@ -87,7 +87,7 @@ router.put(
     { _id: id }, 
     { $set: { updates }},
   );
-  res.send('Task Edited');
+  return res.send('Task Edited');
 });
 
 // DELETE - /tasks/delete
@@ -95,11 +95,11 @@ router.put(
 // argument = task id
 router.delete(
   '/delete', 
-  check('_id').exists().withMessage('Task id is invalid and task can not be removed'),
+  check('_id').exists().withMessage('Task id not provided'),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).send(errors.array());
+      return res.status(400).send(errors.array()[0].msg);
     }
     const task = await doomTasks.find(req.query);
     await doomTasks.deleteOne({ task });
