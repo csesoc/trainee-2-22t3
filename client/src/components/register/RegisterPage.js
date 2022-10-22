@@ -1,5 +1,4 @@
 import { FormLabel, Typography, TextField, Button } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/system';
 import { useState, useEffect } from 'react';
 import './register.css';
@@ -7,13 +6,13 @@ import './register.css';
 
 
 export default function RegisterPage() {
-    const theme = useTheme();
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPass, setConfirmPass] = useState("");
+    const [inputs, setInputs] = useState({
+        "username": "",
+        "email": "",
+        "password": "",
+        "confirmPass": "",
+    })
     const [validRegister, setValidRegister] = useState(false);
-
 
 
     // Use twitch registration as an example, white bold for labels and white regular for text, primary light for textfield background
@@ -27,20 +26,42 @@ export default function RegisterPage() {
     })
 
     useEffect(() => {
-        console.log("Detected change to input field values")
         let emailRegex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
-        if (username.trim().length !== 0 && emailRegex.test(email) && password.trim().length !== 0 && password === confirmPass) {
+        if (inputs.username.trim().length !== 0 && emailRegex.test(inputs.email) && inputs.password.trim().length !== 0 &&
+            inputs.password === inputs.confirmPass) {
             setValidRegister(true);
         }
+    }, [inputs])
 
+    const handleChange = (e) => {
+        let name = e.target.name;
+        let data = e.target.value;
+        // Need to add [] to name to add object key by variable name
+        setInputs((currInput) => ({ ...currInput, [name]: data }));
+    }
 
-    }, [username, email, password, confirmPass])
-    console.log(username)
-    console.log(email)
-    console.log(password)
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const data =
+        {
+            "username": inputs.username,
+            "password": inputs.password,
+            "email": inputs.email,
+            "tasks": [],
+            "courses": [],
+        }
 
-    const handleSubmit = () => {
+        const response = await fetch("http://localhost:3000/register", {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
 
+        if (response.status !== 200) {
+            throw new Error(`HTTP Error ${response.status} when registering user.`)
+        }
     }
 
     return (
@@ -55,22 +76,19 @@ export default function RegisterPage() {
 
                 <form noValidate className="form-container" onSubmit={handleSubmit}>
                     <StyledFormLabel>Username</StyledFormLabel>
-                    <TextField variant='outlined' onChange={(e) => setUsername(e.target.value)} autoComplete="new-password" sx={{ mb: 3, mt: 1 }} />
+                    <TextField variant='outlined' name="username" onChange={handleChange} autoComplete="new-password" sx={{ mb: 3, mt: 1 }} />
                     <StyledFormLabel>Email</StyledFormLabel>
-                    <TextField variant='outlined' onChange={(e) => setEmail(e.target.value)} autoComplete="new-password" sx={{ mb: 3, mt: 1 }} />
+                    <TextField variant='outlined' name="email" onChange={handleChange} autoComplete="new-password" sx={{ mb: 3, mt: 1 }} />
                     <StyledFormLabel>Password</StyledFormLabel>
-                    <TextField variant='outlined' onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" sx={{ mb: 3, mt: 1 }} />
+                    <TextField variant='outlined' name="password" onChange={handleChange} autoComplete="new-password" sx={{ mb: 3, mt: 1 }} />
                     <StyledFormLabel>Confirm Password</StyledFormLabel>
-                    <TextField variant='outlined' onChange={(e) => setConfirmPass(e.target.value)}
+                    <TextField variant='outlined' name="confirmPass" onChange={handleChange}
                         autoComplete="new-password" sx={{ mb: 3, mt: 1 }} />
                     <Button variant="contained" type="submit" disabled={!validRegister} color="secondary" sx={{ fontWeight: "bold" }}>Sign up</Button>
                 </form>
 
             </div>
             {/* Insert skull emoji logo with caption */}
-            <Typography variant="h3">~ The number #1 way to assess your university performance ~</Typography>
-            <Typography variant="h4">Reminds me of my impending doom... 10/10</Typography>
-            <Typography variant="h4">I give this my seal of approval - James Ji</Typography>
         </>
     );
 }
