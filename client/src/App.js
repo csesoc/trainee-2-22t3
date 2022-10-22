@@ -1,9 +1,9 @@
 import Profile from "./components/Profile";
 import ProfileTracker from "./components/ProfileTracker/ProfileTracker";
 import ProgressBarWhole from "./components/ProgressBarWhole";
-import DoomFactor from "./components/DoomFactor";
+import DoomFactor from "./components/DoomFactor/DoomFactor";
 import HowPrepared from "./components/HowPrepared/HowPrepared";
-import DoomGraph from "./components/DoomGraph";
+import DoomGraph from "./components/DoomGraph/DoomGraph";
 
 function App() {
   return (
