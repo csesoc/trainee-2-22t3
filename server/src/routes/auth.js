@@ -20,18 +20,20 @@ router.post("/register", async (req, res) => {
   let password = req.body.password;
   let email = req.body.email;
   if (!username || !password || !email) {
-    res.status(400).send({ error: "username/password/email is missing!" });
+    return res
+      .status(400)
+      .send({ error: "username/password/email is missing!" });
   }
 
   // Check if this user already exists
   let exists = await doomUsers.findOne({ username: username });
   if (exists) {
-    res.status(400).send({ error: "username is taken!" });
+    return res.status(400).send({ error: "username is taken!" });
   }
   // Check if this email is already used
   exists = await doomUsers.findOne({ email: email });
   if (exists) {
-    res.status(400).send({ error: "email is taken!" });
+    return res.status(400).send({ error: "email is taken!" });
   }
 
   // Get salt
@@ -68,7 +70,7 @@ router.post("/register", async (req, res) => {
     secure: true,
   });
 
-  res.status(200).send({
+  return res.status(200).send({
     message: `${username} has been successfully added!`,
   });
 });
@@ -164,7 +166,7 @@ router.get("/logout", async (req, res) => {
   );
 
   res.clearCookie("jwt", { httpOnly: true, sameSite: "none", secure: true });
-  res.sendStatus(200);
+  return res.sendStatus(200);
 });
 
 const createToken = (username) => {
