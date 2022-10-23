@@ -18,7 +18,7 @@ import {
   DialogActions,
 } from "@mui/material";
 
-import sampleData from "../sampleData";
+import sampleData from "../../sampleData";
 
 const ProgressBarWhole = ({ ProgressBarType }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import "../styling/ProgressBarStyling.css";
+import "./ProgressBarStyling.css";
 
 const ProgressBar = ({ done }) => {
   const [ProgressBarPercentage, setProgressBarPercentage] = useState({});
