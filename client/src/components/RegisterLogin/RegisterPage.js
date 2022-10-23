@@ -1,10 +1,10 @@
-import { FormLabel, Typography, TextField, Button } from '@mui/material';
+import { FormLabel, Typography, TextField, Button, InputAdornment, IconButton } from '@mui/material';
 import { styled } from '@mui/system';
 import { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import './RegisterLogin.css';
-
-
 
 export default function RegisterPage() {
     const [inputs, setInputs] = useState({
@@ -14,10 +14,9 @@ export default function RegisterPage() {
         "confirmPass": "",
     })
     const [validRegister, setValidRegister] = useState(false);
-
-
-    // Use twitch registration as an example, white bold for labels and white regular for text, primary light for textfield background
-    // primary dark for selecting/focus in textfield background, secondary for accents e.g. submit button background
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPass, setShowConfirmPass] = useState(false);
+    const navigate = useNavigate();
     // Reminder to customise margin of textfields based on sm, md, lg which are breakpoints for fixed screen width
     // Can clean up styling by using styled function from MUI instead of repeating sx, defining an sxStyle and inserting into sx property
 
@@ -64,6 +63,7 @@ export default function RegisterPage() {
         if (response.status !== 200) {
             throw new Error(`HTTP Error ${response.status} when registering user.`)
         }
+        navigate("/");
     }
 
     return (
@@ -76,21 +76,50 @@ export default function RegisterPage() {
                     Create your Doom Tracker Account 💀
                 </Typography>
 
-                <form noValidate className="form-container" onSubmit={handleSubmit}>
+                <form className="form-container" autoComplete='off' onSubmit={handleSubmit} noValidate>
                     <StyledFormLabel>Username</StyledFormLabel>
-                    <TextField variant='outlined' name="username" onChange={handleChange} autoComplete="new-password" sx={{ mb: 3, mt: 1 }} />
+                    <TextField variant='outlined' name="username" onChange={handleChange} autoComplete="off" sx={{ mb: 3, mt: 1 }} />
                     <StyledFormLabel>Email</StyledFormLabel>
-                    <TextField variant='outlined' name="email" onChange={handleChange} autoComplete="new-password" sx={{ mb: 3, mt: 1 }} />
+                    <TextField variant='outlined' name="email" onChange={handleChange} autoComplete="off" sx={{ mb: 3, mt: 1 }} />
                     <StyledFormLabel>Password</StyledFormLabel>
-                    <TextField variant='outlined' name="password" onChange={handleChange} autoComplete="new-password" sx={{ mb: 3, mt: 1 }} />
+                    <TextField
+                        variant='outlined'
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        onChange={handleChange}
+                        autoComplete="new-password"
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton color="info" onClick={() => { setShowPassword(!showPassword) }}>
+                                        {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                    </IconButton>
+                                </InputAdornment>)
+                        }}
+                        sx={{ mb: 3, mt: 1 }}>
+                    </TextField>
+
                     <StyledFormLabel>Confirm Password</StyledFormLabel>
-                    <TextField variant='outlined' name="confirmPass" onChange={handleChange}
-                        autoComplete="new-password" sx={{ mb: 3, mt: 1 }} />
+                    <TextField
+                        variant='outlined'
+                        type={showConfirmPass ? "text" : "password"}
+                        name="confirmPass"
+                        onChange={handleChange}
+                        autoComplete="new-password"
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton color="info" onClick={() => { setShowConfirmPass(!showConfirmPass) }}>
+                                        {showConfirmPass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                    </IconButton>
+                                </InputAdornment>),
+                        }}
+                        sx={{ mb: 3, mt: 1 }} />
                     <Link to="../login" className='redirect-text'>Already have an account?</Link>
                     <Button variant="contained" type="submit" disabled={!validRegister} color="secondary" sx={{ fontWeight: "bold" }}>Sign up</Button>
                 </form>
 
-            </div>
+            </div >
             {/* Insert skull emoji logo with caption */}
         </>
     );
