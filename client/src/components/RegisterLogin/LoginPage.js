@@ -12,6 +12,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [validLogin, setValidLogin] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,15 +27,41 @@ export default function LoginPage() {
         fontWeight: "bold",
     })
 
-    const handleSubmit = (e) => {
-        /* TODO: 
-            - Need to create a session token for the user stored in the database
-            - Validation/error-checking to see if user exists in database
-        */
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setUsername("");
-        setPassword("");
-        navigate("/");
+        const data = {
+            "username": username,
+            "password": password,
+        }
+        const currErrors = {};
+        const response = await fetch("http://localhost:5000/auth/login", {
+            method: "POST",
+            headers: {
+                'Content-type': "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (response.status === 400) {
+            const res_json = await response.json();
+            console.log(res_json);
+
+            if (res_json.error.toLowerCase().includes("user")) {
+                currErrors["username"] = "This username does not exist.";
+            }
+            else if (res_json.error.toLowerCase().includes("password")) {
+                currErrors["password"] = "Incorrect password. Please try again."
+            }
+            setErrors(currErrors);
+        }
+        else if (!response.ok) {
+            throw new Error(`HTTP Error ${response.status} when logging in user.`)
+        }
+        else {
+            setUsername("");
+            setPassword("");
+            navigate("/");
+        }
     }
 
     return (
@@ -44,7 +71,8 @@ export default function LoginPage() {
 
                 <form className="form-container" autoComplete="off" onSubmit={handleSubmit} noValidate>
                     <StyledFormLabel>Username</StyledFormLabel>
-                    <TextField variant='outlined' name="username" onChange={(e) => setUsername(e.target.value)} autoComplete="off" sx={{ mb: 3, mt: 1 }} />
+                    <TextField variant='outlined' name="username" onChange={(e) => setUsername(e.target.value)} autoComplete="off" sx={{ mb: 3, mt: 1 }}
+                        error={"username" in errors} helperText={errors.username} />
                     <StyledFormLabel>Password</StyledFormLabel>
                     <TextField
                         variant='outlined'
@@ -60,7 +88,8 @@ export default function LoginPage() {
                                     </IconButton>
                                 </InputAdornment>)
                         }}
-                        sx={{ mb: 3, mt: 1 }} />
+                        sx={{ mb: 3, mt: 1 }}
+                        error={"password" in errors} helperText={errors.password} />
                     <Link to="../register" className='redirect-text'> Don't have an account?</Link>
                     <Button variant="contained" type="submit" color="secondary" disabled={!validLogin} sx={{ fontWeight: "bold" }}>Login</Button>
                 </form>

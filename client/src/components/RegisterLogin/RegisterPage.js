@@ -12,7 +12,8 @@ export default function RegisterPage() {
         "email": "",
         "password": "",
         "confirmPass": "",
-    })
+    });
+    const [errors, setErrors] = useState({});
     const [validRegister, setValidRegister] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPass, setShowConfirmPass] = useState(false);
@@ -25,6 +26,7 @@ export default function RegisterPage() {
     })
 
     useEffect(() => {
+        // eslint-disable-next-line
         let emailRegex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
         if (inputs.username.trim().length !== 0 && emailRegex.test(inputs.email) && inputs.password.trim().length !== 0 &&
             inputs.password === inputs.confirmPass) {
@@ -37,12 +39,17 @@ export default function RegisterPage() {
     const handleChange = (e) => {
         let name = e.target.name;
         let data = e.target.value;
+        if (name === "username" || name === "email") {
+            setErrors({});
+        }
+
         // Need to add [] to name to add object key by variable name
         setInputs((currInput) => ({ ...currInput, [name]: data }));
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        let currErrors = {};
         const data =
         {
             "username": inputs.username,
@@ -52,7 +59,7 @@ export default function RegisterPage() {
             "courses": [],
         }
 
-        const response = await fetch("http://localhost:5000/register", {
+        const response = await fetch("http://localhost:5000/auth/register", {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
@@ -60,10 +67,24 @@ export default function RegisterPage() {
             body: JSON.stringify(data),
         })
 
-        if (response.status !== 200) {
-            throw new Error(`HTTP Error ${response.status} when registering user.`)
+        if (response.status === 400) {
+            // Username or email already exists in database
+            const res_json = await response.json();
+            if (res_json.error.toLowerCase().includes("username")) {
+                currErrors["username"] = "This username is already taken.";
+            }
+            else if (res_json.error.toLowerCase().includes("email")) {
+                currErrors["email"] = "This email is already taken.";
+            }
+            setErrors(currErrors);
+            throw new Error(res_json.error);
         }
-        navigate("/");
+        else if (!response.ok) {
+            throw new Error(`HTTP Error ${response.status} when registering user.`);
+        }
+        else {
+            navigate("/");
+        }
     }
 
     return (
@@ -78,9 +99,11 @@ export default function RegisterPage() {
 
                 <form className="form-container" autoComplete='off' onSubmit={handleSubmit} noValidate>
                     <StyledFormLabel>Username</StyledFormLabel>
-                    <TextField variant='outlined' name="username" onChange={handleChange} autoComplete="off" sx={{ mb: 3, mt: 1 }} />
+                    <TextField variant='outlined' name="username" onChange={handleChange} autoComplete="off" sx={{ mb: 3, mt: 1 }}
+                        error={"username" in errors} helperText={errors.username} />
                     <StyledFormLabel>Email</StyledFormLabel>
-                    <TextField variant='outlined' name="email" onChange={handleChange} autoComplete="off" sx={{ mb: 3, mt: 1 }} />
+                    <TextField variant='outlined' name="email" onChange={handleChange} autoComplete="off" sx={{ mb: 3, mt: 1 }}
+                        error={"email" in errors} helperText={errors.email} />
                     <StyledFormLabel>Password</StyledFormLabel>
                     <TextField
                         variant='outlined'
