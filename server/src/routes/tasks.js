@@ -74,10 +74,16 @@ router.post(
   }
 );
 
-// PUT - /tasks/put
-// Edits a specific task
-// task id + edits
-// assumes keys are valid - form for user to fill
+/* PUT - /tasks/put
+Edits a specific task
+task id + edits
+Body example:
+{
+  "_id": "fiewFOJDF394ree",
+  "completed": "true"
+}
+assumes keys are valid - form for user to fill
+*/
 router.put(
   "/put",
   check("_id").exists().withMessage("Task id not provided"),
@@ -109,7 +115,7 @@ router.put(
     }
     if (
       req.body.completed !== undefined &&
-      typeof req.body.completed === "string"
+      typeof req.body.completed === "boolean"
     ) {
       updates.completed = req.body.completed;
     }
