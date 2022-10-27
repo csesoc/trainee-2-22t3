@@ -1,0 +1,13 @@
+.how-prepared {
+  margin: 1rem;
+  border: #ffffff 1px solid;
+  border-radius: 0.4rem;
+  /* background-color: #0f131a; */
+  background-color: darkslategrey;
+}
+
+.how-prepared-rating {
+  border: 1px #ffffff solid;
+  display: flex;
+  justify-content: center;
+}

@@ -14,14 +14,10 @@ const ProgressDropdownListElement = ({
   return (
     <div>
       <div>
-        <Typography component={"span"} variant="h6">
-          {name}
-        </Typography>
+        <Typography variant="h6">{name}</Typography>
       </div>
       <div>
-        <Typography component={"span"} variant="p">
-          Duration: {duration}
-        </Typography>
+        <Typography variant="p">Duration: {duration}</Typography>
       </div>
     </div>
   );

@@ -1,0 +1,29 @@
+/* Profile Tracker */
+.profile-tracker-container {
+  display: flex;
+  flex-direction: column;
+  width: 60vm;
+  border: #ffffff 1px solid;
+  height: auto;
+  margin: 1rem;
+  padding: 3rem;
+  border-radius: 0.4rem;
+  background-color: #0f131a;
+  justify-content: center;
+}
+
+#profile-tracker-title {
+  color: #ffffff;
+  border: 2px #ffffff solid;
+}
+
+/* Progress Bar Components */
+.progress-bar-whole {
+  margin: 10px;
+}
+
+.progress-bar-label {
+}
+
+.progress-bar {
+}

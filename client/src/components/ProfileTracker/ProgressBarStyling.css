@@ -1,15 +1,15 @@
-body {
+/* body {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0;
-}
+  background-color: #0e0e10;
+} */
 
 .progress {
   background-color: lightgrey;
   border-radius: 15px;
   height: 30px;
-  width: 300px;
 }
 
 .progress-done {

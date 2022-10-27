@@ -17,13 +17,13 @@ const ProgressBar = ({ done }) => {
   }, [done]);
 
   return (
-    <div>
+    <>
       <div className="progress">
         <div className="progress-done" style={ProgressBarPercentage}>
           {done}%
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

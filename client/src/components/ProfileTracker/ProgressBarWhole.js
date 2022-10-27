@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProgressBar from "./ProgressBar";
 import ProgressDropdownList from "./ProgressDropdownList";
-
+import { white } from "@mui/material/colors";
 import ProgressBarDropdownButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -18,9 +18,9 @@ import {
   DialogActions,
 } from "@mui/material";
 
-import sampleData from "../../sampleData";
+import "./ProgressTrackerStyling.css";
 
-const ProgressBarWhole = ({ ProgressBarType }) => {
+const ProgressBarWhole = ({ ProgressBarType, dataTasks }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const handleClickDropdownOpen = () => {
     setDropdownOpen(true);
@@ -28,41 +28,69 @@ const ProgressBarWhole = ({ ProgressBarType }) => {
   const handleClickDropdownClose = () => {
     setDropdownOpen(false);
   };
+
+  // Filter by completed status
+  const [completedTasks, setCompletedTasks] = useState([]);
+  const [uncompletedTasks, setUncompletedTasks] = useState([]);
+
+  useEffect(() => {
+    let tempCompletedTasks = dataTasks.filter((task) => {
+      return task.completed === true;
+    });
+    setCompletedTasks(tempCompletedTasks);
+
+    let tempUncompletedTasks = dataTasks.filter((task) => {
+      return task.completed === false;
+    });
+    setUncompletedTasks(tempUncompletedTasks);
+  }, []);
+
   return (
-    <div>
-      <div
-        className="ProgressBarLabel"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          flexWrap: "wrap",
-        }} // positions button next to label name
-      >
-        <Typography variant="h6">{ProgressBarType}</Typography>
-        <ProgressBarDropdownButton onClick={handleClickDropdownOpen}>
-          <ArrowDropDownIcon />
-        </ProgressBarDropdownButton>
-        <Dialog open={dropdownOpen} onClose={handleClickDropdownClose}>
-          <DialogTitle id="dialog-title">
-            {ProgressBarType} yet to complete
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              <ProgressDropdownList
-                data={sampleData}
-                progressType={ProgressBarType}
-              />
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClickDropdownClose}>
-              OK, I'll get to work
-            </Button>
-          </DialogActions>
-        </Dialog>
+    <>
+      <div className="progress-bar-whole">
+        <div
+          className="progress-bar-label"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+          }} // positions button next to label name
+        >
+          <Typography
+            variant="h6"
+            style={{
+              fontWeight: "bold",
+              fontSize: "1rem",
+            }}
+          >
+            {ProgressBarType}
+          </Typography>
+          <ProgressBarDropdownButton onClick={handleClickDropdownOpen}>
+            <ArrowDropDownIcon style={{ color: "white" }} />
+          </ProgressBarDropdownButton>
+          <Dialog open={dropdownOpen} onClose={handleClickDropdownClose}>
+            <DialogTitle id="dialog-title">
+              {ProgressBarType} yet to complete:
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                <ProgressDropdownList dataTasks={uncompletedTasks} />
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClickDropdownClose}>
+                OK, I'll get to work
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+        <div className="progress-bar">
+          <ProgressBar
+            done={(completedTasks.length / dataTasks.length) * 100}
+          />
+        </div>
       </div>
-      <ProgressBar done={100 - sampleData.tasks.length} />
-    </div>
+    </>
   );
 };
 

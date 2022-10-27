@@ -3,18 +3,16 @@ import ProgressDropdownListElement from "./ProgressDropdownListElement";
 import Box from "@mui/material/Box";
 import { ListItem } from "@mui/material";
 
-const ProgressDropdownList = ({ data, progressType }) => {
+const ProgressDropdownList = ({
+  dataTasks,
+  completedTasks,
+  uncompletedTasks,
+}) => {
   // iterates through sample data to add relevant data to dropdown
   const [ProgressDropdownList, setProgressDropdownList] = useState([]);
   useEffect(() => {
-    let listElementsToAdd = data.tasks.filter(
-      (task) => task.taskType === progressType
-    );
-    listElementsToAdd = listElementsToAdd.filter(
-      (task) => task.completed === "false"
-    );
-    setProgressDropdownList(listElementsToAdd);
-  }, [data]);
+    setProgressDropdownList(dataTasks);
+  }, [dataTasks]);
   console.log(ProgressDropdownList);
   return (
     <div>
