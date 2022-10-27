@@ -74,10 +74,16 @@ router.post(
   }
 );
 
-// PUT - /tasks/put
-// Edits a specific task
-// task id + edits
-// assumes keys are valid - form for user to fill
+/* PUT - /tasks/put
+Edits a specific task
+task id + edits
+Body example:
+{
+  "_id": "fiewFOJDF394ree",
+  "completed": "true"
+}
+assumes keys are valid - form for user to fill
+*/
 router.put(
   "/put",
   check("_id").exists().withMessage("Task id not provided"),
@@ -94,42 +100,42 @@ router.put(
     }
 
     // 2. check which keys are valid + which are empty
-    const updates = [];
+    let updates = {};
     if (
       req.body.taskType !== undefined &&
       typeof req.body.taskType === "string"
     ) {
-      updates.push(req.body.taskType);
+      updates.taskType = req.body.taskType;
     }
     if (
       req.body.duration !== undefined &&
       typeof req.body.duration === "number"
     ) {
-      updates.push(req.body.duration);
+      updates.duration = req.body.duration;
     }
     if (
       req.body.completed !== undefined &&
       typeof req.body.completed === "boolean"
     ) {
-      updates.push(req.body.completed);
+      updates.completed = req.body.completed;
     }
     if (req.body.name !== undefined && typeof req.body.name === "string") {
-      updates.push(req.body.name);
+      updates.name = req.body.name;
     }
     if (req.body.course !== undefined && typeof req.body.course === "number") {
-      updates.push(req.body.course);
+      updates.course = req.body.course;
     }
     if (req.body.week !== undefined && typeof req.body.week === "number") {
-      updates.push(req.body.week);
+      updates.week = req.body.week;
     }
     if (req.body.term !== undefined && typeof req.body.term === "number") {
-      updates.push(req.body.term);
+      updates.term = req.body.term;
     }
     if (req.body.year !== undefined && typeof req.body.year === "number") {
-      updates.push(req.body.year);
+      updates.year = req.body.year;
     }
 
-    await doomTasks.updateOne({ _id: id }, { $set: { updates } });
+    await doomTasks.updateOne({ _id: ObjectId(id) }, { $set: updates });
     return res.send("Task Edited");
   }
 );
