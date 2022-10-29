@@ -19,7 +19,12 @@ body {
   flex-direction: row;
 }
 
-.date-divider {
+.weekly-stats {
+  display:flex;
+  flex-direction: column;
+}
+
+.week-divider {
   background-color: rgb(96, 99, 106);
   width: 300px;
   height: 70px;
@@ -29,8 +34,55 @@ body {
   font-weight: bolder;
 }
 
-.date-subtext {
+.week-subtext {
   font-size: 14px !important;
+}
+
+.week-box {
+  background-color: rgb(96, 99, 106);
+  width: 280px;
+  height: 200px;
+  border: solid;
+  border-color: #36393f;
+  border-width:5px;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.weekly-box-text {
+  font-size: 20px !important;
+  font-weight: bold !important;
+  margin-left: 10px !important;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.weekly-box-divider {
+  background-color: #36393f;
+  width:280px;
+  height:5px;
+}
+
+.create-task-box {
+  background-color: rgb(96, 99, 106);
+  width: 400px;
+  height: 280px;
+  border: solid;
+  border-color: #36393f;
+  border-width:5px;
+  border-radius: 10px;
+  position: absolute;
+  right: 5%;
+  text-align: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+.create-task-box-divider {
+  background-color: #36393f;
+  width:400px;
+  height:5px;
 }
 
 .task-card {
