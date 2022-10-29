@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Profile from "./components/Profile";
 import {
@@ -19,6 +18,9 @@ const theme = createTheme({
       light: "#9291ff",
       dark: "#0039be",
     },
+    info: {
+      main: "#ffffff",
+    }
   },
   typography: {
     allVariants: {

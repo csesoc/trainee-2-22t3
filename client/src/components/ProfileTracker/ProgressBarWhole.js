@@ -10,6 +10,9 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import CompletedListDropdown from "./CompletedListDropdown";
+import DropdownButton from "@mui/material/IconButton";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 
 import {
   Dialog,
@@ -38,6 +41,25 @@ const ProgressBarWhole = ({ ProgressBarType, dataTasks }) => {
     return task.completed === false;
   });
 
+  let dialogTitle;
+  if (completedTasks < uncompletedTasks) {
+    dialogTitle = "💀 You are DOOMED 💀";
+  } else {
+    dialogTitle = "Not bad 😊";
+  }
+
+  let expandCompletedIcon = <ArrowRightIcon />;
+  const [completedListIsShown, setCompletedListIsShown] = useState(false);
+  const handleClickExpandCompleted = () => {
+    if (completedListIsShown === true) {
+      setCompletedListIsShown(false);
+      expandCompletedIcon = <ArrowLeftIcon />;
+    } else {
+      setCompletedListIsShown(true);
+      expandCompletedIcon = <ArrowRightIcon />;
+    }
+  };
+
   return (
     <>
       <div className="progress-bar-whole">
@@ -62,23 +84,30 @@ const ProgressBarWhole = ({ ProgressBarType, dataTasks }) => {
             <ArrowDropDownIcon style={{ color: "white" }} />
           </ProgressBarDropdownButton>
           <Dialog open={dropdownOpen} onClose={handleClickDropdownClose}>
-            <DialogTitle id="dialog-title">
-              {ProgressBarType} yet to complete:
-            </DialogTitle>
+            <DialogTitle id="dialog-title">{dialogTitle}</DialogTitle>
             <DialogContent>
-              <DialogContentText>
+              <DialogContentText className="dialog-content">
+                {/* Uncompleted Tasks */}
                 <ProgressDropdownList
-                  dataTasks={dataTasks}
-                  completedTasks={completedTasks}
-                  uncompletedTasks={uncompletedTasks}
+                  dataTasks={uncompletedTasks}
+                  progressBarType={ProgressBarType}
                 />
+                {/* Completed Tasks */}
+                {completedListIsShown && (
+                  <ProgressDropdownList
+                    dataTasks={completedTasks}
+                    progressBarType={ProgressBarType}
+                  />
+                )}
               </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClickDropdownClose}>Close</Button>
             </DialogActions>
             <DialogActions className="completed-tasks-dropdown">
-              <CompletedListDropdown />
+              <DropdownButton onClick={handleClickExpandCompleted}>
+                {expandCompletedIcon}
+              </DropdownButton>
             </DialogActions>
           </Dialog>
         </div>

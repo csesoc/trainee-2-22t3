@@ -28,8 +28,16 @@
 .progress-bar {
 }
 
+.dialog-content {
+  display: flex;
+  flex-direction: row;
+}
+
 .completed-tasks-dropdown {
   position: absolute;
-  left: 0;
-  bottom: 0;
+  right: 0;
+  top: 0;
+}
+
+.progress-dropdown-list-item {
 }
