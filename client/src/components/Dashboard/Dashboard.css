@@ -1,0 +1,86 @@
+body {
+  background-color: #0e0e10;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  height: auto;
+  margin: 4rem auto;
+  border-radius: 0.4rem;
+  padding: 3rem;
+  background-color: #0f131a;
+  color: #ffffff;
+}
+
+.task-card {
+  width: 200px;
+  border-radius: 20px !important;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.task-card-header {
+  color: black !important;
+  align-self: center;
+  margin: none;
+  padding:none;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.task-card-text1 {
+  color: gray !important;
+  margin: 0px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.divider {
+  background-color:#36393f;
+  border-radius: 30px;
+  height:30px;
+  text-align: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.divider-container {
+  display:flex;
+}
+
+.css-1ws8119-MuiDivider-root {
+  margin-top:10px !important;
+  margin-bottom: 10px !important;
+}
+
+.css-169iwlq-MuiCalendarPicker-root {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.css-6t5f1e-MuiDayPicker-monthContainer {
+
+  background-color: rgb(96, 99, 106);
+  color: rgb(96, 99, 106);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 25px;
+  margin-bottom: 10px;
+}
+
+.css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel {
+  color:white !important;
+}
+
+.css-bkrceb-MuiButtonBase-root-MuiPickersDay-root.MuiSelected {
+  background-color: red !important;
+}
+
+.css-195y93z-MuiButtonbase-root-MuiPickersDay-root
+.MuiSelected {
+  background-color: red !important;
+}
