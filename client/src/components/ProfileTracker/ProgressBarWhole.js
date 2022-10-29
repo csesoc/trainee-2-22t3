@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import CompletedListDropdown from "./CompletedListDropdown";
 
 import {
   Dialog,
@@ -30,20 +31,12 @@ const ProgressBarWhole = ({ ProgressBarType, dataTasks }) => {
   };
 
   // Filter by completed status
-  const [completedTasks, setCompletedTasks] = useState([]);
-  const [uncompletedTasks, setUncompletedTasks] = useState([]);
-
-  useEffect(() => {
-    let tempCompletedTasks = dataTasks.filter((task) => {
-      return task.completed === true;
-    });
-    setCompletedTasks(tempCompletedTasks);
-
-    let tempUncompletedTasks = dataTasks.filter((task) => {
-      return task.completed === false;
-    });
-    setUncompletedTasks(tempUncompletedTasks);
-  }, []);
+  let completedTasks = dataTasks.filter((task) => {
+    return task.completed === true;
+  });
+  let uncompletedTasks = dataTasks.filter((task) => {
+    return task.completed === false;
+  });
 
   return (
     <>
@@ -74,13 +67,18 @@ const ProgressBarWhole = ({ ProgressBarType, dataTasks }) => {
             </DialogTitle>
             <DialogContent>
               <DialogContentText>
-                <ProgressDropdownList dataTasks={uncompletedTasks} />
+                <ProgressDropdownList
+                  dataTasks={dataTasks}
+                  completedTasks={completedTasks}
+                  uncompletedTasks={uncompletedTasks}
+                />
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClickDropdownClose}>
-                OK, I'll get to work
-              </Button>
+              <Button onClick={handleClickDropdownClose}>Close</Button>
+            </DialogActions>
+            <DialogActions className="completed-tasks-dropdown">
+              <CompletedListDropdown />
             </DialogActions>
           </Dialog>
         </div>

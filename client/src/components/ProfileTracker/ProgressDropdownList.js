@@ -11,8 +11,9 @@ const ProgressDropdownList = ({
   // iterates through sample data to add relevant data to dropdown
   const [ProgressDropdownList, setProgressDropdownList] = useState([]);
   useEffect(() => {
-    setProgressDropdownList(dataTasks);
-  }, [dataTasks]);
+    setProgressDropdownList(uncompletedTasks);
+  }, [uncompletedTasks]);
+  console.log("ProgressDropdownList: ");
   console.log(ProgressDropdownList);
   return (
     <div>

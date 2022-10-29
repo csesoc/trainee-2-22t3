@@ -27,3 +27,9 @@
 
 .progress-bar {
 }
+
+.completed-tasks-dropdown {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
