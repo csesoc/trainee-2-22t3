@@ -4,14 +4,19 @@ import { LocalizationProvider, CalendarPicker, PickersDay } from '@mui/x-date-pi
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
+import { TaskCard } from './TaskCards';
 import './Dashboard.css';
 
 
 export default function Dashboard() {
 
-  const [pickedDate, setPickedDate] = useState(dayjs('2022-04-07'));
-
+  const [pickedDate, setPickedDate] = useState(dayjs(new Date()));
   const [dataTasks, setDataTasks] = useState([]);
+  const [taskProgress, setTaskProgress] = useState([]);
+  const [startDate, setStartDate] = useState(dayjs(new Date()).format('DD/MM/YYYY'));
+  const [endDate, setEndDate] = useState(dayjs(new Date()).format('DD/MM/YYYY'));
+
+  let currentWeek = 7;
 
   useEffect(() => {
     fetch("http://localhost:5000/tasks/get")
@@ -23,56 +28,21 @@ export default function Dashboard() {
       });
   }, [pickedDate]);
 
+  useEffect(() => {
+  }, []);
+
   console.log(dataTasks);
 
   const TaskCardList = (taskType) => {
     let returnObj = [];
-    for (let task of dataTasks) {
+    for (let i in dataTasks) {
+      let task = dataTasks[i];
       if (task.taskType === taskType) {
-        let taskInfo = TaskCard(task.course, task.taskType, task.year, task.term, task.week, task.completed);
-        console.log(taskInfo);
+        let taskInfo = TaskCard(task.course, task.taskType, task.year, task.term, task.week, task.completed, taskProgress, setTaskProgress, i);
         returnObj.push(taskInfo);
       }
     }
-    console.log(returnObj);
     return returnObj;
-  }
-
-  const TaskCard = (course, taskType, year, term, week, completed) => {
-    let progress = 0;
-
-    const generateCardColor = () => {
-      const r = 255 - (205 * progress * 0.01);
-      const g = 255 - (205 * progress * 0.01);
-      const b = 255 - (83 * progress * 0.01);
-      console.log(`rgba(${r}, ${g}, ${b}, 1)`);
-      return `rgba(${r}, ${g}, ${b}, 1)`;
-    }
-
-    const handleSliderChange = (event) => {
-      progress = event;
-    }
-
-    return(
-      <Card className='task-card' sx={{backgroundColor: () => generateCardColor()}}>
-      <CardContent sx={{pb: 0}}>
-        <Typography className="task-card-header" variant="h5" align="center" sx={{fontWeight:"bold"}}>
-          {course}
-        </Typography>
-        <Typography className="task-card-text1" sx={{mb:0, mt:0}}>
-          {year}T{term} Week {week}<br></br>{taskType}
-        </Typography>
-      </CardContent>
-      <CardActions sx={{pt: 0}}>
-      <Slider
-        size="big"
-        defaultValue={0}
-        onChange={(event) => handleSliderChange(event.target.value)}
-        sx={{width:150, margin:"0 auto", color:"#3232ac"}}
-        />
-      </CardActions>
-      </Card>
-    )
   }
 
   const CustomPickersDay = styled(PickersDay, {
@@ -109,7 +79,8 @@ export default function Dashboard() {
     const isFirstDay = date.isSame(start, 'day');
     const isLastDay = date.isSame(end, 'day');
 
-    console.log(start, end);
+    setStartDate(dayjs(start).format('DD/MM/YYYY'));
+    setEndDate(dayjs(end).format('DD/MM/YYYY'));
 
     return (
       <CustomPickersDay
@@ -126,6 +97,7 @@ export default function Dashboard() {
     <>
       <div className='dashboard-container'>
         <Typography variant="h2" align='center' sx={{fontWeight:"bold"}}>💀 DASHBOARD 💀</Typography>
+        <div className="selector-screen">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <CalendarPicker 
           date={pickedDate} onChange={(pickedDate) => setPickedDate(pickedDate)}
@@ -134,6 +106,10 @@ export default function Dashboard() {
           views={["day", "month"]}
            />
         </LocalizationProvider>
+        <Divider className='date-divider' sx={{mt:0}}>WEEK {currentWeek}<br></br>
+        <Typography className='date-subtext'>{startDate} - {endDate}</Typography>
+        </Divider>
+        </div>
         <Divider className='divider'>LECTURES</Divider>
         <div className="divider-container">
         {TaskCardList("lecture")}
