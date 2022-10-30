@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import ProgressDropdownListElement from "./ProgressDropdownListElement";
 import Box from "@mui/material/Box";
-import { ListItem } from "@mui/material";
+import { ListItem, Typography } from "@mui/material";
+import { Card, Divider } from "@mui/material";
 
-const ProgressDropdownList = ({ dataTasks, progressBarType }) => {
+const ProgressDropdownList = ({
+  dataTasks,
+  progressBarType,
+  dataTaskCompletedStatus,
+}) => {
   // iterates through sample data to add relevant data to dropdown
   const [ProgressDropdownList, setProgressDropdownList] = useState([]);
   const [isShown, setIsShown] = useState(false);
@@ -16,22 +21,35 @@ const ProgressDropdownList = ({ dataTasks, progressBarType }) => {
   // loop through each element in given array and return component
   const showProgressDropdownList = ProgressDropdownList.map((ListElement) => {
     return (
-      <div key={ListElement._id} className="progress-dropdown-list-item">
-        <ListItem sx={{ border: 1, my: 1 }}>
-          <ProgressDropdownListElement {...ListElement} />
-        </ListItem>
-      </div>
+      <Card
+        sx={{ my: 1, backgroundColor: "#3232ac", boxShadow: 4 }}
+        className="progress-dropdown-list-item"
+      >
+        <div key={ListElement._id}>
+          <ListItem>
+            <ProgressDropdownListElement {...ListElement} />
+          </ListItem>
+        </div>
+      </Card>
     );
   });
 
+  let progressListTitle;
+  if (dataTaskCompletedStatus) {
+    progressListTitle = `${progressBarType} finished`;
+  } else {
+    progressListTitle = `${progressBarType} yet to complete`;
+  }
+
   return (
-    <div>
-      <div>{progressBarType} yet to complete</div>
-      <Box
-        sx={{
-          width: 400,
-        }}
-      >
+    <div className="progress-dropdown-list">
+      <Divider className="divider" sx={{ boxShadow: 4 }}>
+        <Typography className="progress-dropdown-list-title">
+          {progressListTitle}
+        </Typography>
+      </Divider>
+
+      <Box className="progress-dropdown-list-box">
         {showProgressDropdownList}
       </Box>
     </div>

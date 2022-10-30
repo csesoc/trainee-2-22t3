@@ -33,7 +33,7 @@ const ProgressDropdownListElement = ({
         <Typography variant="h6">{name}</Typography>
       </div>
       <div>
-        <Typography variant="p">Duration: {duration}</Typography>
+        <Typography>Duration: {duration}</Typography>
       </div>
       <div>
         <IconButton onClick={handleOnDoneOutlineIcon}>

@@ -3,11 +3,20 @@
   border: #ffffff 1px solid;
   border-radius: 0.4rem;
   /* background-color: #0f131a; */
-  background-color: darkslategrey;
+  background-color: rgb(96, 99, 106);
+}
+
+.how-prepared-title {
+  text-align: center;
 }
 
 .how-prepared-rating {
   border: 1px #ffffff solid;
-  display: flex;
-  justify-content: center;
+  position: relative;
+}
+
+.how-prepared-dropdown-arrow {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
 }

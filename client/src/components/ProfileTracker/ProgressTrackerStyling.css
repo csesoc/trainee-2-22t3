@@ -28,6 +28,9 @@
 .progress-bar {
 }
 
+.dialog-box {
+}
+
 .dialog-content {
   display: flex;
   flex-direction: row;
@@ -39,5 +42,27 @@
   top: 0;
 }
 
+.progress-dropdown-list {
+  margin: 0px 10px;
+}
+
+.progress-dropdown-list-box {
+  width: 400px;
+}
+
+.progress-dropdown-list-title {
+  font-weight: bold !important;
+}
+
 .progress-dropdown-list-item {
+  border-radius: 20px !important;
+}
+
+.divider {
+  background-color: #36393f;
+  border-radius: 30px;
+  height: 30px;
+  text-align: center;
+  align-items: center;
+  font-weight: bold;
 }

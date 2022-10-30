@@ -8,7 +8,9 @@ const HowPrepared = () => {
   return (
     <>
       <div className="how-prepared">
-        <Typography variant="h5">How doomed are you feeling today?</Typography>
+        <Typography variant="h5" className="how-prepared-title">
+          How doomed are you feeling today?
+        </Typography>
         <HowPreparedSelector />
         <HowPreparedShare />
       </div>

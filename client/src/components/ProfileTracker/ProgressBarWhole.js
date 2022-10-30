@@ -83,7 +83,21 @@ const ProgressBarWhole = ({ ProgressBarType, dataTasks }) => {
           <ProgressBarDropdownButton onClick={handleClickDropdownOpen}>
             <ArrowDropDownIcon style={{ color: "white" }} />
           </ProgressBarDropdownButton>
-          <Dialog open={dropdownOpen} onClose={handleClickDropdownClose}>
+          <Dialog
+            open={dropdownOpen}
+            onClose={handleClickDropdownClose}
+            maxWidth="m"
+            PaperProps={{
+              style: {
+                backgroundColor: "rgb(96, 99, 106)",
+                border: "solid",
+                borderColor: "#36393f",
+                borderWidth: "5px",
+                borderRadius: "10px",
+              },
+            }}
+            className="dialog-box"
+          >
             <DialogTitle align="center" id="dialog-title">
               {dialogTitle}
             </DialogTitle>
@@ -93,12 +107,14 @@ const ProgressBarWhole = ({ ProgressBarType, dataTasks }) => {
                 <ProgressDropdownList
                   dataTasks={uncompletedTasks}
                   progressBarType={ProgressBarType}
+                  dataTaskCompletedStatus={false}
                 />
                 {/* Completed Tasks */}
                 {completedListIsShown && (
                   <ProgressDropdownList
                     dataTasks={completedTasks}
                     progressBarType={ProgressBarType}
+                    dataTaskCompletedStatus={true}
                   />
                 )}
               </DialogContentText>

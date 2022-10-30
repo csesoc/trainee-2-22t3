@@ -4,6 +4,8 @@ import BlackSkullsvg from "./BlackSkullsvg";
 import WhiteSkullsvg from "./WhiteSkullsvg";
 import MrIncredibleUncanny from "./MrIncredibleUncannySkull.webp";
 import Box from "@mui/material/Box";
+import { IconButton } from "@mui/material";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const labels = {
   0.5: "Very Slightly Doomed",
@@ -25,6 +27,29 @@ function getLabelText(value) {
 const HowPreparedSelector = () => {
   const [value, setValue] = useState(1);
   const [hover, setHover] = useState(-1);
+  const [maxDoomShown, setMaxDoomShown] = useState(false);
+
+  const maxDoomSelector = () => {
+    return (
+      <div>
+        <Rating
+          max={1}
+          icon={<img src={MrIncredibleUncanny}></img>}
+          emptyIcon={<img src={MrIncredibleUncanny}></img>}
+        />
+
+        <Typography variant="h6">I'm DOOOMED</Typography>
+      </div>
+    );
+  };
+
+  const handleClickDropdownSelector = () => {
+    if (maxDoomShown) {
+      setMaxDoomShown(false);
+    } else {
+      setMaxDoomShown(true);
+    }
+  };
 
   return (
     <>
@@ -42,18 +67,29 @@ const HowPreparedSelector = () => {
             setHover(newHover);
           }}
         />
-      </div>
-      {value !== null && (
-        <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
-      )}
-      <div className="how-prepared-rating">
-        <Rating
-          max={1}
-          icon={<img src={MrIncredibleUncanny}></img>}
-          emptyIcon={<img src={MrIncredibleUncanny}></img>}
-        />
+        <Typography>
+          {value !== null && (
+            <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+          )}
+        </Typography>
 
-        <Typography variant="h6">I'm DOOOMED</Typography>
+        <IconButton
+          className="how-prepared-dropdown-arrow"
+          onClick={handleClickDropdownSelector}
+        >
+          <ArrowDropDownIcon />
+        </IconButton>
+        {maxDoomShown && (
+          <div>
+            <Rating
+              max={1}
+              icon={<img src={MrIncredibleUncanny}></img>}
+              emptyIcon={<img src={MrIncredibleUncanny}></img>}
+            />
+
+            <Typography variant="h6">I'm DOOOMED</Typography>
+          </div>
+        )}
       </div>
     </>
   );
