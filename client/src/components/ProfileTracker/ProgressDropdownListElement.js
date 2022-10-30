@@ -16,16 +16,18 @@ const ProgressDropdownListElement = ({
   week,
   term,
   year,
+  runUpdateTasks,
 }) => {
   const handleOnDoneOutlineIcon = () => {
     const requestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: { _id: _id, completed: true },
+      body: JSON.stringify({ _id: _id, completed: true }),
     };
     fetch("http://localhost:5000/tasks/put", requestOptions)
       .then((response) => response.json())
       .catch((error) => console.log(error));
+    runUpdateTasks();
   };
   return (
     <div>

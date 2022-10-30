@@ -8,6 +8,7 @@ const ProgressDropdownList = ({
   dataTasks,
   progressBarType,
   dataTaskCompletedStatus,
+  runUpdateTasks,
 }) => {
   // iterates through sample data to add relevant data to dropdown
   const [ProgressDropdownList, setProgressDropdownList] = useState([]);
@@ -27,7 +28,10 @@ const ProgressDropdownList = ({
       >
         <div key={ListElement._id}>
           <ListItem>
-            <ProgressDropdownListElement {...ListElement} />
+            <ProgressDropdownListElement
+              {...ListElement}
+              runUpdateTasks={runUpdateTasks}
+            />
           </ListItem>
         </div>
       </Card>
