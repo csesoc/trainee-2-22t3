@@ -24,7 +24,7 @@ import {
 
 import "./ProgressTrackerStyling.css";
 
-const ProgressBarWhole = ({ ProgressBarType, dataTasks }) => {
+const ProgressBarWhole = ({ ProgressBarType, dataTasks, runUpdateTasks }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const handleClickDropdownOpen = () => {
     setDropdownOpen(true);
@@ -32,7 +32,6 @@ const ProgressBarWhole = ({ ProgressBarType, dataTasks }) => {
   const handleClickDropdownClose = () => {
     setDropdownOpen(false);
   };
-
   // Filter by completed status
   let completedTasks = dataTasks.filter((task) => {
     return task.completed === true;
@@ -108,6 +107,7 @@ const ProgressBarWhole = ({ ProgressBarType, dataTasks }) => {
                   dataTasks={uncompletedTasks}
                   progressBarType={ProgressBarType}
                   dataTaskCompletedStatus={false}
+                  runUpdateTasks={runUpdateTasks}
                 />
                 {/* Completed Tasks */}
                 {completedListIsShown && (

@@ -27,9 +27,6 @@ app.get("/", (req, res) => {
 app.use("/auth", authRoutes);
 
 app.use("/tasks", tasksRoutes);
-// Routes above do not require authentication
-app.use(verifyJWT);
-// Routes below do require authentication
 
 app.listen(5000, async () => {
   console.log("Doom Tracker API started!");
