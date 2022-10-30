@@ -1,4 +1,8 @@
 import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import MainPage from "./components/main/MainPage";
+import RegisterPage from "./components/RegisterLogin/RegisterPage";
+import LoginPage from "./components/RegisterLogin/LoginPage";
 import Profile from "./components/Profile";
 import {
   experimental_sx as sx,
@@ -20,7 +24,7 @@ const theme = createTheme({
     },
     info: {
       main: "#ffffff",
-    }
+    },
   },
   typography: {
     allVariants: {
@@ -55,9 +59,16 @@ const theme = createTheme({
 
 function App() {
   return (
-    <div>
-      <Profile />
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/tracker" element={<Profile />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 

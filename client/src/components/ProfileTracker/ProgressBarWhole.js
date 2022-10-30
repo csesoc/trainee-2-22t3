@@ -84,7 +84,9 @@ const ProgressBarWhole = ({ ProgressBarType, dataTasks }) => {
             <ArrowDropDownIcon style={{ color: "white" }} />
           </ProgressBarDropdownButton>
           <Dialog open={dropdownOpen} onClose={handleClickDropdownClose}>
-            <DialogTitle id="dialog-title">{dialogTitle}</DialogTitle>
+            <DialogTitle align="center" id="dialog-title">
+              {dialogTitle}
+            </DialogTitle>
             <DialogContent>
               <DialogContentText className="dialog-content">
                 {/* Uncompleted Tasks */}
