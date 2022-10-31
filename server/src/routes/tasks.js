@@ -101,8 +101,7 @@ router.delete(
     if (!errors.isEmpty()) {
       return res.status(400).send(errors.array()[0].msg);
     }
-    const task = await doomTasks.find(req.query);
-    await doomTasks.deleteOne({ task });
+    await doomTasks.deleteOne({_id: ObjectId(req.query._id)});
     res.send('Task Removed');
   }
 );

@@ -1,22 +1,24 @@
-import { Typography, TextField, Card, CardActions, CardContent, Box, Slider, Divider } from "@mui/material";
-import { styled } from "@mui/system";
-import { LocalizationProvider, CalendarPicker, PickersDay } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
+import { Typography, TextField, Box, Divider, Select, MenuItem, InputLabel } from "@mui/material";
 import { useState, useEffect } from "react";
+import dayjs from "dayjs";
 import { TaskCard } from "./TaskCards";
+import { WeeklyCalendar } from './Calendar';
 import "./Dashboard.css";
 
 
 export default function Dashboard() {
 
-  const [pickedDate, setPickedDate] = useState(dayjs(new Date()));
   const [dataTasks, setDataTasks] = useState([]);
+  const [updateTasks, setUpdateTasks] = useState(0);
   const [taskProgress, setTaskProgress] = useState([]);
   const [startDate, setStartDate] = useState(dayjs(new Date()).format("DD/MM/YYYY"));
   const [endDate, setEndDate] = useState(dayjs(new Date()).format("DD/MM/YYYY"));
 
   let currentWeek = 7;
+
+  const runUpdateTasks = () => {
+    setUpdateTasks(updateTasks + 1);
+  }
 
   useEffect(() => {
     fetch("http://localhost:5000/tasks/get")
@@ -26,10 +28,24 @@ export default function Dashboard() {
       .then((dataTasks) => {
         setDataTasks(dataTasks);
       });
-  }, [pickedDate]);
+  }, [startDate, updateTasks]);
 
   useEffect(() => {
-  }, []);
+    for (let i in taskProgress) {
+      if (taskProgress[i] === "deleted") {
+        const response = fetch(`http://localhost:5000/tasks/delete?_id=${dataTasks[i]._id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        });
+      } else if (taskProgress[i] === "done") {
+        
+      }
+    }
+    runUpdateTasks();
+  }, [taskProgress]);
 
   console.log(dataTasks);
 
@@ -45,75 +61,34 @@ export default function Dashboard() {
     return returnObj;
   }
 
-  const CustomPickersDay = styled(PickersDay, {
-    shouldForwardProp: (prop) =>
-      prop !== "dayIsBetween" && prop !== "isFirstDay" && prop !== "isLastDay",
-  })(({ theme, dayIsBetween, isFirstDay, isLastDay }) => ({
-    ...(dayIsBetween && {
-      borderRadius: 0,
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.common.white,
-      "&:hover, &:focus": {
-        backgroundColor: theme.palette.primary.dark,
-      },
-    }),
-    ...(isFirstDay && {
-      borderTopLeftRadius: "50%",
-      borderBottomLeftRadius: "50%",
-    }),
-    ...(isLastDay && {
-      borderTopRightRadius: "50%",
-      borderBottomRightRadius: "50%",
-    }),
-  }));
-
-  const renderWeekPickerDay = (date, selectedDates, pickersDayProps) => {
-    if (!pickedDate) {
-      return <PickersDay {...pickersDayProps} />;
+  const getTaskStats = (str) => {
+    let num = 0;
+    for (let i in taskProgress) {
+      if (taskProgress[i] === "done") {
+        num += 1;
+      }
     }
-
-    const start = pickedDate.startOf("week");
-    const end = pickedDate.endOf("week");
-
-    const dayIsBetween = date.isBetween(start, end, null, "[]");
-    const isFirstDay = date.isSame(start, "day");
-    const isLastDay = date.isSame(end, "day");
-
-    setStartDate(dayjs(start).format("DD/MM/YYYY"));
-    setEndDate(dayjs(end).format("DD/MM/YYYY"));
-
-    return (
-      <CustomPickersDay
-        {...pickersDayProps}
-        disableMargin
-        dayIsBetween={dayIsBetween}
-        isFirstDay={isFirstDay}
-        isLastDay={isLastDay}
-      />
-    );
-  };
+    if (str === "done") { return num }
+    console.log(dataTasks.length, num);
+    return (dataTasks.length - num);
+  }
 
   return (
     <>
       <div className="dashboard-container">
         <Typography variant="h2" align="center" sx={{fontWeight:"bold"}}>💀 DASHBOARD 💀</Typography>
         <div className="selector-screen">
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <CalendarPicker 
-          date={pickedDate} onChange={(pickedDate) => setPickedDate(pickedDate)}
-          renderDay={renderWeekPickerDay}
-          showDaysOutsideCurrentMonth
-          views={["day", "month"]}
-           />
-        </LocalizationProvider>
+        {WeeklyCalendar(setStartDate, setEndDate)}
         <div className="weekly-stats">
         <Divider className="week-divider" sx={{mt:0}}>WEEK {currentWeek}<br></br>
         <Typography className="week-subtext">{startDate} - {endDate}</Typography>
         </Divider>
         <Box className="week-box">
-          <Typography className="weekly-box-text">Tasks done:</Typography>
+          <Typography className="weekly-box-text">Tasks done: 
+          <span className="weekly-stat-counter">{getTaskStats("done")}</span></Typography>
           <Divider className="weekly-box-divider"></Divider>
-          <Typography className="weekly-box-text">Tasks left:</Typography>
+          <Typography className="weekly-box-text">Tasks left: 
+          <span className="weekly-stat-counter">{getTaskStats("left")}</span></Typography>
           <Divider className="weekly-box-divider"></Divider>
           <Typography className="weekly-box-text">Weekly doom:</Typography>
           <Divider className="weekly-box-divider"></Divider>
@@ -123,7 +98,34 @@ export default function Dashboard() {
         <Box className="create-task-box">
           Create Task
           <Divider className="create-task-box-divider"></Divider>
-
+            <TextField
+              sx={{width:"160px"}}
+              className="create-task-text-field"
+              id="outlined-helperText"
+              label="Course Name"
+              size="small"
+            />
+            <InputLabel id="demo-simple-select-label" sx={{lineHeight:"0.55em", overflow:"visible"}}>Term</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Term"
+              size="small"
+            >
+              <MenuItem value={1}>One</MenuItem>
+              <MenuItem value={2}>Two</MenuItem>
+              <MenuItem value={3}>Three</MenuItem>
+            </Select>
+            <TextField
+              sx={{width:"90px"}}
+              id="outlined-number"
+              label="Number"
+              type="number"
+              size="small"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
         </Box>
         </div>
         <Divider className="divider">LECTURES</Divider>

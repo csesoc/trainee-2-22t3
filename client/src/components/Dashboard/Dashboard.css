@@ -24,6 +24,11 @@ body {
   flex-direction: column;
 }
 
+.weekly-stat-counter {
+  float:right;
+  margin-right: 10px;
+}
+
 .week-divider {
   background-color: rgb(96, 99, 106);
   width: 300px;
@@ -85,14 +90,33 @@ body {
   height:5px;
 }
 
+.create-task-text-field {
+  margin-top: 10px !important;
+}
+
+.css-1hnl2uv-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+  width: 90px !important;
+}
+
+.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+  background-color: #36393f !important;
+}
+
 .task-card {
-  width: 200px;
+  width: 180px;
   border-radius: 20px !important;
   margin-bottom: 0px;
   margin-top: 0px;
   margin-left: 10px;
   margin-right: 10px;
 }
+
+
+@keyframes card-transition {
+  from {background-color: white;}
+  to {background-color: rgb(55, 55, 172);}
+}
+
 
 .task-card-header {
   color: black !important;

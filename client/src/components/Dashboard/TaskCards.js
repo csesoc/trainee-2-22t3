@@ -1,24 +1,39 @@
-import { Typography, TextField, Card, CardActions, CardContent, Box, Slider, Divider } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { Typography, Card, CardActions, CardContent } from '@mui/material';
+import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
 import './Dashboard.css';
 
 export function TaskCard (course, taskType, year, term, week, completed, progress, setProgress, num) {
+  let cardId = `card_${num}`;
 
-  const generateCardColor = () => {
-    const r = 255 - (205 * progress[num] * 0.01);
-    const g = 255 - (205 * progress[num] * 0.01);
-    const b = 255 - (83 * progress[num] * 0.01);
-    return `rgba(${r}, ${g}, ${b}, 1)`;
-  }
-
-  const handleSliderChange = (event) => {
+  const handleDone = () => {
+    if (completed) {return}
+    let card = document.getElementById(cardId);
+    card.style.animationDelay="0s";
+    card.style.animation="0.5s ease-in 0s 1 normal forwards running card-transition";
     let newProgress = [...progress];
-    newProgress[num] = event;
+    newProgress[num] = "done";
     setProgress(newProgress);
   }
 
+  console.log(completed);
+
+  const handleDelete = () => {
+    let newProgress = [...progress];
+    newProgress[num] = "deleted";
+    console.log(newProgress);
+    setProgress(newProgress);
+  }
+
+  let bgString = "#ffffff";
+  if (completed === true) {
+    bgString = "rgb(55, 55, 172)";
+  }
+
   return(
-    <Card className='task-card' sx={{backgroundColor: () => generateCardColor()}}>
+    <Card className='task-card' id={cardId} sx={{backgroundColor:bgString}} >
     <CardContent sx={{pb: 0}}>
       <Typography className="task-card-header" variant="h5" align="center" sx={{fontWeight:"bold"}}>
         {course}
@@ -28,12 +43,15 @@ export function TaskCard (course, taskType, year, term, week, completed, progres
       </Typography>
     </CardContent>
     <CardActions sx={{pt: 0}}>
-    <Slider
-      size="big"
-      defaultValue={0}
-      onChange={(event) => handleSliderChange(event.target.value)}
-      sx={{width:150, margin:"0 auto", color:"#3232ac"}}
-      />
+    <IconButton className="done-icon" onClick={() => handleDone()} sx={{ml: 1.8}}>
+      <DoneOutlineIcon />
+    </IconButton>
+    <IconButton>
+      <ModeEditIcon />
+    </IconButton>
+    <IconButton onClick={() => handleDelete()}>
+      <DeleteIcon />
+    </IconButton>
     </CardActions>
     </Card>
   )
