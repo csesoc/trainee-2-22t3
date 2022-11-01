@@ -37,58 +37,71 @@ router.post(
   }
 );
 
-// PUT - /tasks/put
-// Edits a specific task 
-// task id + edits 
-// assumes keys are valid - form for user to fill
+/* PUT - /tasks/put
+Edits a specific task
+task id + edits
+Body example:
+{
+  "_id": "fiewFOJDF394ree",
+  "completed": "true"
+}
+assumes keys are valid - form for user to fill
+*/
 router.put(
-  '/put',
-  check('_id').exists().withMessage('Task id not provided'),
+  "/put",
+  check("_id").exists().withMessage("Task id not provided"),
   async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).send({ errors: errors.array()[0].msg });
-  }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).send({ errors: errors.array()[0].msg });
+    }
 
-  // 1. find inside database for matching id - if none return error message
-  const id = req.body._id;
-  if(doomTasks.find(check => check.id === id) === undefined) {
-    return res.send('Task id is invalid and task can not be editted');
-  }
+    // 1. find inside database for matching id - if none return error message
+    const id = req.body._id;
+    if (doomTasks.find((check) => check.id === id) === undefined) {
+      return res.send("Task id is invalid and task can not be editted");
+    }
 
-  // 2. check which keys are valid + which are empty 
-  const updates = [];
-  if (req.body.taskType !== undefined && typeof req.body.taskType === 'string') {
-    updates.push(req.body.taskType);
-  }
-  if (req.body.duration !== undefined && typeof req.body.duration === 'number') {
-    updates.push(req.body.duration);
-  }
-  if (req.body.completed !== undefined && typeof req.body.completed === 'boolean') {
-    updates.push(req.body.completed);
-  }
-  if (req.body.name !== undefined && typeof req.body.name === 'string') {
-    updates.push(req.body.name);
-  }
-  if (req.body.course !== undefined && typeof req.body.course === 'number') {
-    updates.push(req.body.course);
-  }
-  if (req.body.week !== undefined && typeof req.body.week === 'number') {
-    updates.push(req.body.week);
-  }
-  if (req.body.term !== undefined && typeof req.body.term === 'number') {
-    updates.push(req.body.term);
-  }
-  if (req.body.year !== undefined && typeof req.body.year === 'number') {
-    updates.push(req.body.year);
-  }
+    // 2. check which keys are valid + which are empty
+    let updates = {};
+    if (
+      req.body.taskType !== undefined &&
+      typeof req.body.taskType === "string"
+    ) {
+      updates.taskType = req.body.taskType;
+    }
+    if (
+      req.body.duration !== undefined &&
+      typeof req.body.duration === "number"
+    ) {
+      updates.duration = req.body.duration;
+    }
+    if (
+      req.body.completed !== undefined &&
+      typeof req.body.completed === "boolean"
+    ) {
+      updates.completed = req.body.completed;
+    }
+    if (req.body.name !== undefined && typeof req.body.name === "string") {
+      updates.name = req.body.name;
+    }
+    if (req.body.course !== undefined && typeof req.body.course === "number") {
+      updates.course = req.body.course;
+    }
+    if (req.body.week !== undefined && typeof req.body.week === "number") {
+      updates.week = req.body.week;
+    }
+    if (req.body.term !== undefined && typeof req.body.term === "number") {
+      updates.term = req.body.term;
+    }
+    if (req.body.year !== undefined && typeof req.body.year === "number") {
+      updates.year = req.body.year;
+    }
 
-  await doomTasks.updateOne(
-    { _id: id }, 
-    { $set: { updates }},
-  );
-  return res.send('Task Edited');
-});
+    await doomTasks.updateOne({ _id: ObjectId(id) }, { $set: updates });
+    return res.send("Task Edited");
+  }
+);
 
 // DELETE - /tasks/delete
 // Removes a task from the database

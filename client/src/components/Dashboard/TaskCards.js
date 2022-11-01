@@ -9,12 +9,22 @@ export function TaskCard (course, taskType, year, term, week, completed, progres
   let cardId = `card_${num}`;
 
   const handleDone = () => {
-    if (completed) {return}
-    let card = document.getElementById(cardId);
+    let card = document.getElementById(`card${cardId}`);
+    let cardHeader = document.getElementById(`card-header${cardId}`);
     card.style.animationDelay="0s";
-    card.style.animation="0.5s ease-in 0s 1 normal forwards running card-transition";
+    cardHeader.style.animationDelay="0s";
     let newProgress = [...progress];
-    newProgress[num] = "done";
+    if (!completed) {
+      card.style.animation="0.5s ease-in 0s 1 normal forwards running card-transition-done";
+      cardHeader.style.animation="0.5s ease-in 0s 1 normal forwards running card-header-transition-done";
+      newProgress[num] = "done";
+      completed = true;
+    } else {
+      card.style.animation="0.5s ease-in 0s 1 normal forwards running card-transition-not-done";
+      cardHeader.style.animation="0.5s ease-in 0s 1 normal forwards running card-header-transition-not-done";
+      newProgress[num] = "not done";
+      completed = false;
+    }
     setProgress(newProgress);
   }
 
@@ -28,14 +38,18 @@ export function TaskCard (course, taskType, year, term, week, completed, progres
   }
 
   let bgString = "#ffffff";
+  let txtString = "#000000";
   if (completed === true) {
     bgString = "rgb(55, 55, 172)";
+    txtString = "#ffffff";
   }
 
   return(
-    <Card className='task-card' id={cardId} sx={{backgroundColor:bgString}} >
+    <Card className='task-card' id={`card${cardId}`} sx={{backgroundColor:bgString}} >
     <CardContent sx={{pb: 0}}>
-      <Typography className="task-card-header" variant="h5" align="center" sx={{fontWeight:"bold"}}>
+      <Typography className="task-card-header" id={`card-header${cardId}`} 
+      variant="h5" align="center" 
+      sx={{fontWeight:"bold", color:txtString}}>
         {course}
       </Typography>
       <Typography className="task-card-text1" sx={{mb:0, mt:0}}>

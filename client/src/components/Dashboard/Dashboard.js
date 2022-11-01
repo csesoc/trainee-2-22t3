@@ -1,4 +1,5 @@
-import { Typography, TextField, Box, Divider, Select, MenuItem, InputLabel } from "@mui/material";
+import { Typography, Box, Divider, Fab } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { TaskCard } from "./TaskCards";
@@ -21,6 +22,10 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
+
+  }, []);
+
+  useEffect(() => {
     fetch("http://localhost:5000/tasks/get")
       .then((res) => {
         return res.json();
@@ -33,15 +38,24 @@ export default function Dashboard() {
   useEffect(() => {
     for (let i in taskProgress) {
       if (taskProgress[i] === "deleted") {
-        const response = fetch(`http://localhost:5000/tasks/delete?_id=${dataTasks[i]._id}`, {
+        fetch(`http://localhost:5000/tasks/delete?_id=${dataTasks[i]._id}`, {
           method: "DELETE",
           headers: {
             "Content-type": "application/json",
           },
           credentials: "include",
         });
-      } else if (taskProgress[i] === "done") {
-        
+      } else if (taskProgress[i] === "done" || taskProgress[i] === "not done") {
+        let isComplete = false;
+        if (taskProgress[i] === "done") {isComplete = true;}
+        fetch('http://localhost:5000/tasks/put', {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({_id: dataTasks[i]._id, completed: isComplete})
+        });
       }
     }
     runUpdateTasks();
@@ -63,8 +77,8 @@ export default function Dashboard() {
 
   const getTaskStats = (str) => {
     let num = 0;
-    for (let i in taskProgress) {
-      if (taskProgress[i] === "done") {
+    for (let i in dataTasks) {
+      if (dataTasks[i].completed === true) {
         num += 1;
       }
     }
@@ -76,7 +90,7 @@ export default function Dashboard() {
   return (
     <>
       <div className="dashboard-container">
-        <Typography variant="h2" align="center" sx={{fontWeight:"bold"}}>💀 DASHBOARD 💀</Typography>
+        <Typography variant="h2" class="dashboard-text" align="center" sx={{fontWeight:"bold"}}>💀 DASHBOARD 💀</Typography>
         <div className="selector-screen">
         {WeeklyCalendar(setStartDate, setEndDate)}
         <div className="weekly-stats">
@@ -95,50 +109,23 @@ export default function Dashboard() {
           <Typography className="weekly-box-text">Improvement:</Typography>
         </Box>
         </div>
-        <Box className="create-task-box">
-          Create Task
-          <Divider className="create-task-box-divider"></Divider>
-            <TextField
-              sx={{width:"160px"}}
-              className="create-task-text-field"
-              id="outlined-helperText"
-              label="Course Name"
-              size="small"
-            />
-            <InputLabel id="demo-simple-select-label" sx={{lineHeight:"0.55em", overflow:"visible"}}>Term</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="Term"
-              size="small"
-            >
-              <MenuItem value={1}>One</MenuItem>
-              <MenuItem value={2}>Two</MenuItem>
-              <MenuItem value={3}>Three</MenuItem>
-            </Select>
-            <TextField
-              sx={{width:"90px"}}
-              id="outlined-number"
-              label="Number"
-              type="number"
-              size="small"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-        </Box>
         </div>
-        <Divider className="divider">LECTURES</Divider>
+        <div className="tasks-container">
+        <Divider className="tasks-divider">LECTURES</Divider>
         <div className="divider-container">
         {TaskCardList("lecture")}
+        <Fab size="big" className="add-task-icon" aria-label="add" sx={{backgroundColor: "rgb(55, 55, 172)"}}>
+        <AddIcon className="add-task-icon-sign"/>
+        </Fab>
         </div>
-        <Divider className="divider">TUTORIALS</Divider>
+        <Divider className="tasks-divider">TUTORIALS</Divider>
         <div className="divider-container">
         {TaskCardList("tutorial")}
         </div>
-        <Divider className="divider">HOMEWORK</Divider>
+        <Divider className="tasks-divider">HOMEWORK</Divider>
         <div className="divider-container">
         {TaskCardList("homework")}
+        </div>
         </div>
       </div>
     </>

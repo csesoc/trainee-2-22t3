@@ -10,13 +10,41 @@ body {
   margin: 4rem auto;
   border-radius: 0.4rem;
   padding: 3rem;
+  padding-top: 36px;
   background-color: #0f131a;
   color: #ffffff;
 }
 
+@media (max-width: 400px) {
+  .dashboard-container {
+    padding-left: calc(7%) !important;
+  }
+}
+
+@media (max-width: 370px) {
+  .weekly-stats {
+    width: 96% !important;
+  }
+  .week-divider {
+    width: 96% !important;
+  }
+  .week-box {
+    width: 96% !important;
+  }
+  .weekly-box-divider {
+    width: 96% !important;
+  }
+}
+
+.dashboard-text {
+  font-size: 64px;
+  align-self: center;
+  margin-top: 0px;
+}
+
 .selector-screen {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .weekly-stats {
@@ -30,10 +58,13 @@ body {
 }
 
 .week-divider {
-  background-color: rgb(96, 99, 106);
+  background-color: transparent;
   width: 300px;
   height: 70px;
   border-radius: 50px;
+  border-color: white !important;
+  border-width: 5px !important;
+  border-style: solid !important;
   align-items: center;
   font-size: 30px;
   font-weight: bolder;
@@ -44,14 +75,52 @@ body {
 }
 
 .week-box {
-  background-color: rgb(96, 99, 106);
+  background-color: transparent;
   width: 280px;
   height: 200px;
-  border: solid;
-  border-color: #36393f;
-  border-width:5px;
   border-radius: 10px;
   margin: auto;
+}
+
+.weekly-box-text, .weekly-box-divider, .add-task-icon-sign, .week-divider, .tasks-divider, .dashboard-text {
+  transition: all 1s;
+}
+
+.weekly-box-text:hover, .weekly-box-divider:hover, .task-card:hover {
+  scale: 1.1;
+}
+
+.dashboard-text:hover {
+  scale: 1.2;
+  letter-spacing: 20px;
+}
+
+.tasks-divider:hover {
+  scale: 1.05;
+  border-color: rgb(55, 55, 172) !important;
+  letter-spacing: 10px;
+}
+
+.week-divider:hover {
+  border-color: rgb(55, 55, 172) !important;
+  scale: 1.05;
+}
+
+.add-task-icon:hover  {
+  background-color: #5865f2 !important;
+}
+
+.add-task-icon:hover > .add-task-icon-sign {
+  transition: all 1s ease-in-out;
+  transform: rotate(180deg);
+}
+
+.weekly-box-text:hover {
+  color: rgb(55, 55, 172);
+}
+
+.weekly-box-divider:hover {
+  background-color: rgb(55, 55, 172);
 }
 
 .weekly-box-text {
@@ -63,9 +132,10 @@ body {
 }
 
 .weekly-box-divider {
-  background-color: #36393f;
+  background-color: #ffffff;
   width:280px;
-  height:5px;
+  height:3px;
+  border-radius: 3px;
 }
 
 .create-task-box {
@@ -94,6 +164,11 @@ body {
   margin-top: 10px !important;
 }
 
+.create-task-term-select {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+
 .css-1hnl2uv-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
   width: 90px !important;
 }
@@ -102,24 +177,38 @@ body {
   background-color: #36393f !important;
 }
 
+.tasks-container {
+  min-width: 420px !important;
+}
+
 .task-card {
   width: 180px;
   border-radius: 20px !important;
-  margin-bottom: 0px;
-  margin-top: 0px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 10px;
 }
 
-
-@keyframes card-transition {
+@keyframes card-transition-done {
   from {background-color: white;}
   to {background-color: rgb(55, 55, 172);}
 }
 
+@keyframes card-transition-not-done {
+  from {background-color: rgb(55, 55, 172);}
+  to {background-color: white;}
+}
+
+@keyframes card-header-transition-done {
+  from {color: black;}
+  to {color: white;}
+}
+
+@keyframes card-header-transition-not-done {
+  from {color: white;}
+  to {color: black;}
+}
 
 .task-card-header {
-  color: black !important;
+  color: black;
   align-self: center;
   margin: none;
   padding:none;
@@ -134,9 +223,13 @@ body {
   font-weight: bold;
 }
 
-.divider {
-  background-color:#36393f;
-  border-radius: 30px;
+.tasks-divider {
+  background: transparent;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-width: 5px !important;
+  border-style: solid !important;
+  border-color: white !important;
   height:30px;
   text-align: center;
   align-items: center;
@@ -144,7 +237,21 @@ body {
 }
 
 .divider-container {
-  display:flex;
+  transform: translateX(-15px);
+  display:grid;
+  flex-wrap: wrap;
+  min-width: 420px !important;
+  justify-content:space-between;
+  grid-template-columns: repeat(auto-fill, 170px);
+  grid-gap: 1rem;
+}
+
+.add-task-icon {
+  margin-left: 10px !important;
+}
+
+.add-task-icon-sign {
+  color: white !important;
 }
 
 .css-1ws8119-MuiDivider-root {
@@ -157,35 +264,45 @@ body {
   margin-right: 10px !important;
 }
 
-.css-6t5f1e-MuiDayPicker-monthContainer {
+.css-uoyvse-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .css-qceo8l-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+  background-color: #5865f2 !important;
+}
 
-  background-color: rgb(96, 99, 106);
-  color: rgb(96, 99, 106);
+.css-6t5f1e-MuiDayPicker-monthContainer {
+  max-height: 300px !important;
+  background-color: transparent;
   padding-top: 5px;
-  padding-bottom: 5px;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
+  border-width: 5px !important;
+  border-color: #ffffff;
+  border-top-width: 0px !important;
+  border-style: solid !important;
   margin-bottom: 10px;
 }
 
+.css-1vozmwx-MuiTypography-root-MuiDayPicker-weekDayLabel {
+  color: white !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
 .css-qklzlb-MuiDayPicker-header {
-  background-color: rgb(96, 99, 106);
+  background-color: transparent;
+  border-width: 5px !important;
+  border-bottom-width: 0px !important;
+  border-top-width: 0px !important;
+  border-style: solid !important;
 }
 
 .css-nk89i7-MuiPickersCalendarHeader-root {
-  background-color: rgb(96, 99, 106);
+  background-color: transparent;
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
+  border-width: 5px !important;
+  border-bottom-width: 0px !important;
+  border-style: solid !important;
   padding-top: 6px !important;
   margin-top: 0px !important;
   margin-bottom: 0px !important;
-}
-
-.css-bkrceb-MuiButtonBase-root-MuiPickersDay-root.MuiSelected {
-  background-color: red !important;
-}
-
-.css-195y93z-MuiButtonbase-root-MuiPickersDay-root
-.MuiSelected {
-  background-color: red !important;
 }

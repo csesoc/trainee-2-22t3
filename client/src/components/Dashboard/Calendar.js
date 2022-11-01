@@ -14,10 +14,10 @@ export function WeeklyCalendar(setStartDate, setEndDate) {
   })(({ theme, dayIsBetween, isFirstDay, isLastDay }) => ({
     ...(dayIsBetween && {
       borderRadius: 0,
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
       color: theme.palette.common.white,
       "&:hover, &:focus": {
-        backgroundColor: theme.palette.primary.dark,
+        backgroundColor: theme.palette.secondary.main,
       },
     }),
     ...(isFirstDay && {
