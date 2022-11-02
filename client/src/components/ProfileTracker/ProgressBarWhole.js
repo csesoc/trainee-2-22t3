@@ -47,15 +47,13 @@ const ProgressBarWhole = ({ ProgressBarType, dataTasks, runUpdateTasks }) => {
     dialogTitle = "Not bad 😊";
   }
 
-  let expandCompletedIcon = <ArrowRightIcon />;
+  // let expandCompletedIcon = <ArrowRightIcon />;
   const [completedListIsShown, setCompletedListIsShown] = useState(false);
   const handleClickExpandCompleted = () => {
     if (completedListIsShown === true) {
       setCompletedListIsShown(false);
-      expandCompletedIcon = <ArrowLeftIcon />;
     } else {
       setCompletedListIsShown(true);
-      expandCompletedIcon = <ArrowRightIcon />;
     }
   };
 
@@ -124,7 +122,11 @@ const ProgressBarWhole = ({ ProgressBarType, dataTasks, runUpdateTasks }) => {
             </DialogActions>
             <DialogActions className="completed-tasks-dropdown">
               <DropdownButton onClick={handleClickExpandCompleted}>
-                {expandCompletedIcon}
+                {completedListIsShown === true ? (
+                  <ArrowLeftIcon />
+                ) : (
+                  <ArrowRightIcon />
+                )}
               </DropdownButton>
             </DialogActions>
           </Dialog>
