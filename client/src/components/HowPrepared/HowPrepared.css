@@ -12,7 +12,12 @@
 
 .how-prepared-rating {
   border: 1px #ffffff solid;
-  position: relative;
+  justify-content: center;
+}
+
+.how-prepared-selector {
+  display: flex;
+  justify-content: center;
 }
 
 .how-prepared-dropdown-arrow {

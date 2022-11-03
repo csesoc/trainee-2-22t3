@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
-import { Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { fabClasses, Typography } from "@mui/material";
 
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
+import UndoIcon from "@mui/icons-material/Undo";
 
 const ProgressDropdownListElement = ({
   _id,
@@ -18,17 +19,29 @@ const ProgressDropdownListElement = ({
   year,
   runUpdateTasks,
 }) => {
-  const handleOnDoneOutlineIcon = () => {
+  const [updateCompletedStatus, setUpdateCompletedStatus] = useState();
+  const handleToggleCompletedIcon = () => {
     const requestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ _id: _id, completed: true }),
+      body: JSON.stringify({
+        _id: _id,
+        completed: completed === true ? false : true,
+      }),
     };
+    console.log(updateCompletedStatus);
     fetch("http://localhost:5000/tasks/put", requestOptions)
       .then((response) => response.json())
       .catch((error) => console.log(error));
     runUpdateTasks();
   };
+
+  let toggleCompletedIcon;
+  if (completed === false) {
+    toggleCompletedIcon = <DoneOutlineIcon />;
+  } else {
+    toggleCompletedIcon = <UndoIcon />;
+  }
   return (
     <div>
       <div>
@@ -38,8 +51,8 @@ const ProgressDropdownListElement = ({
         <Typography>Duration: {duration}</Typography>
       </div>
       <div>
-        <IconButton onClick={handleOnDoneOutlineIcon}>
-          <DoneOutlineIcon />
+        <IconButton onClick={handleToggleCompletedIcon}>
+          {toggleCompletedIcon}
         </IconButton>
         <IconButton>
           <ModeEditIcon />

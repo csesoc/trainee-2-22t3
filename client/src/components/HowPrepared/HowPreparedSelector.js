@@ -54,19 +54,22 @@ const HowPreparedSelector = () => {
   return (
     <>
       <div className="how-prepared-rating">
-        <Rating
-          icon={<WhiteSkullsvg />}
-          emptyIcon={<BlackSkullsvg />}
-          precision={0.5}
-          value={value}
-          getLabelText={getLabelText}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-          onChangeActive={(event, newHover) => {
-            setHover(newHover);
-          }}
-        />
+        <div className="how-prepared-selector">
+          <Rating
+            icon={<WhiteSkullsvg />}
+            emptyIcon={<BlackSkullsvg />}
+            precision={0.5}
+            value={value}
+            getLabelText={getLabelText}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+            onChangeActive={(event, newHover) => {
+              setHover(newHover);
+            }}
+          />
+        </div>
+
         <Typography>
           {value !== null && (
             <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>

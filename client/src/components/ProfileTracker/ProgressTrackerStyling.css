@@ -58,6 +58,10 @@
   border-radius: 20px !important;
 }
 
+.progress-dropdown-list-item:hover {
+  scale: 1.05;
+}
+
 .divider {
   background-color: #36393f;
   border-radius: 30px;

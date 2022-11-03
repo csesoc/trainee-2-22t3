@@ -80,6 +80,9 @@ const ProgressBarWhole = ({ ProgressBarType, dataTasks, runUpdateTasks }) => {
           <ProgressBarDropdownButton onClick={handleClickDropdownOpen}>
             <ArrowDropDownIcon style={{ color: "white" }} />
           </ProgressBarDropdownButton>
+          <Typography>
+            {Math.floor((completedTasks.length / dataTasks.length) * 100)}%
+          </Typography>
           <Dialog
             open={dropdownOpen}
             onClose={handleClickDropdownClose}
