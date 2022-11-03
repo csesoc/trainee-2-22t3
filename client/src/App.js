@@ -1,10 +1,9 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MainPage from "./components/main/MainPage";
+import LandingPage from "./components/LandingPage/LandingPage";
 import RegisterPage from "./components/RegisterLogin/RegisterPage";
 import LoginPage from "./components/RegisterLogin/LoginPage";
 import { experimental_sx as sx, ThemeProvider, createTheme } from "@mui/material/styles";
-import LandingPage from "./components/LandingPage/LandingPage";
 
 
 const theme = createTheme({
@@ -60,8 +59,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/landing" element={<LandingPage />} />          
+          <Route path="/" element={<LandingPage />} />          
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
         </Routes>
