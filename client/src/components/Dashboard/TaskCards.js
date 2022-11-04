@@ -28,12 +28,9 @@ export function TaskCard (course, taskType, year, term, week, completed, progres
     setProgress(newProgress);
   }
 
-  console.log(completed);
-
   const handleDelete = () => {
     let newProgress = [...progress];
     newProgress[num] = "deleted";
-    console.log(newProgress);
     setProgress(newProgress);
   }
 

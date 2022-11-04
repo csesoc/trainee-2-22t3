@@ -138,20 +138,8 @@ body {
   border-radius: 3px;
 }
 
-.create-task-box {
-  background-color: rgb(96, 99, 106);
-  width: 400px;
-  height: 280px;
-  border: solid;
-  border-color: #36393f;
-  border-width:5px;
-  border-radius: 10px;
-  position: absolute;
-  right: 5%;
-  text-align: center;
-  align-items: center;
-  font-size: 30px;
-  font-weight: bolder;
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  background-color: #36393f !important;
 }
 
 .create-task-box-divider {
@@ -160,8 +148,20 @@ body {
   height:5px;
 }
 
-.create-task-text-field {
-  margin-top: 10px !important;
+.css-fcrm5i-MuiInputBase-root-MuiOutlinedInput-root {
+  background-color: #232323 !important;
+}
+
+.Mui-focused {
+  color: rgb(55, 55, 172) !important;
+}
+
+.MuiOutlinedInput-root {
+  color: white !important;
+}
+
+.css-1hnl2uv-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused {
+  background-color: #232323 !important;
 }
 
 .create-task-term-select {
@@ -174,7 +174,7 @@ body {
 }
 
 .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
-  background-color: #36393f !important;
+  background-color: #232323 !important;
 }
 
 .tasks-container {
@@ -252,6 +252,21 @@ body {
 
 .add-task-icon-sign {
   color: white !important;
+}
+
+.dialog-box {
+  display: flex;
+}
+
+.select-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.select-box-text {
+  align-self: center !important;
+  text-align: center !important;
 }
 
 .css-1ws8119-MuiDivider-root {

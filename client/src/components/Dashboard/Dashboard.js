@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { TaskCard } from "./TaskCards";
 import { WeeklyCalendar } from './Calendar';
+import { AddTaskDialog } from "./AddTaskDialog";
 import "./Dashboard.css";
 
 
@@ -14,6 +15,7 @@ export default function Dashboard() {
   const [taskProgress, setTaskProgress] = useState([]);
   const [startDate, setStartDate] = useState(dayjs(new Date()).format("DD/MM/YYYY"));
   const [endDate, setEndDate] = useState(dayjs(new Date()).format("DD/MM/YYYY"));
+  const [taskDialog, setTaskDialog] = useState("");
 
   let currentWeek = 7;
 
@@ -62,6 +64,7 @@ export default function Dashboard() {
   }, [taskProgress]);
 
   console.log(dataTasks);
+  console.log(taskDialog);
 
   const TaskCardList = (taskType) => {
     let returnObj = [];
@@ -83,13 +86,13 @@ export default function Dashboard() {
       }
     }
     if (str === "done") { return num }
-    console.log(dataTasks.length, num);
     return (dataTasks.length - num);
   }
 
   return (
     <>
       <div className="dashboard-container">
+        {AddTaskDialog(taskDialog, "lecture")}
         <Typography variant="h2" class="dashboard-text" align="center" sx={{fontWeight:"bold"}}>💀 DASHBOARD 💀</Typography>
         <div className="selector-screen">
         {WeeklyCalendar(setStartDate, setEndDate)}
@@ -114,7 +117,7 @@ export default function Dashboard() {
         <Divider className="tasks-divider">LECTURES</Divider>
         <div className="divider-container">
         {TaskCardList("lecture")}
-        <Fab size="big" className="add-task-icon" aria-label="add" sx={{backgroundColor: "rgb(55, 55, 172)"}}>
+        <Fab size="big" className="add-task-icon" onClick={() => setTaskDialog("lecture")} aria-label="add" sx={{backgroundColor: "rgb(55, 55, 172)"}}>
         <AddIcon className="add-task-icon-sign"/>
         </Fab>
         </div>
