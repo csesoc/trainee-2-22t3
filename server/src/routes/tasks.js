@@ -2,7 +2,7 @@ import express from "express";
 import { check, validationResult } from "express-validator";
 import { doomTasks } from "../database.js";
 import { ObjectId } from "mongodb";
-
+import { verifyJWT } from "../middleware/verifyJWT.js";
 const router = express.Router();
 
 // GET - /tasks/get
@@ -11,6 +11,15 @@ router.get("/get", async (req, res) => {
   const tasksArray = await doomTasks.find().toArray();
   res.send(tasksArray);
 });
+
+// GET - /tasks/doomFactor
+// Calculates the doom factor (a numerical representation of how behind the user is on work)
+router.get("/doomFactor", async (req, res) => {
+  //// calculation....
+  return res.send(doomFactor);
+});
+
+router.use(verifyJWT);
 
 // POST - /tasks/post
 // Adds a given task to database
@@ -69,6 +78,7 @@ router.post(
             errors.array()[0].msg
         );
     }
+    req.body.userId = req.authUser._id.toString();
     doomTasks.insertOne(req.body);
     res.send("Task Added");
   }
@@ -89,8 +99,16 @@ router.put(
 
     // 1. find inside database for matching id - if none return error message
     const id = req.body._id;
-    if (doomTasks.find((check) => check.id === id) === undefined) {
-      return res.send("Task id is invalid and task can not be edited");
+    const foundTask = await doomTasks.findOne({ _id: ObjectId(id) });
+    if (foundTask === undefined) {
+      return res.status(400).send({ error: "Task not found. Invalid task id" });
+    }
+    if (foundTask.userId !== req.authUser._id.toString()) {
+      return res
+        .status(403)
+        .send({
+          error: "Logged in person does not have permission to edit task",
+        });
     }
 
     // 2. Valid date body
@@ -128,6 +146,9 @@ router.put(
     if (req.body.year !== undefined && typeof req.body.year !== "number") {
       return res.status(400).send({ error: "year not number" });
     }
+    if (req.body.userId !== undefined && typeof req.body.userId !== "string") {
+      return res.status(400).send({ error: "userId not string" });
+    }
     // Remove _id so it doesn't get updated.
     delete req.body._id;
     // 3. Update the data
@@ -147,16 +168,18 @@ router.delete(
     if (!errors.isEmpty()) {
       return res.status(400).send(errors.array()[0].msg);
     }
+    const foundTask = await doomTasks.findOne({ _id: ObjectId(req.query._id) });
+    if (foundTask === undefined) {
+      return res.status(400).send({ error: "Task not found. Invalid task id" });
+    }
+    if (foundTask.userId !== req.authUser._id.toString()) {
+      return res
+        .status(403)
+        .send({ error: "Logged in person does not have permission to delete" });
+    }
     await doomTasks.deleteOne({ _id: ObjectId(req.query._id) });
     res.send("Task Removed");
   }
 );
-
-// GET - /tasks/doomFactor
-// Calculates the doom factor (a numerical representation of how behind the user is on work)
-router.get("/doomFactor", async (req, res) => {
-  //// calculation....
-  return res.send(doomFactor);
-});
 
 export { router as default };
