@@ -1,14 +1,21 @@
 import express from "express";
 import { check, validationResult } from "express-validator";
-import { doomCourses, doomUni, doomCourses } from "../database.js";
+import { doomCourses, doomUni, doomTasks } from "../database.js";
 import { ObjectId } from "mongodb";
+import { verifyJWT } from "../middleware/verifyJWT.js";
 
 const router = express.Router();
 // GET - /users/getTasks
 // Returns an array of all courses
-router.get("/get", async (req, res) => {
-  const coursesArray = await doomCourses.find().toArray();
-  res.send(coursesArray);
+
+router.use(verifyJWT);
+
+router.get("/getTasks", async (req, res) => {
+  let userObj = req.authUser;
+  const tasksArray = await doomTasks
+    .find({ userId: userObj._id.toString() })
+    .toArray();
+  res.send(tasksArray);
 });
 
 // task is the task object from the database
@@ -32,3 +39,5 @@ function calculateTaskDate(task, uni) {
   // Calculate date
   return "TODO";
 }
+
+export { router as default };

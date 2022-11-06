@@ -2,7 +2,7 @@ import express from "express";
 import { check, validationResult } from "express-validator";
 import { doomTasks } from "../database.js";
 import { ObjectId } from "mongodb";
-
+import { verifyJWT } from "../middleware/verifyJWT.js";
 const router = express.Router();
 
 // GET - /tasks/get
@@ -11,6 +11,15 @@ router.get("/get", async (req, res) => {
   const tasksArray = await doomTasks.find().toArray();
   res.send(tasksArray);
 });
+
+// GET - /tasks/doomFactor
+// Calculates the doom factor (a numerical representation of how behind the user is on work)
+router.get("/doomFactor", async (req, res) => {
+  //// calculation....
+  return res.send(doomFactor);
+});
+
+router.use(verifyJWT);
 
 // POST - /tasks/post
 // Adds a given task to database
@@ -58,11 +67,6 @@ router.post(
       .withMessage("Year not inputted")
       .isNumeric({ min: 2022 })
       .withMessage("Year is invalid"),
-    check("userId")
-      .exists()
-      .withMessage("userId not inputted")
-      .isString()
-      .withMessage("userId is invalid (not string)"),
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -74,6 +78,7 @@ router.post(
             errors.array()[0].msg
         );
     }
+    req.body.userId = req.authUser._id.toString();
     doomTasks.insertOne(req.body);
     res.send("Task Added");
   }
@@ -94,8 +99,16 @@ router.put(
 
     // 1. find inside database for matching id - if none return error message
     const id = req.body._id;
-    if (doomTasks.find((check) => check.id === id) === undefined) {
-      return res.send("Task id is invalid and task can not be edited");
+    const foundTask = await doomTasks.findOne({ _id: ObjectId(id) });
+    if (foundTask === undefined) {
+      return res.status(400).send({ error: "Task not found. Invalid task id" });
+    }
+    if (foundTask.userId !== req.authUser._id.toString()) {
+      return res
+        .status(403)
+        .send({
+          error: "Logged in person does not have permission to edit task",
+        });
     }
 
     // 2. Valid date body
@@ -155,16 +168,18 @@ router.delete(
     if (!errors.isEmpty()) {
       return res.status(400).send(errors.array()[0].msg);
     }
+    const foundTask = await doomTasks.findOne({ _id: ObjectId(req.query._id) });
+    if (foundTask === undefined) {
+      return res.status(400).send({ error: "Task not found. Invalid task id" });
+    }
+    if (foundTask.userId !== req.authUser._id.toString()) {
+      return res
+        .status(403)
+        .send({ error: "Logged in person does not have permission to delete" });
+    }
     await doomTasks.deleteOne({ _id: ObjectId(req.query._id) });
     res.send("Task Removed");
   }
 );
-
-// GET - /tasks/doomFactor
-// Calculates the doom factor (a numerical representation of how behind the user is on work)
-router.get("/doomFactor", async (req, res) => {
-  //// calculation....
-  return res.send(doomFactor);
-});
 
 export { router as default };
