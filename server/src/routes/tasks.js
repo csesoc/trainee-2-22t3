@@ -58,6 +58,11 @@ router.post(
       .withMessage("Year not inputted")
       .isNumeric({ min: 2022 })
       .withMessage("Year is invalid"),
+    check("userId")
+      .exists()
+      .withMessage("userId not inputted")
+      .isString()
+      .withMessage("userId is invalid (not string)"),
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -127,6 +132,9 @@ router.put(
     }
     if (req.body.year !== undefined && typeof req.body.year !== "number") {
       return res.status(400).send({ error: "year not number" });
+    }
+    if (req.body.userId !== undefined && typeof req.body.userId !== "string") {
+      return res.status(400).send({ error: "userId not string" });
     }
     // Remove _id so it doesn't get updated.
     delete req.body._id;
