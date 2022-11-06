@@ -25,3 +25,6 @@
   width: 0;
   transition: 1s ease;
 }
+
+.progress:before {
+}

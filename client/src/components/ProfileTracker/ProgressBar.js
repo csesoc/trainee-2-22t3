@@ -17,7 +17,7 @@ const ProgressBar = ({ done }) => {
       };
       setProgressBarPercentage(updateProgressBarPercentage);
       const updateProgressBarBackgroundStyling = {
-        backgroundColor: `rgba(150,150, 172, ${done / 100})`,
+        backgroundColor: `rgba(150,150, 172, ${(100 - done) / 100})`,
       };
       setProgressBarBackgroundStyling(updateProgressBarBackgroundStyling);
     }, 0);
