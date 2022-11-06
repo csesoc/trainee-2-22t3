@@ -2,7 +2,7 @@ import express from "express";
 import { check, validationResult } from "express-validator";
 import { doomTasks } from "../database.js";
 import { ObjectId } from "mongodb";
-
+import { verifyJWT } from "../middleware/verifyJWT.js";
 const router = express.Router();
 
 // GET - /tasks/get
@@ -11,6 +11,15 @@ router.get("/get", async (req, res) => {
   const tasksArray = await doomTasks.find().toArray();
   res.send(tasksArray);
 });
+
+// GET - /tasks/doomFactor
+// Calculates the doom factor (a numerical representation of how behind the user is on work)
+router.get("/doomFactor", async (req, res) => {
+  //// calculation....
+  return res.send(doomFactor);
+});
+
+router.use(verifyJWT);
 
 // POST - /tasks/post
 // Adds a given task to database
@@ -69,21 +78,16 @@ router.post(
             errors.array()[0].msg
         );
     }
+    req.body.userId = req.authUser._id.toString();
     doomTasks.insertOne(req.body);
     res.send("Task Added");
   }
 );
 
-/* PUT - /tasks/put
-Edits a specific task
-task id + edits
-Body example:
-{
-  "_id": "fiewFOJDF394ree",
-  "completed": "true"
-}
-assumes keys are valid - form for user to fill
-*/
+// PUT - /tasks/put
+// Edits a specific task
+// task id + edits
+// assumes keys are valid - form for user to fill
 router.put(
   "/put",
   check("_id").exists().withMessage("Task id not provided"),
@@ -95,47 +99,58 @@ router.put(
 
     // 1. find inside database for matching id - if none return error message
     const id = req.body._id;
-    if (doomTasks.find((check) => check.id === id) === undefined) {
-      return res.send("Task id is invalid and task can not be editted");
+    const foundTask = await doomTasks.findOne({ _id: ObjectId(id) });
+    if (foundTask === undefined) {
+      return res.status(400).send({ error: "Task not found. Invalid task id" });
+    }
+    if (foundTask.userId !== req.authUser._id.toString()) {
+      return res.status(403).send({
+        error: "Logged in person does not have permission to edit task",
+      });
     }
 
-    // 2. check which keys are valid + which are empty
-    let updates = {};
+    // 2. Valid date body
+    const updates = {};
     if (
       req.body.taskType !== undefined &&
-      typeof req.body.taskType === "string"
+      typeof req.body.taskType !== "string"
     ) {
-      updates.taskType = req.body.taskType;
+      return res.status(400).send({ error: "taskType not string" });
     }
     if (
       req.body.duration !== undefined &&
-      typeof req.body.duration === "number"
+      typeof req.body.duration !== "number"
     ) {
-      updates.duration = req.body.duration;
+      return res.status(400).send({ error: "duration not number" });
     }
     if (
       req.body.completed !== undefined &&
-      typeof req.body.completed === "boolean"
+      typeof req.body.completed !== "boolean"
     ) {
-      updates.completed = req.body.completed;
+      return res.status(400).send({ error: "completed not boolean" });
     }
-    if (req.body.name !== undefined && typeof req.body.name === "string") {
-      updates.name = req.body.name;
+    if (req.body.name !== undefined && typeof req.body.name !== "string") {
+      return res.status(400).send({ error: "name not string" });
     }
-    if (req.body.course !== undefined && typeof req.body.course === "number") {
-      updates.course = req.body.course;
+    if (req.body.course !== undefined && typeof req.body.course !== "number") {
+      return res.status(400).send({ error: "course not number" });
     }
-    if (req.body.week !== undefined && typeof req.body.week === "number") {
-      updates.week = req.body.week;
+    if (req.body.week !== undefined && typeof req.body.week !== "number") {
+      return res.status(400).send({ error: "week not number" });
     }
-    if (req.body.term !== undefined && typeof req.body.term === "number") {
-      updates.term = req.body.term;
+    if (req.body.term !== undefined && typeof req.body.term !== "number") {
+      return res.status(400).send({ error: "term not number" });
     }
-    if (req.body.year !== undefined && typeof req.body.year === "number") {
-      updates.year = req.body.year;
+    if (req.body.year !== undefined && typeof req.body.year !== "number") {
+      return res.status(400).send({ error: "year not number" });
     }
-
-    await doomTasks.updateOne({ _id: ObjectId(id) }, { $set: updates });
+    if (req.body.userId !== undefined && typeof req.body.userId !== "string") {
+      return res.status(400).send({ error: "userId not string" });
+    }
+    // Remove _id so it doesn't get updated.
+    delete req.body._id;
+    // 3. Update the data
+    await doomTasks.updateOne({ _id: ObjectId(id) }, { $set: req.body });
     return res.send("Task Edited");
   }
 );
@@ -151,17 +166,18 @@ router.delete(
     if (!errors.isEmpty()) {
       return res.status(400).send(errors.array()[0].msg);
     }
-    const task = await doomTasks.find(req.query);
-    await doomTasks.deleteOne({ task });
+    const foundTask = await doomTasks.findOne({ _id: ObjectId(req.query._id) });
+    if (foundTask === undefined) {
+      return res.status(400).send({ error: "Task not found. Invalid task id" });
+    }
+    if (foundTask.userId !== req.authUser._id.toString()) {
+      return res
+        .status(403)
+        .send({ error: "Logged in person does not have permission to delete" });
+    }
+    await doomTasks.deleteOne({ _id: ObjectId(req.query._id) });
     res.send("Task Removed");
   }
 );
-
-// GET - /tasks/doomFactor
-// Calculates the doom factor (a numerical representation of how behind the user is on work)
-router.get("/doomFactor", async (req, res) => {
-  //// calculation....
-  return res.send(doomFactor);
-});
 
 export { router as default };
