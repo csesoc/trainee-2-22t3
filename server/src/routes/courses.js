@@ -111,6 +111,10 @@ router.post(
   }
 );
 
+// PUT - /courses/put
+// Edits a specific course
+// course id + edits
+// assumes keys are valid - form for user to fill
 router.put("/put", async (req, res) => {
   // Remove _id so it doesn't get updated.
   delete req.body._id;
@@ -121,31 +125,15 @@ router.put("/put", async (req, res) => {
   return res.send("course updated");
 });
 
+// DELETE - /courses/delete
+// Removes a specified course from the database
+// course id
 router.delete("/delete", async (req, res) => {
+  if (doomCourses.findOne({ _id: ObjectId(req.query._id) })) {
+    return res.status(400).send("course could not be found");
+  }
   await doomCourses.deleteOne({ _id: ObjectId(req.query._id) });
   return res.send("course deleted");
 });
-
-// task is the task object from the database
-// uni is the uni object from the database
-// Given a task and the uni it's from,
-function calculateTaskDate(task, uni) {
-  let foundTerm;
-  for (term of uni.terms) {
-    // Find the correct term
-    if (term.term === task.term) {
-      let endDate = new Date(term.endDate);
-      if (endDate.getFullYear() === task.year) {
-        foundTerm = term;
-      }
-      break;
-    }
-  }
-  if (foundTerm === undefined) {
-    return { error: "uni does not have required term" };
-  }
-  // Calculate date
-  return "TODO";
-}
 
 export { router as default };
