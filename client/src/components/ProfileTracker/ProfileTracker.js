@@ -23,7 +23,6 @@ const ProfileTracker = () => {
         console.log(dataTasks);
       });
   }, [updateTasks]);
-
   return (
     <>
       <div className="profile-tracker-container">

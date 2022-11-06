@@ -21,18 +21,26 @@ const ProgressDropdownListElement = ({
 }) => {
   const [updateCompletedStatus, setUpdateCompletedStatus] = useState();
   const handleToggleCompletedIcon = () => {
+    if (completed === true) {
+      completed = false;
+    } else {
+      completed = true;
+    }
     const requestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         _id: _id,
-        completed: completed === true ? false : true,
+        completed: completed,
       }),
     };
+    console.log(completed);
     console.log(updateCompletedStatus);
+
     fetch("http://localhost:5000/tasks/put", requestOptions)
       .then((response) => response.json())
       .catch((error) => console.log(error));
+
     runUpdateTasks();
   };
 

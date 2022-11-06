@@ -116,6 +116,7 @@ const ProgressBarWhole = ({ ProgressBarType, dataTasks, runUpdateTasks }) => {
                     dataTasks={completedTasks}
                     progressBarType={ProgressBarType}
                     dataTaskCompletedStatus={true}
+                    runUpdateTasks={runUpdateTasks}
                   />
                 )}
               </DialogContentText>

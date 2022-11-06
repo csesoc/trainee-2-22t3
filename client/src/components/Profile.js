@@ -1,10 +1,12 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import ProfilePageTitle from "./ProfilePageTitle/ProfilePageTitle";
 import ProfileTracker from "./ProfileTracker/ProfileTracker";
 import HowPrepared from "./HowPrepared/HowPrepared";
 import DoomFactor from "./DoomFactor/DoomFactor";
 import DoomBuddiesListButton from "./DoomBuddiesList/DoomBuddiesListButton";
 import "./ProfileStyling.css";
+import MiniDashboard from "./MiniDashboard/MiniDashboard";
 
 const Profile = () => {
   return (
@@ -15,6 +17,9 @@ const Profile = () => {
           <DoomBuddiesListButton />
         </div>
         <DoomFactor />
+        <div className="profile-mini-dashboard">
+          <MiniDashboard />
+        </div>
         <div className="profile-tracker-profile">
           <ProfileTracker />
         </div>
