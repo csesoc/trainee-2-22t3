@@ -65,6 +65,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/tracker/:id" element={<Profile />} />
           <Route path="/tracker" element={<Profile />} />
         </Routes>
       </Router>

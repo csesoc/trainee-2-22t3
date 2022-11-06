@@ -3,6 +3,7 @@ import ProgressBarWhole from "./ProgressBarWhole";
 import { Button, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import "./ProgressTrackerStyling.css";
+import { useParams } from "react-router-dom";
 
 const ProfileTracker = () => {
   const [dataTasks, setDataTasks] = useState([]);
@@ -12,16 +13,36 @@ const ProfileTracker = () => {
     setUpdateTasks(updateTasks + 1);
     return;
   };
+  const { id } = useParams();
 
   useEffect(() => {
-    fetch("http://localhost:5000/tasks/get")
-      .then((res) => {
-        return res.json();
+    if (id === undefined) {
+      fetch("http://localhost:5000/users/getTasks", {
+        credentials: "include",
       })
-      .then((dataTasks) => {
-        setDataTasks(dataTasks);
-        console.log(dataTasks);
-      });
+        .then((res) => {
+          return res.json();
+        })
+        .then((dataTasks) => {
+          setDataTasks(dataTasks);
+          console.log(dataTasks);
+        });
+    } else {
+      fetch("http://localhost:5000/tasks/get", {
+        credentials: "include",
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((dataTasks) => {
+          setDataTasks(
+            dataTasks.filter((task) => {
+              return task.userId === id;
+            })
+          );
+          console.log(dataTasks);
+        });
+    }
   }, [updateTasks]);
   return (
     <>
@@ -36,6 +57,7 @@ const ProfileTracker = () => {
             return task.taskType === "lecture";
           })}
           runUpdateTasks={runUpdateTasks}
+          userId={id}
         />
         <ProgressBarWhole
           ProgressBarType="Tutorials"
@@ -43,6 +65,7 @@ const ProfileTracker = () => {
             return task.taskType === "tutorial";
           })}
           runUpdateTasks={runUpdateTasks}
+          userId={id}
         />
         <ProgressBarWhole
           ProgressBarType="Homework"
@@ -50,6 +73,7 @@ const ProfileTracker = () => {
             return task.taskType === "homework";
           })}
           runUpdateTasks={runUpdateTasks}
+          userId={id}
         />
       </div>
     </>

@@ -33,6 +33,7 @@ const ProgressDropdownListElement = ({
         _id: _id,
         completed: completed,
       }),
+      credentials: "include",
     };
     console.log(completed);
     console.log(updateCompletedStatus);

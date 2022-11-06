@@ -24,7 +24,12 @@ import {
 
 import "./ProgressTrackerStyling.css";
 
-const ProgressBarWhole = ({ ProgressBarType, dataTasks, runUpdateTasks }) => {
+const ProgressBarWhole = ({
+  ProgressBarType,
+  dataTasks,
+  runUpdateTasks,
+  userId,
+}) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const handleClickDropdownOpen = () => {
     setDropdownOpen(true);
@@ -77,9 +82,14 @@ const ProgressBarWhole = ({ ProgressBarType, dataTasks, runUpdateTasks }) => {
           >
             {ProgressBarType}
           </Typography>
-          <ProgressBarDropdownButton onClick={handleClickDropdownOpen}>
-            <ArrowDropDownIcon style={{ color: "white" }} />
-          </ProgressBarDropdownButton>
+          {userId === undefined ? (
+            <ProgressBarDropdownButton onClick={handleClickDropdownOpen}>
+              <ArrowDropDownIcon style={{ color: "white" }} />
+            </ProgressBarDropdownButton>
+          ) : (
+            <></>
+          )}
+
           <Typography>
             {Math.floor((completedTasks.length / dataTasks.length) * 100)}%
           </Typography>
