@@ -1,5 +1,7 @@
+import { Typography } from "@mui/material";
 import React from "react";
 import { useEffect } from "react";
+import "./DoomFactor.css";
 
 const DoomFactor = () => {
   // useEffect(() => {
@@ -11,7 +13,16 @@ const DoomFactor = () => {
   // }, []);
   return (
     <div>
-      <div>Skull Image png</div>
+      <div className="doom-factor-skull">
+        <Typography
+          variant="h1"
+          sx={{
+            fontSize: 200,
+          }}
+        >
+          💀
+        </Typography>
+      </div>
     </div>
   );
 };

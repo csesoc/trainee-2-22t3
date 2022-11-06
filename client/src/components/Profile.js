@@ -3,6 +3,7 @@ import ProfilePageTitle from "./ProfilePageTitle/ProfilePageTitle";
 import ProfileTracker from "./ProfileTracker/ProfileTracker";
 import HowPrepared from "./HowPrepared/HowPrepared";
 import DoomFactor from "./DoomFactor/DoomFactor";
+import DoomBuddiesListButton from "./DoomBuddiesList/DoomBuddiesListButton";
 import "./ProfileStyling.css";
 
 const Profile = () => {
@@ -10,6 +11,9 @@ const Profile = () => {
     <>
       <div>
         <ProfilePageTitle />
+        <div className="profile-doom-buddies-list-button">
+          <DoomBuddiesListButton />
+        </div>
         <DoomFactor />
         <div className="profile-tracker-profile">
           <ProfileTracker />

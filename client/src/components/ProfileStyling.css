@@ -10,3 +10,9 @@ body {
 .how-prepared-profile {
   border: #ffffff 2px solid;
 }
+
+.profile-doom-buddies-list-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

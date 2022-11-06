@@ -6,6 +6,10 @@ const ProgressBar = ({ done }) => {
   const [ProgressBarPercentage, setProgressBarPercentage] = useState({});
   const [ProgressBarBackgroundStyling, setProgressBarBackgroundStyling] =
     useState({});
+  const [
+    ProgressBarPercentageBackgroundStyling,
+    setProgressBarPercentageBackgroundStyling,
+  ] = useState({});
 
   // useEffect to ensure infinite looping does NOT occur
   useEffect(() => {
@@ -20,12 +24,22 @@ const ProgressBar = ({ done }) => {
         backgroundColor: `rgba(150,150, 172, ${(100 - done) / 100})`,
       };
       setProgressBarBackgroundStyling(updateProgressBarBackgroundStyling);
+      const updateProgressBarPercentageBackgroundStyling = {
+        width: `${done}%`,
+      };
+      setProgressBarPercentageBackgroundStyling(
+        updateProgressBarPercentageBackgroundStyling
+      );
     }, 0);
   }, [done]);
 
   return (
     <>
       <div className="progress" style={ProgressBarBackgroundStyling}>
+        <div
+          className="progress-done-background"
+          style={ProgressBarPercentageBackgroundStyling}
+        ></div>
         <div className="progress-done" style={ProgressBarPercentage}>
           {/* {done}% */}
         </div>
