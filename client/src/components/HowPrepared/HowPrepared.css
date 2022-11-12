@@ -1,0 +1,32 @@
+.how-prepared {
+  margin: 1rem;
+  border: #ffffff 1px solid;
+  border-radius: 0.4rem;
+  /* background-color: #0f131a; */
+  background-color: rgb(96, 99, 106);
+}
+
+.how-prepared-title {
+  text-align: center;
+}
+
+.how-prepared-rating {
+  border: 1px #ffffff solid;
+  justify-content: center;
+}
+
+.how-prepared-selector {
+  display: flex;
+  justify-content: center;
+}
+
+.how-prepared-dropdown-arrow {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+}
+
+@media (max-width: 370px) {
+  .how-prepared-rating-selector {
+  }
+}

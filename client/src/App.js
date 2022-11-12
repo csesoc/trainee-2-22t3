@@ -1,8 +1,9 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MainPage from "./components/main/MainPage";
+import LandingPage from "./components/LandingPage/LandingPage";
 import RegisterPage from "./components/RegisterLogin/RegisterPage";
 import LoginPage from "./components/RegisterLogin/LoginPage";
+import Profile from "./components/Profile";
 import {
   experimental_sx as sx,
   ThemeProvider,
@@ -61,10 +62,11 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/profile/:id" element={<ProfilePage view={false} />} />
+          <Route path="/tracker/:id" element={<Profile />} />
+          <Route path="/tracker" element={<Profile />} />
         </Routes>
       </Router>
     </ThemeProvider>

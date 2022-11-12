@@ -41,16 +41,16 @@ router.post(
       });
     }
     // Check that coursename is unique
-    const findCourse = await doomCourses.find({
+    const findCourse = await doomCourses.findOne({
       courseName: req.body.courseName,
     });
-    if (findCourse !== undefined) {
+    if (findCourse !== null) {
       return res.status(400).send({ error: "Course name already exists!" });
     }
 
     // Check that uni exists
-    const uni = doomUni.findOne({ name: req.body.uni });
-    if (uni === undefined) {
+    const uni = await doomUni.findOne({ name: req.body.uni });
+    if (uni === null) {
       return res.status(400).send({ error: "Given uni does not exist" });
     }
 
