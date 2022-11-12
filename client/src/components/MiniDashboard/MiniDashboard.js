@@ -28,31 +28,37 @@ const MiniDashboard = ({ dataTasks }) => {
 
   return (
     <div>
-      <div>
-        <Divider className="week-divider" sx={{ mt: 0 }}>
-          WEEK {currentWeek}
-          <br></br>
-          <Typography className="week-subtext">
-            {startDate} - {endDate}
-          </Typography>
-        </Divider>
-      </div>
-      <div>
-        <Box className="week-box">
-          <Typography className="weekly-box-text">
-            Tasks done:
-            <span className="weekly-stat-counter">{getTaskStats("done")}</span>
-          </Typography>
-          <Divider className="weekly-box-divider"></Divider>
-          <Typography className="weekly-box-text">
-            Tasks left:
-            <span className="weekly-stat-counter">{getTaskStats("left")}</span>
-          </Typography>
-          <Divider className="weekly-box-divider"></Divider>
-          <Typography className="weekly-box-text">Weekly doom:</Typography>
-          <Divider className="weekly-box-divider"></Divider>
-          <Typography className="weekly-box-text">Improvement:</Typography>
-        </Box>
+      <div className="weekly-stats">
+        <div>
+          <Divider className="week-divider" sx={{ mt: 0 }}>
+            WEEK {currentWeek}
+            <br></br>
+            <Typography className="week-subtext">
+              {startDate} - {endDate}
+            </Typography>
+          </Divider>
+        </div>
+        <div>
+          <Box className="week-box">
+            <Typography className="weekly-box-text">
+              Tasks done:
+              <span className="weekly-stat-counter">
+                {getTaskStats("done")}
+              </span>
+            </Typography>
+            <Divider className="weekly-box-divider"></Divider>
+            <Typography className="weekly-box-text">
+              Tasks left:
+              <span className="weekly-stat-counter">
+                {getTaskStats("left")}
+              </span>
+            </Typography>
+            <Divider className="weekly-box-divider"></Divider>
+            <Typography className="weekly-box-text">Weekly doom:</Typography>
+            <Divider className="weekly-box-divider"></Divider>
+            <Typography className="weekly-box-text">Improvement:</Typography>
+          </Box>
+        </div>
       </div>
     </div>
   );
