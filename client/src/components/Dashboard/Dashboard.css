@@ -255,18 +255,26 @@ body {
 }
 
 .dialog-box {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-column-gap: 15px;
+}
+
+.text-field-box {
+  max-width: 150px;
+}
+
+.css-7foc6i-MuiFormControl-root-MuiTextField-root {
+  margin-top: 0px !important;
 }
 
 .select-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
 }
 
-.select-box-text {
+.dialog-box-text {
   align-self: center !important;
-  text-align: center !important;
+  text-align: left !important;
 }
 
 .css-1ws8119-MuiDivider-root {
