@@ -26,6 +26,11 @@
 }
 
 .progress-bar {
+  transition: all 1s;
+}
+
+.progress-bar:hover {
+  scale: 1.1;
 }
 
 .dialog-box {
@@ -69,4 +74,16 @@
   text-align: center;
   align-items: center;
   font-weight: bold;
+}
+
+.progress-bar-percentage {
+  transition: all 1s;
+  font-size: 20px !important;
+  font-weight: bold !important;
+}
+
+.progress-bar-label {
+  transition: all 1s;
+  font-size: 20px !important;
+  font-weight: bold !important;
 }

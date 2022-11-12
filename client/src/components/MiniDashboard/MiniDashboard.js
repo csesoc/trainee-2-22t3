@@ -1,9 +1,18 @@
 import React from "react";
 import { useState } from "react";
 import { Typography, Divider, Box } from "@mui/material";
+import "./MiniDashboard.css";
+import dayjs from "dayjs";
 
-const MiniDashboard = () => {
-  const [dataTasks, setDataTasks] = useState([]);
+const MiniDashboard = ({ dataTasks }) => {
+  const [startDate, setStartDate] = useState(
+    dayjs(new Date()).format("DD/MM/YYYY")
+  );
+  const [endDate, setEndDate] = useState(
+    dayjs(new Date()).format("DD/MM/YYYY")
+  );
+  let currentWeek = 7;
+
   const getTaskStats = (str) => {
     let num = 0;
     for (let i in dataTasks) {
@@ -19,6 +28,15 @@ const MiniDashboard = () => {
 
   return (
     <div>
+      <div>
+        <Divider className="week-divider" sx={{ mt: 0 }}>
+          WEEK {currentWeek}
+          <br></br>
+          <Typography className="week-subtext">
+            {startDate} - {endDate}
+          </Typography>
+        </Divider>
+      </div>
       <div>
         <Box className="week-box">
           <Typography className="weekly-box-text">

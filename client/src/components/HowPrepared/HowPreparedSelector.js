@@ -6,6 +6,7 @@ import MrIncredibleUncanny from "./MrIncredibleUncannySkull.webp";
 import Box from "@mui/material/Box";
 import { IconButton } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import "./HowPrepared.css";
 
 const labels = {
   0.5: "Very Slightly Doomed",
@@ -67,6 +68,7 @@ const HowPreparedSelector = () => {
             onChangeActive={(event, newHover) => {
               setHover(newHover);
             }}
+            className="how-prepared-rating-selector"
           />
         </div>
 

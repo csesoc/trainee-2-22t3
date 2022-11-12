@@ -5,45 +5,7 @@ import { styled } from "@mui/system";
 import "./ProgressTrackerStyling.css";
 import { useParams } from "react-router-dom";
 
-const ProfileTracker = () => {
-  const [dataTasks, setDataTasks] = useState([]);
-  const [updateTasks, setUpdateTasks] = useState(0);
-
-  const runUpdateTasks = () => {
-    setUpdateTasks(updateTasks + 1);
-    return;
-  };
-  const { id } = useParams();
-
-  useEffect(() => {
-    if (id === undefined) {
-      fetch("http://localhost:5000/users/getTasks", {
-        credentials: "include",
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((dataTasks) => {
-          setDataTasks(dataTasks);
-          console.log(dataTasks);
-        });
-    } else {
-      fetch("http://localhost:5000/tasks/get", {
-        credentials: "include",
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((dataTasks) => {
-          setDataTasks(
-            dataTasks.filter((task) => {
-              return task.userId === id;
-            })
-          );
-          console.log(dataTasks);
-        });
-    }
-  }, [updateTasks]);
+const ProfileTracker = ({ runUpdateTasks, dataTasks, id }) => {
   return (
     <>
       <div className="profile-tracker-container">

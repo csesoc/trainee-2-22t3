@@ -35,14 +35,10 @@ const ProgressDropdownListElement = ({
       }),
       credentials: "include",
     };
-    console.log(completed);
-    console.log(updateCompletedStatus);
 
     fetch("http://localhost:5000/tasks/put", requestOptions)
-      .then((response) => response.json())
+      .then(() => runUpdateTasks())
       .catch((error) => console.log(error));
-
-    runUpdateTasks();
   };
 
   let toggleCompletedIcon;

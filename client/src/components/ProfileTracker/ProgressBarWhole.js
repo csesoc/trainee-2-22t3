@@ -66,20 +66,14 @@ const ProgressBarWhole = ({
     <>
       <div className="progress-bar-whole">
         <div
-          className="progress-bar-label"
+          className="progress-bar-header"
           style={{
             display: "flex",
             alignItems: "center",
             flexWrap: "wrap",
           }} // positions button next to label name
         >
-          <Typography
-            variant="h6"
-            style={{
-              fontWeight: "bold",
-              fontSize: "1rem",
-            }}
-          >
+          <Typography variant="h6" className="progress-bar-label">
             {ProgressBarType}
           </Typography>
           {userId === undefined ? (
@@ -90,7 +84,7 @@ const ProgressBarWhole = ({
             <></>
           )}
 
-          <Typography>
+          <Typography className="progress-bar-percentage">
             {Math.floor((completedTasks.length / dataTasks.length) * 100)}%
           </Typography>
           <Dialog

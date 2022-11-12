@@ -16,8 +16,6 @@ const ProgressDropdownList = ({
   useEffect(() => {
     setProgressDropdownList(dataTasks);
   }, [dataTasks]);
-  console.log("ProgressDropdownList: ");
-  console.log(ProgressDropdownList);
 
   // loop through each element in given array and return component
   const showProgressDropdownList = ProgressDropdownList.map((ListElement) => {

@@ -8,26 +8,12 @@ import DoomBuddiesListButton from "./DoomBuddiesList/DoomBuddiesListButton";
 import "./ProfileStyling.css";
 import MiniDashboard from "./MiniDashboard/MiniDashboard";
 import { useParams } from "react-router-dom";
+import ProfileWrapper from "./ProfileWrapper";
 
 const Profile = () => {
   return (
     <>
-      <div>
-        <ProfilePageTitle />
-        <div className="profile-doom-buddies-list-button">
-          <DoomBuddiesListButton />
-        </div>
-        <DoomFactor />
-        <div className="profile-mini-dashboard">
-          <MiniDashboard />
-        </div>
-        <div className="profile-tracker-profile">
-          <ProfileTracker />
-        </div>
-        <div className="how-prepared-profile">
-          <HowPrepared />
-        </div>
-      </div>
+      <ProfileWrapper className="profile-wrapper" />
     </>
   );
 };
