@@ -36,7 +36,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(422).send({
         error:
-          "Task can not be added due to the following issues: " +
+          "Course can not be added due to the following issues: " +
           errors.array()[0].msg,
       });
     }
