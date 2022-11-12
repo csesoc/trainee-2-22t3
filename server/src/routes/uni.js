@@ -65,7 +65,7 @@ router.put("/put", async (req, res) => {
   return res.send("uni updated");
 });
 
-// POST - /uni/post
+// POST - /uni/addTerm
 // Adds a term to the uni
 // uni id +
 // term : {
