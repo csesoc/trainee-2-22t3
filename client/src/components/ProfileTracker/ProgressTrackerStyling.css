@@ -1,0 +1,89 @@
+/* Profile Tracker */
+.profile-tracker-container {
+  display: flex;
+  flex-direction: column;
+  width: 60vm;
+  border: #ffffff 1px solid;
+  height: auto;
+  margin: 1rem;
+  padding: 3rem;
+  border-radius: 0.4rem;
+  background-color: #0f131a;
+  justify-content: center;
+}
+
+#profile-tracker-title {
+  color: #ffffff;
+  border: 2px #ffffff solid;
+}
+
+/* Progress Bar Components */
+.progress-bar-whole {
+  margin: 10px;
+}
+
+.progress-bar-label {
+}
+
+.progress-bar {
+  transition: all 1s;
+}
+
+.progress-bar:hover {
+  scale: 1.1;
+}
+
+.dialog-box {
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.completed-tasks-dropdown {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.progress-dropdown-list {
+  margin: 0px 10px;
+}
+
+.progress-dropdown-list-box {
+  width: 400px;
+}
+
+.progress-dropdown-list-title {
+  font-weight: bold !important;
+}
+
+.progress-dropdown-list-item {
+  border-radius: 20px !important;
+}
+
+.progress-dropdown-list-item:hover {
+  scale: 1.05;
+}
+
+.divider {
+  background-color: #36393f;
+  border-radius: 30px;
+  height: 30px;
+  text-align: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.progress-bar-percentage {
+  transition: all 1s;
+  font-size: 20px !important;
+  font-weight: bold !important;
+}
+
+.progress-bar-label {
+  transition: all 1s;
+  font-size: 20px !important;
+  font-weight: bold !important;
+}

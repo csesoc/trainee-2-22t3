@@ -104,11 +104,9 @@ router.put(
       return res.status(400).send({ error: "Task not found. Invalid task id" });
     }
     if (foundTask.userId !== req.authUser._id.toString()) {
-      return res
-        .status(403)
-        .send({
-          error: "Logged in person does not have permission to edit task",
-        });
+      return res.status(403).send({
+        error: "Logged in person does not have permission to edit task",
+      });
     }
 
     // 2. Valid date body
