@@ -1,5 +1,6 @@
-import { TextField, InputAdornment, IconButton, Menu, MenuItem } from "@mui/material";
+import { TextField, InputAdornment, IconButton, Menu, MenuItem, Popper, ListItemIcon, ListItemText } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
+import PersonIcon from '@mui/icons-material/Person';
 import { useState } from "react";
 
 export default function ProfileSearchBar() {
@@ -28,12 +29,6 @@ export default function ProfileSearchBar() {
         }
         else {
             setAnchorEl(e.currentTarget);
-            // for (const user of searchResults) {
-            //     
-            //     if (user.username.includes(e.target.value)) {
-            //         setFilteredResults([...filteredResults, user.username]);
-            //     }
-            // }
             setFilteredResults(searchResults.filter((user) => { return user.username.includes(e.target.value) }))
         }
 
@@ -58,11 +53,23 @@ export default function ProfileSearchBar() {
 
                 }}
             />
-            <Menu open={searchInput ? true : false} anchorEl={anchorEl}>
-                {/* Menu item is a popover/modal so it won't let you click anywhere else besides options
-                Changing background colour changes colour of entire window */}
-                {filteredResults.map((user) => <MenuItem key={user.id} >{user.username}</MenuItem>)}
-            </Menu>
+            {/* Menu item is a popover/modal so it won't let you click anywhere else besides options
+                Changing background colour changes colour of entire window 
+                */}
+            {/* Use clickawayevent listener to make popper disappear upon clicking elsewhere on screen */}
+            <Popper open={searchInput ? true : false} anchorEl={anchorEl}>
+                {filteredResults.map((user) => {
+                    return (
+                        <MenuItem key={user.id} >
+                            {/* Default shows person icon but later will show profile image if available */}
+                            <ListItemIcon>
+                                <PersonIcon color="info"></PersonIcon>
+                            </ListItemIcon>
+                            <ListItemText>{user.username}</ListItemText>
+                        </MenuItem>
+                    )
+                })}
+            </Popper>
             <p>{console.log(filteredResults)}</p>
         </form>
     )
