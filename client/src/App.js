@@ -1,10 +1,14 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MainPage from "./components/main/MainPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LandingPage from "./components/LandingPage/LandingPage";
 import RegisterPage from "./components/RegisterLogin/RegisterPage";
 import LoginPage from "./components/RegisterLogin/LoginPage";
-import { experimental_sx as sx, ThemeProvider, createTheme } from "@mui/material/styles";
-
+import Profile from "./components/Profile";
+import {
+  experimental_sx as sx,
+  ThemeProvider,
+  createTheme,
+} from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
@@ -20,12 +24,12 @@ const theme = createTheme({
     },
     info: {
       main: "#ffffff",
-    }
+    },
   },
   typography: {
     allVariants: {
       color: "#ffffff",
-    }
+    },
   },
   components: {
     MuiInputBase: {
@@ -36,9 +40,8 @@ const theme = createTheme({
           "&.Mui-focused": {
             backgroundColor: "#0e0e10",
           },
-
         },
-      }
+      },
     },
     MuiTextField: {
       styleOverrides: {
@@ -46,22 +49,24 @@ const theme = createTheme({
           "& .MuiOutlinedInput-root.Mui-focused": {
             "& > fieldset": {
               borderColor: "#5865f2",
-            }
-          }
-        })
-      }
+            },
+          },
+        }),
+      },
     },
-  }
-})
+  },
+});
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/tracker/:id" element={<Profile />} />
+          <Route path="/tracker" element={<Profile />} />
         </Routes>
       </Router>
     </ThemeProvider>

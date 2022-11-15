@@ -1,0 +1,76 @@
+/* body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  background-color: #0e0e10;
+} */
+
+.progress {
+  position: relative;
+  background-color: lightgrey;
+  border-radius: 15px;
+  height: 30px;
+  transition: 1s ease;
+}
+
+.progress-done {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background-color: red;
+  /* box-shadow: 0 2px 5px red; */
+  border-radius: 15px;
+
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: blur(0px);
+
+  opacity: 0;
+  width: 0;
+  transition: 1s ease;
+}
+
+.progress-done-background {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ffffff,
+    #e3e3e3,
+    #bcbcbc,
+    #858484,
+    #6d6d6d,
+    #4f4f4f,
+    #222,
+    #111,
+    #0e0e10
+  );
+  /* display: flex;
+  align-items: center; */
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(0px);
+  -webkit-filter: blur(5px);
+  width: calc(100%);
+  height: calc(100%);
+  animation: glowing-progress-done-background 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 15px;
+  transition: 1s ease;
+}
+
+@keyframes glowing-progress-done-background {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
