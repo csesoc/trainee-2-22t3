@@ -32,7 +32,6 @@ const MiniDashboard = ({ dataTasks }) => {
         <div>
           <Divider className="week-divider" sx={{ mt: 0 }}>
             WEEK {currentWeek}
-            <br></br>
             <Typography className="week-subtext">
               {startDate} - {endDate}
             </Typography>

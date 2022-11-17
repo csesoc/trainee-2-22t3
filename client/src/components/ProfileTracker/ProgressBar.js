@@ -1,3 +1,4 @@
+import { width } from "@mui/system";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import "./ProgressBarStyling.css";
@@ -16,7 +17,7 @@ const ProgressBar = ({ done }) => {
     setTimeout(() => {
       const updateProgressBarPercentage = {
         opacity: 1,
-        width: `${done}%`,
+        width: isNaN(done) === true ? "0%" : `${done}%`,
         backgroundColor: `rgb(255, 0, 0)`,
       };
       setProgressBarPercentage(updateProgressBarPercentage);

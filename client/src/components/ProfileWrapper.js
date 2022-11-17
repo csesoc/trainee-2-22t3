@@ -8,6 +8,7 @@ import DoomBuddiesListButton from "./DoomBuddiesList/DoomBuddiesListButton";
 import "./ProfileStyling.css";
 import MiniDashboard from "./MiniDashboard/MiniDashboard";
 import { useParams } from "react-router-dom";
+import { Divider } from "@mui/material";
 
 const ProfileWrapper = () => {
   const [dataTasks, setDataTasks] = useState([]);
@@ -57,17 +58,22 @@ const ProfileWrapper = () => {
         <DoomBuddiesListButton />
       </div>
       <DoomFactor />
-      <div className="profile-mini-dashboard">
-        <MiniDashboard dataTasks={dataTasks} />
+      <Divider className="profile-section-divider">TRACKER</Divider>
+      <div className="profile-mini-dashboard-tracker">
+        <div className="profile-mini-dashboard">
+          <MiniDashboard dataTasks={dataTasks} />
+        </div>
+        <div className="profile-tracker-profile">
+          <ProfileTracker
+            runUpdateTasks={runUpdateTasks}
+            dataTasks={dataTasks}
+            id={id}
+            updateTasks={updateTasks}
+          />
+        </div>
       </div>
-      <div className="profile-tracker-profile">
-        <ProfileTracker
-          runUpdateTasks={runUpdateTasks}
-          dataTasks={dataTasks}
-          id={id}
-          updateTasks={updateTasks}
-        />
-      </div>
+
+      <Divider className="profile-section-divider" />
       <div className="how-prepared-profile">
         <HowPrepared />
       </div>
