@@ -5,15 +5,15 @@ import { Link } from "react-router-dom";
 export default function LandingPage() {
   return (
     <>
-      <div class="landing-container">
+      <div className="landing-container">
         <img 
           src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/microsoft/310/skull_1f480.png" 
           alt="skull"
-          class="landing-skull"
+          className="landing-skull"
         ></img>
         <Typography 
           variant="h2" 
-          class="landing-title" 
+          className="landing-title" 
           align="center" 
           sx={{ fontWeight: "bold" }}
         >
@@ -23,7 +23,7 @@ export default function LandingPage() {
           <Button 
             variant="outlined"
             type="submit"
-            class="landing-button-1"
+            className="landing-button-1"
             sx={{ fontWeight: "normal" }}
           >
             Login
@@ -32,18 +32,18 @@ export default function LandingPage() {
         <Divider 
           variant="middle" 
           style={{width:'100%'}} 
-          class="login-divider"
+          className="login-divider"
         />
         <Typography 
           variant="h2" 
-          class="landing-text" 
+          className="landing-text" 
         >
           Don't have an account?
         </Typography>
         <Link to="/register"> 
           <Button 
             href="#text-buttons"
-            class="landing-button-2"
+            className="landing-button-2"
             sx={{ fontWeight: "normal" }}
             style={{textTransform: 'none'}}
           >
