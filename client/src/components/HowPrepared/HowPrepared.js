@@ -8,8 +8,14 @@ const HowPrepared = () => {
   return (
     <>
       <div className="how-prepared">
-        <Typography variant="h5" className="how-prepared-title">
-          How doomed are you feeling today?
+        <Typography
+          className="how-prepared-title"
+          sx={{
+            fontSize: "30px",
+            fontWeight: "bold",
+          }}
+        >
+          DAILY CHECK IN
         </Typography>
         <HowPreparedSelector />
         <HowPreparedShare />

@@ -91,7 +91,9 @@ const ProgressBarWhole = ({
             {dataTasks.length === 0 ? (
               <>Task List Empty</>
             ) : (
-              Math.floor((completedTasks.length / dataTasks.length) * 100)
+              <>
+                {Math.floor((completedTasks.length / dataTasks.length) * 100)}%
+              </>
             )}
           </Typography>
           <Dialog

@@ -9,7 +9,7 @@ body {
 }
 
 .how-prepared-profile {
-  border: #ffffff 2px solid;
+  /* border: #ffffff 2px solid; */
 }
 
 .profile-doom-buddies-list-button {
@@ -30,6 +30,7 @@ body {
   align-items: center;
   font-weight: bold;
   width: calc(100% - 40px);
+  margin: auto !important;
 }
 
 .profile-mini-dashboard-tracker {

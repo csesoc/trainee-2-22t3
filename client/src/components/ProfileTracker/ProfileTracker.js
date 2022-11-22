@@ -10,7 +10,7 @@ const ProfileTracker = ({ runUpdateTasks, dataTasks, id }) => {
   return (
     <>
       <div className="profile-tracker-container">
-        <Divider id="profile-tracker-title">Progress</Divider>
+        <Divider id="profile-tracker-title">PROGRESS</Divider>
         {/* Filter by taskType */}
         <ProgressBarWhole
           ProgressBarType="Lectures"

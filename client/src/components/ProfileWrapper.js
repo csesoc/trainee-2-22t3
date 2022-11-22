@@ -58,7 +58,7 @@ const ProfileWrapper = () => {
         <DoomBuddiesListButton />
       </div>
       <DoomFactor />
-      <Divider className="profile-section-divider">TRACKER</Divider>
+      <Divider className="profile-section-divider">DOOM TRACKER</Divider>
       <div className="profile-mini-dashboard-tracker">
         <div className="profile-mini-dashboard">
           <MiniDashboard dataTasks={dataTasks} />
@@ -73,7 +73,7 @@ const ProfileWrapper = () => {
         </div>
       </div>
 
-      <Divider className="profile-section-divider" />
+      <Divider className="profile-section-divider">DOOM SELECTOR</Divider>
       <div className="how-prepared-profile">
         <HowPrepared />
       </div>
