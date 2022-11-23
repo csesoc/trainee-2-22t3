@@ -50,9 +50,21 @@
   position: absolute;
   right: 0px;
   bottom: 0px;
+  color: white !important;
+  transition: all 1s;
+}
+
+.how-prepared-dropdown-arrow:hover {
+  scale: 1.05;
+  color: rgb(55, 55, 172) !important;
 }
 
 @media (max-width: 370px) {
   .how-prepared-rating-selector {
   }
+}
+
+.how-prepared-share-dialog-content {
+  display: flex;
+  flex-direction: column;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Rating, Typography } from "@mui/material";
+import { Button, Rating, Typography } from "@mui/material";
 import BlackSkullsvg from "./BlackSkullsvg";
 import WhiteSkullsvg from "./WhiteSkullsvg";
 import MrIncredibleUncanny from "./MrIncredibleUncannySkull.webp";
@@ -9,6 +9,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "./HowPrepared.css";
 
 const labels = {
+  null: "hello",
   0.5: "very slightly doomed",
   1: "Very Slightly Doomed",
   1.5: "Almost Doomed",
@@ -37,6 +38,9 @@ const HowPreparedSelector = () => {
           max={1}
           icon={<img src={MrIncredibleUncanny}></img>}
           emptyIcon={<img src={MrIncredibleUncanny}></img>}
+          onChange={() => {
+            console.log("Hello");
+          }}
         />
 
         <Typography variant="h6">I'm DOOOMED</Typography>
@@ -77,7 +81,7 @@ const HowPreparedSelector = () => {
             <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
           )}
         </Typography>
-
+        <Button variant="contained">Submit</Button>
         <IconButton
           className="how-prepared-dropdown-arrow"
           onClick={handleClickDropdownSelector}
