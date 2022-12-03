@@ -1,19 +1,37 @@
-import { TextField, InputAdornment, IconButton, Menu, MenuItem, Popper, ListItemIcon, ListItemText } from "@mui/material";
+import { TextField, InputAdornment, IconButton, Menu, MenuItem, Popper, ListItemIcon, ListItemText, ClickAwayListener } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileSearchBar() {
     const [searchInput, setSearchInput] = useState("");
-    // Temporary search results for testing
-    const [searchResults, setSearchResults] = useState([
-        { "id": 1, "username": "andrew" },
-        { "id": 2, "username": "henry" },
-        { "id": 3, "username": "eklavya" },
-        { "id": 4, "username": "ashley" },
-        { "id": 5, "username": "brian" },]);
+    const [searchResults, setSearchResults] = useState([]);
     const [filteredResults, setFilteredResults] = useState([]);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [openPopper, setOpenPopper] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const getUsers = async () => {
+            const response = await fetch("http://localhost:5000/users/getUsers", {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json",
+                },
+                credentials: "include",
+            });
+            const users = await response.json();
+            setSearchResults(users);
+        }
+        getUsers();
+    }, []);
+
+    const openUserTracker = (user) => {
+        // Open the page with the user's id
+        console.log(user);
+        navigate(`/tracker/${user._id}`);
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -22,55 +40,50 @@ export default function ProfileSearchBar() {
     }
 
     const handleChange = (e) => {
-        console.log(e.target.value);
         setSearchInput(e.target.value);
-        if (e.target.value === "") {
-            setAnchorEl(null);
-        }
-        else {
-            setAnchorEl(e.currentTarget);
-            setFilteredResults(searchResults.filter((user) => { return user.username.includes(e.target.value) }))
-        }
+        console.log(e.target.value);
 
-        // Display autocomplete with dropdown menu based on current value of searchInput
-        // Menu with .map() of menu items which have been filtered based on searchInput (might have to use e.target.value)
-        // Later filter from /users/get request of all users but for now filter based on searchResults local state variable
-
-        // If MenuItem is selected, then it should navigate to page "http://localhost:3000/users/$username" i.e. that user's profile page
-        // Where $username refers to the username of the person clicked on, 
+        setFilteredResults(searchResults.filter((user) => {
+            return user.username.startsWith(e.target.value);
+        }))
+        // If MenuItem is selected, then it should navigate to page "http://localhost:3000/tracker/$id" i.e. that user's profile page
+        // Where $id refers to the id of the person clicked on, 
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <TextField variant="outlined" autoComplete="off" onChange={handleChange}
-                InputProps={{
-                    startAdornment:
-                        <InputAdornment position="start">
-                            <IconButton onClick={handleSubmit} edge="start" color="info">
-                                <SearchIcon />
-                            </IconButton>
-                        </InputAdornment>
-
+        <ClickAwayListener onClickAway={() => {
+            setOpenPopper(false)
+            setAnchorEl(null)
+        }}>
+            <form onSubmit={handleSubmit}>
+                <TextField variant="outlined" autoComplete="off" onChange={handleChange} onClick={(e) => {
+                    setAnchorEl(e.currentTarget)
+                    setOpenPopper(true)
                 }}
-            />
-            {/* Menu item is a popover/modal so it won't let you click anywhere else besides options
-                Changing background colour changes colour of entire window 
-                */}
-            {/* Use clickawayevent listener to make popper disappear upon clicking elsewhere on screen */}
-            <Popper open={searchInput ? true : false} anchorEl={anchorEl}>
-                {filteredResults.map((user) => {
-                    return (
-                        <MenuItem key={user.id} >
-                            {/* Default shows person icon but later will show profile image if available */}
-                            <ListItemIcon>
-                                <PersonIcon color="info"></PersonIcon>
-                            </ListItemIcon>
-                            <ListItemText>{user.username}</ListItemText>
-                        </MenuItem>
-                    )
-                })}
-            </Popper>
-            <p>{console.log(filteredResults)}</p>
-        </form>
+                    InputProps={{
+                        startAdornment:
+                            <InputAdornment position="start">
+                                <IconButton onClick={handleSubmit} edge="start" color="info">
+                                    <SearchIcon />
+                                </IconButton>
+                            </InputAdornment>
+
+                    }}
+                />
+                <Popper open={openPopper} anchorEl={anchorEl} placement="bottom-start">
+                    {filteredResults.map((user) => {
+                        return (
+                            <MenuItem key={user._id} onClick={() => openUserTracker(user)} >
+                                {/* Default shows person icon but later will show profile image if available */}
+                                <ListItemIcon>
+                                    <PersonIcon color="info"></PersonIcon>
+                                </ListItemIcon>
+                                <ListItemText>{user.username}</ListItemText>
+                            </MenuItem>
+                        )
+                    })}
+                </Popper>
+            </form>
+        </ClickAwayListener>
     )
 }
