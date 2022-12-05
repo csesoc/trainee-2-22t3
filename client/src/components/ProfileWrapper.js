@@ -53,7 +53,7 @@ const ProfileWrapper = () => {
 
   return (
     <div>
-      <ProfilePageTitle />
+      <ProfilePageTitle className="profile-page-title" />
       <div className="profile-doom-buddies-list-button">
         <DoomBuddiesListButton />
       </div>
