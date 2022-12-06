@@ -8,7 +8,6 @@ import "./Friends.css";
 import Popup from "./FriendsPopUp";
 import { useState, useEffect } from "react";
 
-
 export default function FriendList() {
   const [friends, setFriends] = useState([]);
   const [popup, setPopup] = useState([false]);
@@ -32,37 +31,31 @@ export default function FriendList() {
   const showList = friends.length ? (
     friends.map(friendObj => {
       return (
-        <div className="friend-box" key={friendObj._id}>
-          {/* <Typography 
-            variant="h2" 
-            className="friend-text" 
-          >
-            {friendObj.username};
-          </Typography> */}
+        <div className="friend-box" sx={{p: 4}} key={friendObj._id}>
+          <img 
+            src={friendObj.profileImgUrl} 
+            alt="profile"
+            className="profile-image"
+          ></img>
           <Link 
-            // href="#" 
             underline="hover"
             component="button"
             variant="h2" 
             className="friend-text" 
             onClick={() => setPopup(true)}  
           >
-            {friendObj.username};
-          </Link>  
-          <img 
-            src={friendObj.profileImgUrl} 
-            alt="profileImg"
-            className="profile-image"
-          ></img>          
+            {friendObj.username}
+          </Link>            
         </div>
       );
     })
   ) : (
     <Typography 
       variant="h2" 
-      className="friend-text" 
+      className="u-lonely-ass"
+      align="center"  
     >
-      Looking a bit lonely here. Go make some friends!
+      Looking a bit lonely here. Go make some friends! 🐸
     </Typography>  
   )
     
@@ -77,7 +70,7 @@ export default function FriendList() {
         >
           💀 DOOM BUDDIES 💀
         </Typography>
-        <Box className="list-box">
+        <Box className="list-box" sx={{p: 4}}>
           {showList}
         </Box>
         <Popup trigger={popup} setTrigger={setPopup}>

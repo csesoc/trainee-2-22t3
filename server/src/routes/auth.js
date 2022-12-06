@@ -59,6 +59,7 @@ router.post("/register", async (req, res) => {
     profileImg: "",
     tasks: [],
     courses: [],
+    friends: [],
   };
 
   await doomUsers.insertOne(user);

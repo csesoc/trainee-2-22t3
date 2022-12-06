@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 
-export function Popup(props) {
+function Popup(props) {
   return (props.trigger) ? (
     <div className="popup">
       <div className="popup-inner">
@@ -11,3 +11,5 @@ export function Popup(props) {
     </div>
   ) : "";
 }
+
+export default Popup;

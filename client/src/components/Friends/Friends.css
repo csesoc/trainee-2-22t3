@@ -11,7 +11,6 @@ body {
   border-radius: 0.4rem;
   padding: 3rem;
   padding-top: 36px;
-  background-color: #0f131a;
   color: #ffffff;
 }
 
@@ -21,10 +20,31 @@ body {
   margin-top: 0px;
 }
 
-.normal-text {
+.profile-name {
+  border-radius: 50%;
+}
+
+.friend-text {
   font-size: 20px !important;
   font-weight: bold !important;
   margin-left: 10px !important;
   margin-top: 8px !important;
   margin-bottom: 8px !important;
+  color: white !important;
+}
+
+.u-lonely-ass {
+  font-size: 25px !important;
+  margin-left: 10px !important;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+  color: white !important;
+}
+
+.list-box {
+  background-color: #262626;
+}
+
+.friend-box {
+  background-color: #878787;
 }
