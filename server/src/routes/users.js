@@ -12,9 +12,7 @@ router.use(verifyJWT);
 // Returns an array of all courses
 router.get("/getTasks", async (req, res) => {
   let userObj = req.authUser;
-  const tasksArray = await doomTasks
-    .find({ userId: userObj._id.toString() })
-    .toArray();
+  const tasksArray = await doomTasks.find({ userId: userObj._id }).toArray();
   res.send(tasksArray);
 });
 
