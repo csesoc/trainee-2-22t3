@@ -1,4 +1,6 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Select, MenuItem, InputLabel } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Select, MenuItem, InputLabel, Switch, Button } from '@mui/material';
+import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState, useEffect } from "react";
 import './Dashboard.css';
 
@@ -40,6 +42,11 @@ export function AddTaskDialog(open, taskType) {
         fullWidth
       />
       </div>
+      <div>
+        <InputLabel className="switch-box-text">Completed</InputLabel>
+        <div className="switch-box-underline"></div>
+        <Switch />
+      </div>
       <div className="select-box">
       <InputLabel className="dialog-box-text">Task Type</InputLabel>
       <Select
@@ -48,16 +55,6 @@ export function AddTaskDialog(open, taskType) {
         <MenuItem value={10}>Ten</MenuItem>
         <MenuItem value={20}>Twenty</MenuItem>
         <MenuItem value={30}>Thirty</MenuItem>
-      </Select>
-      </div>
-      <div className="select-box">
-      <InputLabel className="dialog-box-text">Term</InputLabel>
-      <Select
-        value={1}
-      >
-        <MenuItem value={1}>One</MenuItem>
-        <MenuItem value={2}>Two</MenuItem>
-        <MenuItem value={3}>Three</MenuItem>
       </Select>
       </div>
       <div className="select-box">
@@ -78,6 +75,41 @@ export function AddTaskDialog(open, taskType) {
         <MenuItem value={11}>11</MenuItem>
 
       </Select>
+      </div>
+      <div className="select-box">
+      <InputLabel className="dialog-box-text">Day</InputLabel>
+      <Select
+        value={1}
+      >
+        <MenuItem value={0}>Sunday</MenuItem>
+        <MenuItem value={1}>Monday</MenuItem>
+        <MenuItem value={2}>Tuesday</MenuItem>
+        <MenuItem value={3}>Wednesday</MenuItem>
+        <MenuItem value={4}>Thursday</MenuItem>
+        <MenuItem value={5}>Friday</MenuItem>
+        <MenuItem value={6}>Saturday</MenuItem>
+      </Select>
+      </div>
+      <div className="time-picker">
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <TimePicker
+            label="Start time"
+            value={1}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider>
+      </div>
+      <div className="time-picker">
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <TimePicker
+            label="End time"
+            value={1}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider>
+      </div>
+      <div>
+        <Button variant="contained" className="dialog-submit-button">Create</Button>
       </div>
       </div>
     </DialogContent>

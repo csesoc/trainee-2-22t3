@@ -170,7 +170,7 @@ body {
 }
 
 .css-1hnl2uv-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
-  width: 90px !important;
+  min-width: 90px !important;
 }
 
 .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
@@ -256,8 +256,13 @@ body {
 
 .dialog-box {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 150px 150px 100px;
   grid-column-gap: 15px;
+}
+
+.dialog-box-text {
+  align-self: center !important;
+  text-align: left !important;
 }
 
 .text-field-box {
@@ -269,12 +274,43 @@ body {
 }
 
 .select-box {
-
+  
 }
 
-.dialog-box-text {
+.time-picker {
+  width: 140px;
+  margin-top: 23px !important;
+}
+
+.switch-box-text {
   align-self: center !important;
   text-align: left !important;
+}
+
+.switch-box-underline {
+  background-color: #5865f2 !important;
+  width: 60px;
+  height: 2px;
+  border-radius: 1px;
+}
+
+.css-jsexje-MuiSwitch-thumb {
+  background-color: #5865f2 !important;
+}
+
+.MuiSwitch-track {
+  background-color: rgb(11, 11, 31) !important;
+}
+
+.dialog-submit-button {
+  background-color: rgb(55, 55, 172) !important;
+  margin-top: 23px !important;
+  width: 100px;
+  height: 55px;
+}
+
+.css-1jm66jt-MuiClockPicker-root {
+  background-color: #595f6c !important;
 }
 
 .css-1ws8119-MuiDivider-root {

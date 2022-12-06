@@ -28,7 +28,7 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5000/tasks/get")
+    fetch("http://localhost:5000/users/getTasks", {credentials: "include"})
       .then((res) => {
         return res.json();
       })
