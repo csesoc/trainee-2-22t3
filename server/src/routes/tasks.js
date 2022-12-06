@@ -55,7 +55,7 @@ router.post(
     check("week")
       .exists()
       .withMessage("Week not inputted")
-      .isNumeric({ min: 1, max: 10 })
+      .isNumeric({ min: 1, max: 12 })
       .withMessage("Week is invalid"),
     check("term")
       .exists()

@@ -15,9 +15,9 @@ export default function Dashboard() {
   const [taskProgress, setTaskProgress] = useState([]);
   const [startDate, setStartDate] = useState(dayjs(new Date()).format("DD/MM/YYYY"));
   const [endDate, setEndDate] = useState(dayjs(new Date()).format("DD/MM/YYYY"));
+  const [week, setWeek] = useState(7);
+  const [term, setTerm] = useState(3);
   const [taskDialog, setTaskDialog] = useState("");
-
-  let currentWeek = 7;
 
   const runUpdateTasks = () => {
     setUpdateTasks(updateTasks + 1);
@@ -28,17 +28,27 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
+    runUpdateTasks();
+  }, [taskDialog]);
+
+  useEffect(() => {
+
+  }, [updateTasks]);
+
+  useEffect(() => {
     fetch("http://localhost:5000/users/getTasks", {credentials: "include"})
       .then((res) => {
         return res.json();
       })
       .then((dataTasks) => {
         setDataTasks(dataTasks);
+        console.log(dataTasks);
       });
   }, [startDate, updateTasks]);
 
   useEffect(() => {
     for (let i in taskProgress) {
+      if(dataTasks[i] == undefined) {continue;}
       if (taskProgress[i] === "deleted") {
         fetch(`http://localhost:5000/tasks/delete?_id=${dataTasks[i]._id}`, {
           method: "DELETE",
@@ -86,18 +96,26 @@ export default function Dashboard() {
       }
     }
     if (str === "done") { return num }
+    if (isNaN(dataTasks.length - num)) { return 0 }
     return (dataTasks.length - num);
+  }
+  const handleAddTask = (taskType) => {
+    if (taskType === "lecture") {console.log("adding lecture"); setTaskDialog("lecture");}
+    else if (taskType === "tutorial") {console.log("adding tutorial"); setTaskDialog("tutorial");}
+    else if (taskType === "homework") {console.log("adding homework"); setTaskDialog("homework");}
   }
 
   return (
     <>
       <div className="dashboard-container">
-        {AddTaskDialog(taskDialog, "lecture")}
+        {AddTaskDialog(taskDialog, setTaskDialog, "lecture", startDate, week, term)}
+        {AddTaskDialog(taskDialog, setTaskDialog, "tutorial", startDate, week, term)}
+        {AddTaskDialog(taskDialog, setTaskDialog, "homework", startDate, week, term)}
         <Typography variant="h2" class="dashboard-text" align="center" sx={{fontWeight:"bold"}}>💀 DASHBOARD 💀</Typography>
         <div className="selector-screen">
         {WeeklyCalendar(setStartDate, setEndDate)}
         <div className="weekly-stats">
-        <Divider className="week-divider" sx={{mt:0}}>WEEK {currentWeek}<br></br>
+        <Divider className="week-divider" sx={{mt:0}}>WEEK {week}<br></br>
         <Typography className="week-subtext">{startDate} - {endDate}</Typography>
         </Divider>
         <Box className="week-box">
@@ -117,17 +135,23 @@ export default function Dashboard() {
         <Divider className="tasks-divider">LECTURES</Divider>
         <div className="divider-container">
         {TaskCardList("lecture")}
-        <Fab size="big" className="add-task-icon" onClick={() => setTaskDialog("lecture")} aria-label="add" sx={{backgroundColor: "rgb(55, 55, 172)"}}>
+        <Fab size="big" className="add-task-icon" onClick={() => handleAddTask("lecture")} aria-label="add" sx={{backgroundColor: "rgb(55, 55, 172)"}}>
         <AddIcon className="add-task-icon-sign"/>
         </Fab>
         </div>
         <Divider className="tasks-divider">TUTORIALS</Divider>
         <div className="divider-container">
         {TaskCardList("tutorial")}
+        <Fab size="big" className="add-task-icon" onClick={() => handleAddTask("tutorial")} aria-label="add" sx={{backgroundColor: "rgb(55, 55, 172)"}}>
+        <AddIcon className="add-task-icon-sign"/>
+        </Fab>
         </div>
         <Divider className="tasks-divider">HOMEWORK</Divider>
         <div className="divider-container">
         {TaskCardList("homework")}
+        <Fab size="big" className="add-task-icon" onClick={() => handleAddTask("homework")} aria-label="add" sx={{backgroundColor: "rgb(55, 55, 172)"}}>
+        <AddIcon className="add-task-icon-sign"/>
+        </Fab>
         </div>
         </div>
       </div>

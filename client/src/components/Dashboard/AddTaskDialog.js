@@ -1,24 +1,65 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Select, MenuItem, InputLabel, Switch, Button } from '@mui/material';
+import { Button, Dialog, DialogContent, DialogTitle, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField } from '@mui/material';
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useState, useEffect } from "react";
+import dayjs from 'dayjs';
+import { useEffect, useState } from "react";
 import './Dashboard.css';
 
-export function AddTaskDialog(open, taskType) {
+export function AddTaskDialog(taskDialog, setTaskDialog, taskType, startDate, week, term) {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const [name, setName] = useState("");
+  const [courseId, setCourseId] = useState("");
+  const [day, setDay] = useState(1);
+  const [time, setTime] = useState(new Date());
+  const [duration, setDuration] = useState(0);
+
   useEffect(() => {
-    if (open === taskType) {
+    if (taskDialog === taskType) {
       setIsOpen(true);
     } else {
       setIsOpen(false);
     }
-    console.log(isOpen);
-  }, [open]);
+  }, [taskDialog]);
+
+  const handleClose = () => {
+    setTaskDialog("");
+    setIsOpen(false);
+  }
+
+  useEffect(() => {
+    
+  })
+
+  const handleSubmit = () => {
+    if (duration === 0) {handleClose(); return;}
+    let taskDate = dayjs(startDate, "DD/MM/YYYY") + (day * 1000 * 60 * 60 * 24);
+    taskDate += 1000 * 60 * ((60 * new Date(time).getHours()) + new Date(time).getMinutes());
+    const date = new Date(taskDate);
+    fetch('http://localhost:5000/tasks/post', {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        taskType: taskType,
+        duration: (duration * 3600),
+        completed: false,
+        name: name,
+        course: courseId,
+        date: date,
+        week: week,
+        term: term,
+        year: date.getYear() + 1900,
+      })
+    });
+    handleClose();
+  }
 
   return (
-    <Dialog open={isOpen} onClose={() => setIsOpen("")}>
+    <Dialog open={isOpen} onClose={() => handleClose()}>
     <DialogTitle>Create new {taskType}</DialogTitle>
     <DialogContent>
     <div className="dialog-box">
@@ -30,6 +71,7 @@ export function AddTaskDialog(open, taskType) {
         id="name"
         type="text"
         fullWidth
+        onChange={(event) => setName(event.target.value)}
       />
       </div>
       <div className="text-field-box">
@@ -40,47 +82,16 @@ export function AddTaskDialog(open, taskType) {
         id="courseId"
         type="text"
         fullWidth
+        onChange={(event) => setCourseId(event.target.value)}
       />
-      </div>
-      <div>
-        <InputLabel className="switch-box-text">Completed</InputLabel>
-        <div className="switch-box-underline"></div>
-        <Switch />
-      </div>
-      <div className="select-box">
-      <InputLabel className="dialog-box-text">Task Type</InputLabel>
-      <Select
-        value={10}
-      >
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
-      </Select>
-      </div>
-      <div className="select-box">
-      <InputLabel className="dialog-box-text">Week</InputLabel>
-      <Select
-        value={1}
-      >
-        <MenuItem value={1}>1</MenuItem>
-        <MenuItem value={2}>2</MenuItem>
-        <MenuItem value={3}>3</MenuItem>
-        <MenuItem value={4}>4</MenuItem>
-        <MenuItem value={5}>5</MenuItem>
-        <MenuItem value={6}>6</MenuItem>
-        <MenuItem value={7}>7</MenuItem>
-        <MenuItem value={8}>8</MenuItem>
-        <MenuItem value={9}>9</MenuItem>
-        <MenuItem value={10}>10</MenuItem>
-        <MenuItem value={11}>11</MenuItem>
-
-      </Select>
       </div>
       <div className="select-box">
       <InputLabel className="dialog-box-text">Day</InputLabel>
       <Select
-        value={1}
+        value={day}
+        onChange={(event) => setDay(event.target.value)}
       >
+
         <MenuItem value={0}>Sunday</MenuItem>
         <MenuItem value={1}>Monday</MenuItem>
         <MenuItem value={2}>Tuesday</MenuItem>
@@ -94,29 +105,27 @@ export function AddTaskDialog(open, taskType) {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <TimePicker
             label="Start time"
-            value={1}
+            value={time}
             renderInput={(params) => <TextField {...params} />}
+            onChange={(value) => setTime(value)}
           />
         </LocalizationProvider>
       </div>
-      <div className="time-picker">
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <TimePicker
-            label="End time"
-            value={1}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </LocalizationProvider>
+      <div className="duration-box">
+      <InputLabel className="dialog-box-text">Duration</InputLabel>
+      <OutlinedInput
+          endAdornment={<InputAdornment position="end">hours</InputAdornment>}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={(event) => setDuration(event.target.value)}
+      />
       </div>
       <div>
-        <Button variant="contained" className="dialog-submit-button">Create</Button>
+        <Button variant="contained" className="dialog-submit-button" onClick={() => handleSubmit()}>Create</Button>
       </div>
       </div>
     </DialogContent>
-    <DialogActions>
-      {/* <Button onClick={handleClose}>Cancel</Button>
-      <Button onClick={handleClose}>Subscribe</Button> */}
-    </DialogActions>
   </Dialog>
   );
 }

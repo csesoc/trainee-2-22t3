@@ -256,7 +256,7 @@ body {
 
 .dialog-box {
   display: grid;
-  grid-template-columns: 150px 150px 100px;
+  grid-template-columns: 150px 150px 130px;
   grid-column-gap: 15px;
 }
 
@@ -275,6 +275,10 @@ body {
 
 .select-box {
   
+}
+
+.duration-box {
+  width: 100px !important;
 }
 
 .time-picker {
@@ -300,6 +304,10 @@ body {
 
 .MuiSwitch-track {
   background-color: rgb(11, 11, 31) !important;
+}
+
+.css-kq46vq-MuiTypography-root {
+  color: white !important;
 }
 
 .dialog-submit-button {
