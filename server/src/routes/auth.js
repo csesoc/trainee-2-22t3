@@ -56,7 +56,7 @@ router.post("/register", async (req, res) => {
     salt: salt,
     password: hashed,
     token: token,
-    profileImg: "",
+    profileImg: "http://localhost:5000/default-profile.png",
     tasks: [],
     courses: [],
   };
