@@ -24,7 +24,7 @@ router.get("/doomFactor", async (req, res) => {
   //// calculation....
   let userId = req.authUser._id.toString();
   console.log(userId);
-  console.log(req.query.userId);
+
   const totalTasks = await doomTasks
     .find({ userId: ObjectId(userId) })
     .toArray();
