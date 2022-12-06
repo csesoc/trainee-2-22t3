@@ -36,21 +36,21 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(422).send({
         error:
-          "Task can not be added due to the following issues: " +
+          "Course can not be added due to the following issues: " +
           errors.array()[0].msg,
       });
     }
     // Check that coursename is unique
-    const findCourse = await doomCourses.find({
+    const findCourse = await doomCourses.findOne({
       courseName: req.body.courseName,
     });
-    if (findCourse !== undefined) {
+    if (findCourse !== null) {
       return res.status(400).send({ error: "Course name already exists!" });
     }
 
     // Check that uni exists
-    const uni = doomUni.findOne({ name: req.body.uni });
-    if (uni === undefined) {
+    const uni = await doomUni.findOne({ name: req.body.uni });
+    if (uni === null) {
       return res.status(400).send({ error: "Given uni does not exist" });
     }
 

@@ -5,6 +5,7 @@ import tasksRoutes from "./routes/tasks.js";
 import authRoutes from "./routes/auth.js";
 import courseRoutes from "./routes/courses.js";
 import userRoutes from "./routes/users.js";
+import uniRoutes from "./routes/uni.js";
 import { verifyJWT } from "./middleware/verifyJWT.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -33,6 +34,8 @@ app.use("/tasks", tasksRoutes);
 app.use("/courses", courseRoutes);
 
 app.use("/users", userRoutes);
+
+app.use("/uni", uniRoutes);
 
 app.listen(5000, async () => {
   console.log("Doom Tracker API started!");
