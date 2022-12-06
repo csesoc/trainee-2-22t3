@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainPage from "./components/main/MainPage";
 import RegisterPage from "./components/RegisterLogin/RegisterPage";
 import LoginPage from "./components/RegisterLogin/LoginPage";
+import Friends from "./components/Friends/Friends";
 import { experimental_sx as sx, ThemeProvider, createTheme } from "@mui/material/styles";
 
 
@@ -62,6 +63,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/friends" element={<Friends />} />
         </Routes>
       </Router>
     </ThemeProvider>

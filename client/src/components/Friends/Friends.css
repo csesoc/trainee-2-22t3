@@ -1,0 +1,30 @@
+body {
+  background-color: #0e0e10;
+}
+
+.friends-container {
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  height: auto;
+  margin: 4rem auto;
+  border-radius: 0.4rem;
+  padding: 3rem;
+  padding-top: 36px;
+  background-color: #0f131a;
+  color: #ffffff;
+}
+
+.friends-title {
+  font-size: 64px;
+  align-self: center;
+  margin-top: 0px;
+}
+
+.normal-text {
+  font-size: 20px !important;
+  font-weight: bold !important;
+  margin-left: 10px !important;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
