@@ -14,9 +14,29 @@ router.get("/get", async (req, res) => {
 
 // GET - /tasks/doomFactor
 // Calculates the doom factor (a numerical representation of how behind the user is on work)
+// Requires in query:
+// {
+//    userId: string
+// }
+//
 router.get("/doomFactor", async (req, res) => {
   //// calculation....
-  return res.send(doomFactor);
+  console.log(req.query.userId);
+  const totalTasks = await doomTasks
+    .find({ userId: ObjectId(req.query.userId) })
+    .toArray();
+  console.log(totalTasks);
+  const numTotal = totalTasks.length;
+  if (numTotal === 0) {
+    return res.send({ doomFactor: 0 });
+  }
+  const completedTasks = await doomTasks
+    .find({ userId: ObjectId(req.query.userId), completed: true })
+    .toArray();
+  const numCompleted = completedTasks.length;
+  return res.send({
+    doomFactor: Math.floor(100 - (numCompleted / numTotal) * 100),
+  });
 });
 
 router.use(verifyJWT);
@@ -176,8 +196,38 @@ router.delete(
         .send({ error: "Logged in person does not have permission to delete" });
     }
     await doomTasks.deleteOne({ _id: ObjectId(req.query._id) });
-    res.send("Task Removed");
+    return res.send("Task Removed");
   }
 );
+
+// given uni, term, year and week calculate the unix time of the monday at 00:00 (in seconds)
+// uni is an object
+export function calculateTaskDate(week, term, year, uni) {
+  let foundTerm;
+  let newTime;
+
+  for (let uniTerm of uni.terms) {
+    // Find the correct term
+    console.log(uniTerm.term, term, uniTerm.startDate);
+    if (uniTerm.term === term) {
+      let startDate = new Date(uniTerm.startDate * 1000);
+      console.log(startDate.getFullYear(), year);
+      if (startDate.getFullYear() === year) {
+        foundTerm = term;
+        newTime = uniTerm.startDate;
+      }
+      break;
+    }
+  }
+  if (foundTerm === undefined) {
+    return { error: "uni does not have required term" };
+  }
+  if (newTime === undefined) {
+    return { error: "startDate not in uni" };
+  }
+  // Calculate date
+  let date = newTime + (week - 1) * 7 * 24 * 60 * 60;
+  return { date: date };
+}
 
 export { router as default };
