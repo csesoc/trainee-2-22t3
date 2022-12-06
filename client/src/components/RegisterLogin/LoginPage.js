@@ -65,8 +65,7 @@ export default function LoginPage() {
     } else {
       setUsername("");
       setPassword("");
-      // navigate("/friends");
-      navigate("/tracker");
+      navigate("/friends");
     }
   };
 

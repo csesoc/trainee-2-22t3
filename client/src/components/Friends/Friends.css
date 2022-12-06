@@ -20,7 +20,7 @@ body {
   margin-top: 0px;
 }
 
-.profile-name {
+.profile-image {
   border-radius: 50%;
 }
 
@@ -43,8 +43,12 @@ body {
 
 .list-box {
   background-color: #262626;
+  border-radius: 0.8rem;
 }
 
 .friend-box {
   background-color: #878787;
+  margin: 1rem auto;
+  border-radius: 0.8rem;
+  padding: 8px;
 }
