@@ -1,0 +1,28 @@
+.background-fire-class {
+  overflow: hidden;
+  display: flex;
+  position: absolute;
+  z-index: 1;
+  transition: all 1s;
+}
+
+.background-fire-video {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+}
+
+.doom-factor-number {
+  overflow: hidden;
+  display: flex;
+  position: absolute;
+  z-index: 1;
+  transition: all 1s;
+  margin: auto;
+  top: 50%;
+  left: 50%;
+  font-size: 40px;
+  margin-top: -20px;
+  margin-left: -20px;
+  transition: 1s all;
+}

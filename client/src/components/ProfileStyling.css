@@ -3,6 +3,10 @@ body {
   background-color: #0e0e10;
 }
 
+.profile-wrapper {
+  position: relative;
+}
+
 .profile-tracker-profile {
   /* border: #ffffff 2px solid; */
   flex-basis: 70%;
@@ -29,14 +33,22 @@ body {
   text-align: center;
   align-items: center;
   font-weight: bold;
-  width: calc(100% - 40px);
+  width: calc(100% - 100px);
   margin: auto !important;
+  transition: 1s all;
+}
+
+.profile-section-divider:hover {
+  /* color: rgb(55, 55, 172) !important; */
+  letter-spacing: 10px;
+  scale: 1.05;
+  border-color: rgb(55, 55, 172) !important;
 }
 
 .profile-mini-dashboard-tracker {
   background-color: #0f131a;
   border-radius: 15px;
-  border: white solid 2px;
+  /* border: white solid 2px; */
   margin: 10px;
 }
 
@@ -44,9 +56,9 @@ body {
   .profile-mini-dashboard-tracker {
     display: flex;
     flex-direction: row;
-    border: white 3px solid;
+    /* border: white 3px solid; */
     background-color: #0f131a;
-    margin: 10px;
+    margin: 10px 50px;
     border-radius: 15px;
   }
 }

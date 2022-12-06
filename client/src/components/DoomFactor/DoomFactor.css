@@ -1,4 +1,31 @@
 .doom-factor-skull {
   display: flex;
   justify-content: center;
+  position: relative;
+}
+
+.doom-factor-avatar {
+  background-color: white !important;
+  position: absolute;
+  transition: all 1s;
+  z-index: 2;
+  border: 3px white solid;
+}
+
+.doom-factor-avatar:hover {
+  scale: 1.1;
+  border-color: black;
+}
+
+.background-fire {
+  overflow: hidden;
+  display: flex;
+  position: absolute;
+  z-index: 1;
+}
+
+.background-fire-video {
+  object-fit: cover;
+  width: 200vw;
+  height: 200vh;
 }

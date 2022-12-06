@@ -7,16 +7,26 @@ import DoomFactor from "./DoomFactor/DoomFactor";
 import DoomBuddiesListButton from "./DoomBuddiesList/DoomBuddiesListButton";
 import "./ProfileStyling.css";
 import MiniDashboard from "./MiniDashboard/MiniDashboard";
+import BackgroundFire from "./BackgroundFire/BackgroundFire";
 import { useParams } from "react-router-dom";
-import { Divider } from "@mui/material";
+import { Divider, Fade } from "@mui/material";
 
 const ProfileWrapper = () => {
   const [dataTasks, setDataTasks] = useState([]);
   const [updateTasks, setUpdateTasks] = useState(0);
+  const [backgroundFireShown, setBackgroundFireShown] = useState(false);
 
   const runUpdateTasks = () => {
     setUpdateTasks(updateTasks + 1);
     return;
+  };
+
+  const updateBackgroundFireShown = () => {
+    if (backgroundFireShown == false) {
+      setBackgroundFireShown(true);
+    } else {
+      setBackgroundFireShown(false);
+    }
   };
 
   const { id } = useParams();
@@ -52,12 +62,13 @@ const ProfileWrapper = () => {
   }, [updateTasks]);
 
   return (
-    <div>
+    <div className="profile-wrapper">
+      {backgroundFireShown && <BackgroundFire isShown={backgroundFireShown} />}
       <ProfilePageTitle className="profile-page-title" />
       <div className="profile-doom-buddies-list-button">
         <DoomBuddiesListButton />
       </div>
-      <DoomFactor />
+      <DoomFactor updateBackgroundFireShown={updateBackgroundFireShown} />
       <Divider className="profile-section-divider">DOOM TRACKER</Divider>
       <div className="profile-mini-dashboard-tracker">
         <div className="profile-mini-dashboard">
