@@ -1,0 +1,71 @@
+@media (max-width: 370px) {
+  .weekly-box-divider {
+    width: 96% !important;
+  }
+  .week-box {
+    width: 96% !important;
+  }
+}
+
+.week-divider {
+  background-color: transparent;
+  width: 300px;
+  height: 70px;
+  border-radius: 50px;
+  border-color: white !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bolder;
+  transition: all 1s;
+}
+
+.week-divider:hover {
+  scale: 1.05;
+  border-color: rgb(55, 55, 172) !important;
+}
+
+.week-subtext {
+  font-size: 14px !important;
+}
+
+.week-box {
+  background-color: transparent;
+  width: 280px;
+  height: 200px;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.weekly-box-divider {
+  background-color: #ffffff;
+  width: 280px;
+  height: 3px;
+  border-radius: 3px;
+  transition: all 1s;
+}
+
+.weekly-box-divider:hover {
+  background-color: rgb(55, 55, 172);
+  scale: 1.1;
+}
+
+.weekly-box-text {
+  transition: all 1s;
+  font-size: 20px !important;
+  font-weight: bold !important;
+  margin-left: 10px !important;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.weekly-box-text:hover {
+  scale: 1.1;
+  color: rgb(55, 55, 172);
+}
+
+.weekly-stat-counter {
+  float: right;
+  margin-right: 10px;
+}
