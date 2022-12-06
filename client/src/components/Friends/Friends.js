@@ -30,10 +30,11 @@ export default function FriendList() {
 
   const showList = friends.length ? (
     friends.map(friendObj => {
+      console.log(friendObj.profileImg);
       return (
         <div className="friend-box" sx={{p: 4}} key={friendObj._id}>
           <img 
-            src={friendObj.profileImgUrl} 
+            src={friendObj.profileImg} 
             alt="profile"
             className="profile-image"
           ></img>

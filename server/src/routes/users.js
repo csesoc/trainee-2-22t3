@@ -145,7 +145,7 @@ router.get("/friends/get", async (req,res,next) => {
       friendObj = { 
         _id: ObjectId(friend._id),
         username: friend.username, 
-        profileImgUrl: friend.profileImgUrl,
+        profileImg: friend.profileImg,
       };
     }
     friendsList.push(friendObj);
