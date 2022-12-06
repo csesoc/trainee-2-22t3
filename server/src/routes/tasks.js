@@ -21,9 +21,11 @@ router.get("/get", async (req, res) => {
 //
 router.get("/doomFactor", async (req, res) => {
   //// calculation....
+  let userId = req.query.userId;
+  console.log(userId);
   console.log(req.query.userId);
   const totalTasks = await doomTasks
-    .find({ userId: ObjectId(req.query.userId) })
+    .find({ userId: ObjectId(userId) })
     .toArray();
   console.log(totalTasks);
   const numTotal = totalTasks.length;
@@ -31,7 +33,7 @@ router.get("/doomFactor", async (req, res) => {
     return res.send({ doomFactor: 0 });
   }
   const completedTasks = await doomTasks
-    .find({ userId: ObjectId(req.query.userId), completed: true })
+    .find({ userId: ObjectId(userId), completed: true })
     .toArray();
   const numCompleted = completedTasks.length;
   return res.send({
