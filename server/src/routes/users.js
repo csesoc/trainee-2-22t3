@@ -103,9 +103,14 @@ router.post("/uploadProfileImg", async (req, res, next) => {
     console.log(req.files);
     let avatar = req.files.avatar;
     avatar.mv("./profile-imgs/" + req.authUser.username + ".png");
-
-    req.authUser.profileImg = `localhost:5000/${avatar.name}.png`;
-
+    await doomUsers.updateOne(
+      { _id: req.authUser._id },
+      {
+        $set: {
+          profileImg: `http://localhost:5000/${req.authUser.username}.png`,
+        },
+      }
+    );
     res.send({
       message: "File uploaded",
       data: { name: avatar.name, mimetype: avatar.mimetype, size: avatar.size },
