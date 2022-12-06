@@ -16,6 +16,32 @@ router.get("/getTasks", async (req, res) => {
   res.send(tasksArray);
 });
 
+// GET - /tasks/doomFactor
+// Calculates the doom factor (a numerical representation of how behind the user is on work)
+// of the logged in user.
+//
+router.get("/doomFactor", async (req, res) => {
+  //// calculation....
+  let userId = req.authUser._id.toString();
+  console.log(userId);
+  console.log(req.query.userId);
+  const totalTasks = await doomTasks
+    .find({ userId: ObjectId(userId) })
+    .toArray();
+  console.log(totalTasks);
+  const numTotal = totalTasks.length;
+  if (numTotal === 0) {
+    return res.send({ doomFactor: 0 });
+  }
+  const completedTasks = await doomTasks
+    .find({ userId: ObjectId(userId), completed: true })
+    .toArray();
+  const numCompleted = completedTasks.length;
+  return res.send({
+    doomFactor: Math.floor(100 - (numCompleted / numTotal) * 100),
+  });
+});
+
 // POST - /users/addCourse
 // Adds a course to a user
 // Also adds all the tasks from that course
