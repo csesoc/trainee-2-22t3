@@ -94,6 +94,27 @@ router.post("/addCourse", async (req, res, next) => {
   }
 });
 
+// POST - /users/uploadProfileImg
+router.post("/uploadProfileImg", async (req, res, next) => {
+  try {
+    if (!req.files) {
+      return res.status(400).send({ error: "No files given" });
+    }
+    console.log(req.files);
+    let avatar = req.files.avatar;
+    avatar.mv("./profile-imgs/" + req.authUser.username + ".png");
+
+    req.authUser.profileImg = `localhost:5000/${avatar.name}.png`;
+
+    res.send({
+      message: "File uploaded",
+      data: { name: avatar.name, mimetype: avatar.mimetype, size: avatar.size },
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 // DEL - /users/dropCourse
 // Drops course from user
 // Also deletes all tasks assigned to that user from the course.
