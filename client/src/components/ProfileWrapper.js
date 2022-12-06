@@ -63,7 +63,9 @@ const ProfileWrapper = () => {
 
   return (
     <div className="profile-wrapper">
-      {backgroundFireShown && <BackgroundFire isShown={backgroundFireShown} />}
+      {backgroundFireShown && (
+        <BackgroundFire isShown={backgroundFireShown} id={id} />
+      )}
       <ProfilePageTitle className="profile-page-title" />
       <div className="profile-doom-buddies-list-button">
         <DoomBuddiesListButton />

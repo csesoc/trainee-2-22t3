@@ -28,6 +28,7 @@
 }
 
 #profile-tracker-title:hover {
+  letter-spacing: 10px !important;
   scale: 1.05;
   border-color: rgb(55, 55, 172) !important;
 }

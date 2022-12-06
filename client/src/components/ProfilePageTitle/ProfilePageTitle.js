@@ -4,7 +4,7 @@ import "./ProfilePageTitle.css";
 
 const ProfilePageTitle = () => {
   return (
-    <div>
+    <div className="profile-page-title-div">
       <Typography
         variant="h2"
         align="center"

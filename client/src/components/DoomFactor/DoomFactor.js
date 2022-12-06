@@ -62,7 +62,7 @@ const DoomFactor = ({ updateBackgroundFireShown }) => {
                 </video>
               </Grow>
             ) : (
-              <div>Hello</div>
+              <div>Profile Picture Here</div>
             )}
           </Avatar>
         </div>

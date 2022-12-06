@@ -1,11 +1,18 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BackgroundFireVideo from "./background fire.mp4";
 import "./BackgroundFire.css";
 import { Fade } from "@mui/material";
 
-const BackgroundFire = ({ isShown }) => {
+const BackgroundFire = ({ isShown, id }) => {
   const [doomFactor, setDoomFactor] = useState(59);
+  useEffect(() => {
+    fetch(`http://localhost:5000/tasks/doomFactor?userId=${id}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => console.log(data));
+  }, []);
   return (
     <div>
       <div className="background-fire-class">

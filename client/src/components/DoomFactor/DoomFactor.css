@@ -10,6 +10,7 @@
   transition: all 1s;
   z-index: 2;
   border: 3px white solid;
+  color: black !important;
 }
 
 .doom-factor-avatar:hover {
