@@ -105,4 +105,95 @@ router.delete("/dropCourse", async (req, res, next) => {
   }
 });
 
+// GET - /users/friends/get
+// given user, gets an array of friend
+// objects with username and pfp
+router.get("/friends/get", async (req,res,next) => {
+  const friends = req.authUser.friends;
+  // for each element of friends find username and pfp and store into object 
+  // then push into an array
+  const friendsList = [];
+  for (let i = 0; i < friends.length; i++) {
+    
+  }
+  return res.send(friendsList);
+});
+
+// POST - /users/friends/post
+// given user and friend id, 
+// adds friend to user
+router.post("/friends/post", async (req,res,next) => {
+  try {
+    const userObj = req.authUser;
+    const friendId = ObjectId(req.body._id);
+
+    if (friendId === undefined) {
+      return res.status(400).send({ error: "friendId not given" });
+    }
+
+    let foundFriend = await doomUsers.findOne({
+      _id: ObjectId(friendId),
+    });
+
+    if (foundFriend === null) {
+      return res.status(400).send({ error: "friendId is invalid" });
+    }
+    
+    for (let friend of userObj.friends) {
+      if (friend === foundFriend._id.toString()) {
+        return res
+          .status(400)
+          .send({ error: "user already a friend" });
+      }
+    }
+
+    userObj.friends.push(foundFriend._id.toString());
+    return res.send({ success: "friend has been added" });
+  } catch (error) {
+    next(err);
+  }
+});
+
+// DELETE - /users/friends/delete
+// given user and friend id, 
+// deletes friend from user
+router.delete("/friends/delete", async (req,res,next) => {
+  try {
+    const userObj = req.authUser;
+    const friendId = ObjectId(req.body._id);
+
+    if (friendId === undefined) {
+      return res.status(400).send({ error: "friendId not given" });
+    }
+
+    let foundFriend = await doomUsers.findOne({
+      _id: ObjectId(friendId),
+    });
+
+    if (foundFriend === null) {
+      return res.status(400).send({ error: "friendId is invalid" });
+    }
+    
+    let flag = false;
+    for (let friend of userObj.friends) {
+      if (friend === foundFriend._id.toString()) {
+        flag = true;
+        break;
+      }
+    }
+
+    if (flag === false) {
+      return res
+      .status(400)
+      .send({ error: "user isn't a friend" });
+    }
+
+    const friendIndex = authUser.friends.indexOf(foundFriend._id);
+    userObj.friends.splice(friendIndex, 1);
+    return res.send({ success: "friend has been removed" });
+  } catch (error) {
+    next (error);
+  }
+});
+
 export { router as default };
