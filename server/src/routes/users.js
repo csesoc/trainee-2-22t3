@@ -110,14 +110,21 @@ router.delete("/dropCourse", async (req, res, next) => {
 // objects with username and pfp
 router.get("/friends/get", async (req,res,next) => {
   const friends = req.authUser.friends;
-  // for each element of friends find username and pfp and store into object 
-  // then push into an array
   const friendsList = [];
+  const usersData = await doomUsers.find().toArray();
+  let friendObj = {};
   for (let i = 0; i < friends.length; i++) {
-    
+    friend = usersData.find(e => e._id === friends[i]);
+    friendObj = { 
+      _id: friend._id,
+      username: friend.username, 
+      profileImgUrl: friend.profileImgUrl,
+    };
+    friendsList.push(friendObj);
   }
   return res.send(friendsList);
 });
+
 
 // POST - /users/friends/post
 // given user and friend id, 
