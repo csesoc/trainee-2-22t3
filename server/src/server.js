@@ -8,6 +8,7 @@ import userRoutes from "./routes/users.js";
 import uniRoutes from "./routes/uni.js";
 import { verifyJWT } from "./middleware/verifyJWT.js";
 import cookieParser from "cookie-parser";
+import fileUpload from "express-fileupload";
 import cors from "cors";
 // Setup app
 const app = express();
@@ -22,6 +23,12 @@ app.use(
   })
 );
 app.use(cookieParser());
+app.use(
+  fileUpload({
+    createParentPath: true,
+  })
+);
+app.use(express.static("./profile-imgs"));
 app.get("/", (req, res) => {
   console.log("hello");
   res.send("hi!!!!");
