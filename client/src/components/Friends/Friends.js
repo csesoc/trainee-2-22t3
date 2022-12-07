@@ -3,6 +3,7 @@ import {
   Typography,
   Box,
   Link,
+  Button,
 } from "@mui/material";
 import "./Friends.css";
 import Popup from "./FriendsPopUp";
@@ -20,23 +21,38 @@ export default function FriendList() {
           "Content-type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify(),
+        qs: {},
       });
       const json = await response.json();
       setFriends(json);
     };
     fetchFriends();
-  }, []);
+  }, [friends]);
 
-  const showList = friends.length ? (
+  const removeFriend = async (_id) => {
+    console.log(`HERE ${_id}`);
+    const response = await fetch(("http://localhost:5000/users/friends/delete"), {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({_id:_id}),
+    });
+    const json = await response.json();
+    console.log(json);
+    setFriends(json);
+  };
+
+  const showList = (friends.length) ? (
     friends.map(friendObj => {
       return (
         <div className="friend-box" key={friendObj._id}>
           <img 
             src={friendObj.profileImg} 
             alt="profile"
-            width="85"
-            height="85"
+            width="70"
+            height="70"
             className="profile-image"
           ></img>
           <Link 
@@ -47,8 +63,9 @@ export default function FriendList() {
             onClick={() => setPopup(true)}  
           >
             {friendObj.username}
-          </Link>            
-        </div>
+          </Link>
+          <Button className="remove-friend" onClick={() => removeFriend(friendObj._id)}>Remove</Button>  
+        </div>          
       );
     })
   ) : (
@@ -66,13 +83,13 @@ export default function FriendList() {
       <div className="friends-container">
         <Typography  
           variant="h2" 
-          class="friends-title" 
+          className="friends-title" 
           align="center" 
           sx={{fontWeight:"bold"}}
         >
           💀 DOOM BUDDIES 💀
         </Typography>
-        <Box className="list-box" sx={{p: 4}}>
+        <Box className="list-box" sx={{p: 3}}>
           {showList}
         </Box>
         <Popup trigger={popup} setTrigger={setPopup}>

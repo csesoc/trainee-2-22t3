@@ -191,7 +191,7 @@ router.post("/friends/post", async (req,res,next) => {
 
     userObj.friends.push(foundFriend._id.toString());
     await doomUsers.updateOne({_id: ObjectId(userObj._id)}, {$set: {friends: userObj.friends}});
-    return res.send({ success: "friend has been added" });
+    return res.send(userObj.friends);
   } catch (error) {
     next(error);
   }
@@ -203,8 +203,8 @@ router.post("/friends/post", async (req,res,next) => {
 router.delete("/friends/delete", async (req,res,next) => {
   try {
     const userObj = req.authUser;
-    const friendId = ObjectId(req.query._id);
-
+    const friendId = ObjectId(req.body._id);
+    
     if (friendId === undefined) {
       return res.status(400).send({ error: "friendId not given" });
     }
@@ -236,7 +236,7 @@ router.delete("/friends/delete", async (req,res,next) => {
     const friendIndex = userObj.friends.indexOf(foundFriend._id.toString());
     userObj.friends.splice(friendIndex, 1);
     await doomUsers.updateOne({_id: ObjectId(userObj._id)}, {$set: {friends: userObj.friends}});
-    return res.send({ success: "friend has been removed" });
+    return res.send(userObj.friends);
   } catch (error) {
     next (error);
   }

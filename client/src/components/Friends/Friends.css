@@ -15,22 +15,27 @@ body {
 }
 
 .friends-title {
-  font-size: 64px;
-  align-self: center;
-  margin-top: 0px;
+  align-self: center !important;
+  margin-top: 0px !important;
+  font-size: 4.2vw !important;
+  /* white-space: nowrap !important; */
 }
 
 .profile-image {
   border-radius: 50%;
+  margin-left: 15px;
+  margin-top: 15px;
 }
 
 .friend-text {
   font-size: 20px !important;
-  font-weight: bold !important;
-  margin-left: 10px !important;
+  letter-spacing: 0.05em !important;
   margin-top: 8px !important;
   margin-bottom: 8px !important;
   color: white !important;
+  position: relative !important;
+  bottom: 30px !important;
+  left: 15px !important;
 }
 
 .u-lonely-ass {
@@ -44,11 +49,42 @@ body {
 .list-box {
   background-color: #262626;
   border-radius: 0.8rem;
+  margin-top: 30px;
+}
+
+.list-box:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .friend-box {
-  background-color: #878787;
-  margin: 1rem auto;
-  border-radius: 0.8rem;
-  padding: 8px;
+  background-color: #878787 !important;
+  /* margin: 0.5rem auto !important; */
+  border-radius: 0.8rem !important; 
+  float: left !important;
+  width: 50% !important;
+  /* border: 5px solid #262626 !important; */
+}
+
+.friend-box:not(:last-child) {
+  margin-bottom: 0.8rem;
+}
+
+@media screen and (max-width: 1280px) {
+  .friend-box {
+    width: 100% !important;
+  }
+}
+
+.remove-friend {
+  font-size: 20px !important;
+  color: white !important;
+  position: relative !important;
+  text-transform: lowercase !important;
+  letter-spacing: 0.05em !important;
+  background-color: #262626 !important;
+  float: right !important;
+  top: 28px !important;
+  right: 15px !important;
 }
