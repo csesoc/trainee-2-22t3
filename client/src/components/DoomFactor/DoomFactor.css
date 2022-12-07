@@ -1,5 +1,72 @@
 .doom-factor-skull {
   display: flex;
   justify-content: center;
-  border: 2px solid white;
+  position: relative;
+  transition: 1s all !important;
+}
+
+.doom-factor-avatar {
+  background-color: white !important;
+  position: relative;
+  transition: all 0.7s;
+  z-index: 2;
+  border: 3px white solid;
+  color: black !important;
+  left: 0px;
+}
+
+.doom-factor-avatar:hover {
+  scale: 1.1;
+  border-color: black;
+  cursor: pointer !important;
+}
+
+.doom-factor-avatar-profile-picture {
+  transition: all 1s;
+}
+
+.avatar-flaming-skull-video {
+  position: absolute !important;
+}
+
+.doom-factor-value {
+  position: absolute;
+  transition: all 0.6s;
+}
+
+.background-fire {
+  overflow: hidden;
+  display: flex;
+  position: absolute;
+}
+
+.background-fire-video {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+.show-doom-factor-grow {
+  position: absolute;
+  top: 0px;
+}
+
+.doom-factor-words {
+  display: flex;
+
+  margin: auto;
+  position: relative;
+}
+
+.doom-part {
+  position: absolute;
+  right: -100px;
+  top: 15px;
+}
+
+.factor-part {
+  position: absolute;
+  top: 115px;
+  right: -100px;
 }

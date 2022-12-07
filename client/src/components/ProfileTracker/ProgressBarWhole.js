@@ -78,14 +78,23 @@ const ProgressBarWhole = ({
           </Typography>
           {userId === undefined ? (
             <ProgressBarDropdownButton onClick={handleClickDropdownOpen}>
-              <ArrowDropDownIcon style={{ color: "white" }} />
+              <ArrowDropDownIcon
+                style={{ color: "white" }}
+                className="progress-bar-dropdown-button"
+              />
             </ProgressBarDropdownButton>
           ) : (
             <></>
           )}
 
           <Typography className="progress-bar-percentage">
-            {Math.floor((completedTasks.length / dataTasks.length) * 100)}%
+            {dataTasks.length === 0 ? (
+              <>Task List Empty</>
+            ) : (
+              <>
+                {Math.floor((completedTasks.length / dataTasks.length) * 100)}%
+              </>
+            )}
           </Typography>
           <Dialog
             open={dropdownOpen}

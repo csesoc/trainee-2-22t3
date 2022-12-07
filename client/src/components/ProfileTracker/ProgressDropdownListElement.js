@@ -26,7 +26,7 @@ const ProgressDropdownListElement = ({
     } else {
       completed = true;
     }
-    const requestOptions = {
+    const putRequestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -36,7 +36,21 @@ const ProgressDropdownListElement = ({
       credentials: "include",
     };
 
-    fetch("http://localhost:5000/tasks/put", requestOptions)
+    fetch("http://localhost:5000/tasks/put", putRequestOptions)
+      .then(() => runUpdateTasks())
+      .catch((error) => console.log(error));
+  };
+
+  const handleDeleteIcon = () => {
+    const deleteRequestOptions = {
+      method: "DELETE",
+      header: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    };
+
+    fetch(`http://localhost:5000/tasks/delete?_id=${_id}`, deleteRequestOptions)
       .then(() => runUpdateTasks())
       .catch((error) => console.log(error));
   };
@@ -62,7 +76,7 @@ const ProgressDropdownListElement = ({
         <IconButton>
           <ModeEditIcon />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={handleDeleteIcon}>
           <DeleteIcon />
         </IconButton>
       </div>

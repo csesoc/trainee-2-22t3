@@ -1,0 +1,61 @@
+.background-fire-class {
+  overflow: hidden;
+  display: flex;
+  position: absolute;
+  z-index: 1;
+  transition: all 1s !important;
+}
+
+.background-fire-video-fade-in {
+  display: block;
+  object-fit: cover;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 1;
+  opacity: 1;
+  /* animation: fadeIn 1s !important; */
+  /* transition: 1s all !important; */
+  /* transition: opacity 1s ease !important; */
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.background-fire-video-fade-out {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  /* animation: fadeOut 1s !important;
+  transition: opacity 1s ease !important; */
+  /* opacity: 0 !important; */
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.doom-factor-number {
+  overflow: hidden;
+  display: flex;
+  position: absolute;
+  z-index: 1;
+  transition: all 1s;
+  margin: auto;
+  top: 40%;
+  left: 50%;
+  font-size: 40px;
+  margin-top: -20px;
+  margin-left: -20px;
+  transition: 1s all;
+}

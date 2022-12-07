@@ -1,0 +1,15 @@
+.profile-page-title {
+  transition: all 1s;
+}
+
+.profile-page-title:hover {
+  letter-spacing: 3px;
+  color: rgb(55, 55, 172) !important;
+  scale: 1.1;
+}
+
+.profile-page-title-div {
+  /* stops side scrolling when hovering over title */
+  width: 85vw;
+  margin: auto;
+}

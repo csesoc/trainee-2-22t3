@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Rating, Typography } from "@mui/material";
+import { Button, Rating, Typography } from "@mui/material";
 import BlackSkullsvg from "./BlackSkullsvg";
 import WhiteSkullsvg from "./WhiteSkullsvg";
 import MrIncredibleUncanny from "./MrIncredibleUncannySkull.webp";
@@ -9,16 +9,17 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "./HowPrepared.css";
 
 const labels = {
-  0.5: "Very Slightly Doomed",
-  1: "Very Slightly Doomed Plus+",
-  1.5: "Just Doomed",
-  2: "Just Doomed Plus",
+  null: "hello",
+  0.5: "very slightly doomed",
+  1: "Very Slightly Doomed",
+  1.5: "Almost Doomed",
+  2: "Just Doomed",
   2.5: "Solidly Doomed",
-  3: "Solidly Doomed Plus",
+  3: "SOLIDLY DOOMED",
   3.5: "Undeniably Doomed",
-  4: "Undeniably Doomed Plus",
+  4: "UNDENIABLY DOOMED",
   4.5: "CRAZY Doomed",
-  5: "CRAZY Doomed Pro Max Plus",
+  5: "CRAAAAAAAAAAAAAAAAAAAAAAAAAZY DOOMED",
 };
 
 function getLabelText(value) {
@@ -37,6 +38,9 @@ const HowPreparedSelector = () => {
           max={1}
           icon={<img src={MrIncredibleUncanny}></img>}
           emptyIcon={<img src={MrIncredibleUncanny}></img>}
+          onChange={() => {
+            console.log("Hello");
+          }}
         />
 
         <Typography variant="h6">I'm DOOOMED</Typography>
@@ -72,12 +76,12 @@ const HowPreparedSelector = () => {
           />
         </div>
 
-        <Typography>
+        <Typography className="how-prepared-rating-label">
           {value !== null && (
             <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
           )}
         </Typography>
-
+        <Button variant="contained">Submit</Button>
         <IconButton
           className="how-prepared-dropdown-arrow"
           onClick={handleClickDropdownSelector}

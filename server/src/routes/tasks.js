@@ -14,9 +14,31 @@ router.get("/get", async (req, res) => {
 
 // GET - /tasks/doomFactor
 // Calculates the doom factor (a numerical representation of how behind the user is on work)
+// Requires in query:
+// {
+//    userId: string
+// }
+//
 router.get("/doomFactor", async (req, res) => {
   //// calculation....
-  return res.send(doomFactor);
+  let userId = req.query.userId;
+  console.log(userId);
+  console.log(req.query.userId);
+  const totalTasks = await doomTasks
+    .find({ userId: ObjectId(userId) })
+    .toArray();
+  console.log(totalTasks);
+  const numTotal = totalTasks.length;
+  if (numTotal === 0) {
+    return res.send({ doomFactor: 0 });
+  }
+  const completedTasks = await doomTasks
+    .find({ userId: ObjectId(userId), completed: true })
+    .toArray();
+  const numCompleted = completedTasks.length;
+  return res.send({
+    doomFactor: Math.floor(100 - (numCompleted / numTotal) * 100),
+  });
 });
 
 router.use(verifyJWT);
@@ -206,7 +228,7 @@ export function calculateTaskDate(week, term, year, uni) {
     return { error: "startDate not in uni" };
   }
   // Calculate date
-  let date = newTime + week * 7 * 24 * 60 * 60;
+  let date = newTime + (week - 1) * 7 * 24 * 60 * 60;
   return { date: date };
 }
 
