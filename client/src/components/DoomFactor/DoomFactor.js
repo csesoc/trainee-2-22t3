@@ -17,13 +17,17 @@ import {
 } from "@mui/material";
 
 import Box from "@mui/material/Box";
-import Switch from "@mui/material/Switch";
 import Paper from "@mui/material/Paper";
+
+import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import Checkbox from "@mui/material/Checkbox";
 
 const DoomFactor = ({ updateBackgroundFireShown }) => {
   const [isShown, setIsShown] = useState(false);
   const [isShownOptionMenu, setIsShownOptionMenu] = useState(false);
+  const [showDoomFactor, setShowDoomFactor] = useState(false);
 
   const runOnMouseEnter = () => {
     setIsShown(true);
@@ -54,6 +58,10 @@ const DoomFactor = ({ updateBackgroundFireShown }) => {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
+  const handleCheckboxShowDoomFactor = () => {
+    setShowDoomFactor(!showDoomFactor);
+  };
+
   return (
     <div>
       {/* <div className="background-fire">
@@ -65,11 +73,20 @@ const DoomFactor = ({ updateBackgroundFireShown }) => {
           </div>
         </Fade>
       </div> */}
+
       <div className="doom-factor-skull">
         <div
           className="doom-factor-centre"
-          onMouseEnter={() => runOnMouseEnter()}
-          onMouseLeave={() => runOnMouseLeave()}
+          onMouseEnter={() => {
+            if (!showDoomFactor) {
+              runOnMouseEnter();
+            }
+          }}
+          onMouseLeave={() => {
+            if (!showDoomFactor) {
+              runOnMouseLeave();
+            }
+          }}
           onClick={handleShowOptionMenu}
         >
           <Avatar
@@ -78,15 +95,63 @@ const DoomFactor = ({ updateBackgroundFireShown }) => {
               height: 200,
               borderWidth: 0,
               borderColor: "black",
+              left: showDoomFactor ? "150px" : "0px",
             }}
             className="doom-factor-avatar"
           >
-            <Grow in={isShown} {...(isShown ? { timeout: 700 } : {})}>
+            <Typography
+              sx={{
+                color: "black",
+              }}
+            >
+              Profile Picture Here
+            </Typography>
+            <Grow
+              in={isShown}
+              {...(isShown ? { timeout: 700 } : {})}
+              className="avatar-flaming-skull-video"
+            >
               <video width="500" height="500" loop autoPlay>
                 <source src={SkullVideo} type="video/mp4" />
               </video>
             </Grow>
           </Avatar>
+          <div className="doom-factor-words">
+            <Grow
+              in={showDoomFactor}
+              className="show-doom-factor-grow"
+              {...(showDoomFactor ? { timeout: 1000 } : {})}
+            >
+              <Typography
+                className="doom-part"
+                variant="h1"
+                align="right"
+                sx={{ fontWeight: "bold" }}
+                left="-180px"
+                top="-190px"
+              >
+                DOOM
+              </Typography>
+            </Grow>
+
+            <Grow
+              in={showDoomFactor}
+              className="show-doom-factor-grow"
+              {...(showDoomFactor ? { timeout: 1000 } : {})}
+            >
+              <Typography
+                className="factor-part"
+                variant="h2"
+                fontSize="60px"
+                align="right"
+                sx={{ fontWeight: "bold" }}
+                left="-130px"
+                top="-90px"
+              >
+                FACTOR
+              </Typography>
+            </Grow>
+          </div>
         </div>
         <Dialog
           open={isShownOptionMenu}
@@ -107,6 +172,17 @@ const DoomFactor = ({ updateBackgroundFireShown }) => {
           <DialogContent>
             <DialogContentText>
               <Button variant="contained">Change Profile Picture</Button>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={showDoomFactor}
+                      onClick={handleCheckboxShowDoomFactor}
+                    />
+                  }
+                  label="Show Doom Factor"
+                />
+              </FormGroup>
             </DialogContentText>
           </DialogContent>
         </Dialog>

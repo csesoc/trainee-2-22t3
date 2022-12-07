@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import BackgroundFireVideo from "./background fire.mp4";
 import "./BackgroundFire.css";
-import { Fade, Grow } from "@mui/material";
+import { Fade, Grow, CardMedia } from "@mui/material";
 
 const BackgroundFire = ({ isShown, id }) => {
   const [doomFactor, setDoomFactor] = useState(0);
@@ -51,11 +51,15 @@ const BackgroundFire = ({ isShown, id }) => {
           in={isShownBackgroundFireVideo}
           {...(isShownBackgroundFireVideo ? { timeout: 1000 } : {})}
         >
-          <div>
-            <video loop autoPlay className="background-fire-video-fade-in">
-              <source src={BackgroundFireVideo} />
-            </video>
-          </div>
+          <CardMedia
+            component="video"
+            className="background-fire-video-fade-in"
+            src={BackgroundFireVideo}
+            autoPlay
+          />
+          {/* <video loop autoPlay className="background-fire-video-fade-in">
+            <source src={BackgroundFireVideo} />
+          </video> */}
         </Fade>
       </div>
 
