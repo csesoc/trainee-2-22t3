@@ -4,17 +4,13 @@ import BackgroundFireVideo from "./background fire.mp4";
 import "./BackgroundFire.css";
 import { Fade, Grow, CardMedia } from "@mui/material";
 
-const BackgroundFire = ({ isShown, id }) => {
-  const [doomFactor, setDoomFactor] = useState(0);
+const BackgroundFire = ({ isShown, id, doomFactor }) => {
   const [isShownBackgroundFireVideo, setIsShownBackgroundFireVideo] =
     useState(false);
   const [backgroundVideoFade, setBackgrounDireVideoFade] = useState(
     "background-fire-video-fade-in"
   );
-  const getRequestOptions = {
-    method: "GET",
-    credentials: "include",
-  };
+
   useEffect(() => {
     if (isShown) {
       setBackgrounDireVideoFade("background-fire-video-fade-in");
@@ -25,24 +21,29 @@ const BackgroundFire = ({ isShown, id }) => {
     }
   }, [isShown]);
 
-  useEffect(() => {
-    if (id === undefined) {
-      fetch(`http://localhost:5000/users/doomFactor`, getRequestOptions)
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => setDoomFactor(data.doomFactor));
-    } else {
-      fetch(
-        `http://localhost:5000/tasks/doomFactor?userId=${id}`,
-        getRequestOptions
-      )
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => setDoomFactor(data.doomFactor));
-    }
-  }, []);
+  // const [doomFactor, setDoomFactor] = useState(0);
+  // const getRequestOptions = {
+  //   method: "GET",
+  //   credentials: "include",
+  // };
+  // useEffect(() => {
+  //   if (id === undefined) {
+  //     fetch(`http://localhost:5000/users/doomFactor`, getRequestOptions)
+  //       .then((res) => {
+  //         return res.json();
+  //       })
+  //       .then((data) => setDoomFactor(data.doomFactor));
+  //   } else {
+  //     fetch(
+  //       `http://localhost:5000/tasks/doomFactor?userId=${id}`,
+  //       getRequestOptions
+  //     )
+  //       .then((res) => {
+  //         return res.json();
+  //       })
+  //       .then((data) => setDoomFactor(data.doomFactor));
+  //   }
+  // }, []);
 
   return (
     <div>

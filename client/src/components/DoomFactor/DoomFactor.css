@@ -25,6 +25,11 @@
   position: absolute !important;
 }
 
+.doom-factor-value {
+  position: absolute;
+  transition: all 0.6s;
+}
+
 .background-fire {
   overflow: hidden;
   display: flex;

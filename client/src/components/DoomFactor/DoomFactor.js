@@ -24,7 +24,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import Checkbox from "@mui/material/Checkbox";
 
-const DoomFactor = ({ updateBackgroundFireShown }) => {
+const DoomFactor = ({ updateBackgroundFireShown, doomFactor }) => {
   const [isShown, setIsShown] = useState(false);
   const [isShownOptionMenu, setIsShownOptionMenu] = useState(false);
   const [showDoomFactor, setShowDoomFactor] = useState(false);
@@ -102,9 +102,17 @@ const DoomFactor = ({ updateBackgroundFireShown }) => {
             <Typography
               sx={{
                 color: "black",
+                opacity: showDoomFactor ? "0.5" : "1",
               }}
             >
               Profile Picture Here
+            </Typography>
+            <Typography
+              sx={{ color: "black", opacity: showDoomFactor ? "1" : "0" }}
+              className="doom-factor-value"
+              variant="h1"
+            >
+              {doomFactor}
             </Typography>
             <Grow
               in={isShown}

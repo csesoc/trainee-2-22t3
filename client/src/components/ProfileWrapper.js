@@ -61,16 +61,47 @@ const ProfileWrapper = () => {
     }
   }, [updateTasks]);
 
+  const [doomFactor, setDoomFactor] = useState(19);
+  const getRequestOptions = {
+    method: "GET",
+    credentials: "include",
+  };
+  useEffect(() => {
+    if (id === undefined) {
+      fetch(`http://localhost:5000/users/doomFactor`, getRequestOptions)
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => setDoomFactor(data.doomFactor));
+    } else {
+      fetch(
+        `http://localhost:5000/tasks/doomFactor?userId=${id}`,
+        getRequestOptions
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => setDoomFactor(data.doomFactor));
+    }
+  }, []);
+
   return (
     <div className="profile-wrapper">
       {backgroundFireShown && (
-        <BackgroundFire isShown={backgroundFireShown} id={id} />
+        <BackgroundFire
+          isShown={backgroundFireShown}
+          id={id}
+          doomFactor={doomFactor}
+        />
       )}
       <ProfilePageTitle className="profile-page-title" />
       <div className="profile-doom-buddies-list-button">
         <DoomBuddiesListButton />
       </div>
-      <DoomFactor updateBackgroundFireShown={updateBackgroundFireShown} />
+      <DoomFactor
+        updateBackgroundFireShown={updateBackgroundFireShown}
+        doomFactor={doomFactor}
+      />
       <Divider className="profile-section-divider">DOOM TRACKER</Divider>
       <div className="profile-mini-dashboard-tracker">
         <div className="profile-mini-dashboard">
