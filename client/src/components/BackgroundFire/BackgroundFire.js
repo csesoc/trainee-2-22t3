@@ -2,14 +2,29 @@ import React from "react";
 import { useState, useEffect } from "react";
 import BackgroundFireVideo from "./background fire.mp4";
 import "./BackgroundFire.css";
-import { Fade } from "@mui/material";
+import { Fade, Grow } from "@mui/material";
 
 const BackgroundFire = ({ isShown, id }) => {
-  const [doomFactor, setDoomFactor] = useState(59);
+  const [doomFactor, setDoomFactor] = useState(0);
+  const [isShownBackgroundFireVideo, setIsShownBackgroundFireVideo] =
+    useState(false);
+  const [backgroundVideoFade, setBackgrounDireVideoFade] = useState(
+    "background-fire-video-fade-in"
+  );
   const getRequestOptions = {
     method: "GET",
     credentials: "include",
   };
+  useEffect(() => {
+    if (isShown) {
+      setBackgrounDireVideoFade("background-fire-video-fade-in");
+      setIsShownBackgroundFireVideo(true);
+    } else {
+      setBackgrounDireVideoFade("background-fire-video-fade-out");
+      setIsShownBackgroundFireVideo(false);
+    }
+  }, [isShown]);
+
   useEffect(() => {
     if (id === undefined) {
       fetch(`http://localhost:5000/users/doomFactor`, getRequestOptions)
@@ -28,18 +43,27 @@ const BackgroundFire = ({ isShown, id }) => {
         .then((data) => setDoomFactor(data.doomFactor));
     }
   }, []);
+
   return (
     <div>
       <div className="background-fire-class">
-        <Fade in={isShown === true} timeout={500}>
-          <video loop autoPlay muted className="background-fire-video">
-            <source src={BackgroundFireVideo} />
-          </video>
+        <Fade
+          in={isShownBackgroundFireVideo}
+          {...(isShownBackgroundFireVideo ? { timeout: 1000 } : {})}
+        >
+          <div>
+            <video loop autoPlay className="background-fire-video-fade-in">
+              <source src={BackgroundFireVideo} />
+            </video>
+          </div>
         </Fade>
       </div>
-      <Fade in={isShown} timeout={500}>
-        <div className="doom-factor-number">{doomFactor}</div>
-      </Fade>
+
+      <Grow in={isShown} timeout={1500}>
+        <div className="doom-factor-number" zIndex="1">
+          {doomFactor}
+        </div>
+      </Grow>
     </div>
   );
 };

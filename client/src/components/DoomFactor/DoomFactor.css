@@ -16,17 +16,18 @@
 .doom-factor-avatar:hover {
   scale: 1.1;
   border-color: black;
+  cursor: pointer !important;
 }
 
 .background-fire {
   overflow: hidden;
   display: flex;
   position: absolute;
-  z-index: 1;
 }
 
 .background-fire-video {
   object-fit: cover;
-  width: 200vw;
-  height: 200vh;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
 }
