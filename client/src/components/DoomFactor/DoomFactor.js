@@ -14,6 +14,7 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  CardMedia,
 } from "@mui/material";
 
 import Box from "@mui/material/Box";
@@ -23,6 +24,8 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import Checkbox from "@mui/material/Checkbox";
+
+import testProfileImage from "./testProfileImage.jpg";
 
 const DoomFactor = ({ updateBackgroundFireShown, doomFactor }) => {
   const [isShown, setIsShown] = useState(false);
@@ -99,21 +102,39 @@ const DoomFactor = ({ updateBackgroundFireShown, doomFactor }) => {
             }}
             className="doom-factor-avatar"
           >
-            <Typography
+            {/* <Typography
               sx={{
                 color: "black",
                 opacity: showDoomFactor ? "0.5" : "1",
               }}
             >
               Profile Picture Here
-            </Typography>
-            <Typography
-              sx={{ color: "black", opacity: showDoomFactor ? "1" : "0" }}
-              className="doom-factor-value"
-              variant="h1"
+            </Typography> */}
+            <Avatar
+              src={testProfileImage}
+              sx={{
+                width: 200,
+                height: 200,
+                borderWidth: 0,
+                borderColor: "black",
+                opacity: showDoomFactor ? "0.5" : "1",
+              }}
+              className="doom-factor-avatar-profile-picture"
+            />
+
+            <Grow
+              in={showDoomFactor}
+              {...(showDoomFactor ? { timeout: 700 } : {})}
+              className="avatar-flaming-skull-video"
             >
-              {doomFactor}
-            </Typography>
+              <Typography
+                sx={{ color: "black", opacity: showDoomFactor ? "1" : "0" }}
+                className="doom-factor-value"
+                variant="h1"
+              >
+                {doomFactor}
+              </Typography>
+            </Grow>
             <Grow
               in={isShown}
               {...(isShown ? { timeout: 700 } : {})}

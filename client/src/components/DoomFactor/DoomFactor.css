@@ -21,6 +21,10 @@
   cursor: pointer !important;
 }
 
+.doom-factor-avatar-profile-picture {
+  transition: all 1s;
+}
+
 .avatar-flaming-skull-video {
   position: absolute !important;
 }
