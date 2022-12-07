@@ -197,10 +197,16 @@ router.post("/friends/post", async (req,res,next) => {
 
     let foundFriend = await doomUsers.findOne({_id: ObjectId(friendId)});
 
-    if (foundFriend === null) {
-      return res.status(400).send({ error: "friendId is invalid" });
-    }
+    console.log(`USER ID? ${userObj._id}`);
+    console.log(`USER ID TYPE ${typeof userObj._id}`);
+    console.log(`FOUND ID? ${foundFriend._id}`);
+    console.log(`FOUND ID TYPE ${typeof foundFriend._id}`);
 
+    // check later, comparison not working...
+    if (foundFriend === null || foundFriend._id === userObj._id) {
+      return res.status(400).send({ error: "friendId is invalid" });
+    } 
+    
     if (userObj.friends === undefined) {
       userObj.friends = [];
     }

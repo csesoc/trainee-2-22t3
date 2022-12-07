@@ -18,23 +18,33 @@ body {
   align-self: center !important;
   margin-top: 0px !important;
   font-size: 4.2vw !important;
-  /* white-space: nowrap !important; */
+  transition: all 1s !important;
+}
+
+.friends-title:hover {
+  letter-spacing: 3px;
+  color: rgb(55, 55, 172) !important;
+  scale: 1.1;
+}
+
+.friends-title-div {
+  width: 85vw;
+  margin: auto;
 }
 
 .profile-image {
   border-radius: 50%;
   margin-left: 15px;
-  margin-top: 15px;
+  margin-top: 12px;
 }
 
 .friend-text {
-  font-size: 20px !important;
+  font-size: 18px !important;
   letter-spacing: 0.05em !important;
-  margin-top: 8px !important;
-  margin-bottom: 8px !important;
+  margin-bottom: 12px !important;
   color: white !important;
   position: relative !important;
-  bottom: 30px !important;
+  bottom: 22px !important;
   left: 15px !important;
 }
 
@@ -47,8 +57,6 @@ body {
 }
 
 .list-box {
-  background-color: #262626;
-  border-radius: 0.8rem;
   margin-top: 30px;
 }
 
@@ -60,11 +68,13 @@ body {
 
 .friend-box {
   background-color: #878787 !important;
-  /* margin: 0.5rem auto !important; */
   border-radius: 0.8rem !important; 
   float: left !important;
   width: 50% !important;
-  /* border: 5px solid #262626 !important; */
+  cursor: pointer !important;
+  position: relative !important;
+  z-index: 0 !important;
+  transition: all 1s !important;
 }
 
 .friend-box:not(:last-child) {
@@ -77,14 +87,80 @@ body {
   }
 }
 
+.friend-box:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ffffff,
+    #E3E3E3,
+    #BCBCBC,
+    #858484,
+    #6D6D6D,
+    #4F4F4F, 
+    #222,
+    #111,
+    #0e0e10
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowingfriend-box 20s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowingfriend-box {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.friend-box:active {
+  color: #000;
+}
+
+.friend-box:active:after {
+  background: transparent;
+}
+
+.friend-box:hover:before {
+  opacity: 1;
+}
+
+.friend-box:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #222222;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
 .remove-friend {
-  font-size: 20px !important;
+  font-size: 18px !important;
   color: white !important;
   position: relative !important;
   text-transform: lowercase !important;
   letter-spacing: 0.05em !important;
-  background-color: #262626 !important;
+  background-color: #181818 !important;
   float: right !important;
   top: 28px !important;
   right: 15px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
 }
