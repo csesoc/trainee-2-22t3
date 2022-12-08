@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function ProfileSearchBar() {
+    // TODO: Empty string shows all search results in database
+
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [filteredResults, setFilteredResults] = useState([]);
@@ -43,9 +45,14 @@ export default function ProfileSearchBar() {
         setSearchInput(e.target.value);
         console.log(e.target.value);
 
-        setFilteredResults(searchResults.filter((user) => {
-            return user.username.startsWith(e.target.value);
-        }))
+        if (e.target.value !== "") {
+            setFilteredResults(searchResults.filter((user) => {
+                return user.username.startsWith(e.target.value);
+            }))
+        } else {
+            setFilteredResults([])
+        }
+
         // If MenuItem is selected, then it should navigate to page "http://localhost:3000/tracker/$id" i.e. that user's profile page
         // Where $id refers to the id of the person clicked on, 
     }
