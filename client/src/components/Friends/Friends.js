@@ -6,8 +6,10 @@ import {
   Divider,
   Dialog,
   DialogContent,
+  CardMedia,
 } from "@mui/material";
 import "./Friends.css";
+import BackgroundFireVideo from "../BackgroundFire/background fire.mp4";
 import { useState, useEffect } from "react";
 
 export default function FriendList() {
@@ -114,6 +116,14 @@ export default function FriendList() {
             FRIENDS STUFF HERE
           </DialogContent>
         </Dialog>
+        <div className="background-fire-class">
+          <CardMedia
+            component="video"
+            src={BackgroundFireVideo}
+            autoPlay
+            loop
+          />
+        </div>
       </div>
     </>
   );
