@@ -33,7 +33,6 @@ export default function FriendList() {
   }, [friends]);
 
   const removeFriend = async (_id) => {
-    console.log(`HERE ${_id}`);
     const response = await fetch(("http://localhost:5000/users/friends/delete"), {
       method: "DELETE",
       headers: {
@@ -50,7 +49,7 @@ export default function FriendList() {
   const showList = (friends.length) ? (
     friends.map(friendObj => {
       return (
-        <div className="friend-box" key={friendObj._id} onClick={() => setPopup(true)}>
+        <div className="friend-box" key={friendObj._id} onClick={e => e.stopPropagation() && setPopup(true)}>
           <img 
             src={friendObj.profileImg} 
             alt="profile"
@@ -73,7 +72,7 @@ export default function FriendList() {
     <Typography 
       variant="h2" 
       className="u-lonely-ass"
-      align="center"  
+      align="center"
     >
       Looking a bit lonely here. Go make some friends! 🐸
     </Typography>  

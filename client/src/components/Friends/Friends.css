@@ -35,6 +35,7 @@ body {
   border-radius: 50%;
   margin-left: 15px;
   margin-top: 12px;
+  object-fit: cover;
 }
 
 .friend-text {
@@ -55,6 +56,8 @@ body {
   margin-top: 8px !important;
   margin-bottom: 8px !important;
   color: white !important;
+  font-weight: bold !important;
+  letter-spacing: 0.05em !important;
 }
 
 .list-box {
@@ -178,7 +181,9 @@ body {
   left: 0;
   width: 100%; 
   height: auto;
-  margin-top: -10%;
+  bottom: 0; 
   object-fit: cover;
-  transition: all 1s !important;
-}
+  transition: all 1s;
+  -webkit-filter: blur(6px);
+  filter: brightness(60%) blur(6px);
+} 
