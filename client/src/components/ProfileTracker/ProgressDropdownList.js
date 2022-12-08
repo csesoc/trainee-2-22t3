@@ -4,11 +4,14 @@ import Box from "@mui/material/Box";
 import { ListItem, Typography } from "@mui/material";
 import { Card, Divider } from "@mui/material";
 
+import "./ProgressTrackerStyling.css";
+
 const ProgressDropdownList = ({
   dataTasks,
   progressBarType,
   dataTaskCompletedStatus,
   runUpdateTasks,
+  sortByMode,
 }) => {
   // iterates through sample data to add relevant data to dropdown
   const [ProgressDropdownList, setProgressDropdownList] = useState([]);
@@ -61,7 +64,18 @@ const ProgressDropdownList = ({
     }
     return 0;
   };
-  const [compareBy, setCompareBy] = useState(() => compareByName);
+  const [compareBy, setCompareBy] = useState(() => compareByDate);
+  useEffect(() => {
+    if (sortByMode === "date") {
+      setCompareBy(() => compareByDate);
+    } else if (sortByMode === "week") {
+      setCompareBy(() => compareByWeek);
+    } else if (sortByMode === "year") {
+      setCompareBy(() => compareByYear);
+    } else if (sortByMode === "name") {
+      setCompareBy(() => compareByName);
+    }
+  }, [sortByMode]);
 
   // loop through each element in given array and return component
   const showProgressDropdownList = ProgressDropdownList.sort(compareBy).map(

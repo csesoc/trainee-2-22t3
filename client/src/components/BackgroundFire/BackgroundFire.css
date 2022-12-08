@@ -7,8 +7,10 @@
 }
 
 .background-fire-video-fade-in {
+  overflow: hidden !important;
   display: block;
   object-fit: cover;
+  scale: 1;
   width: 100vw !important;
   height: 100vh !important;
   z-index: 1;

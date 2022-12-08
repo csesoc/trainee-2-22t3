@@ -134,3 +134,18 @@
   top: 10px !important;
   left: 10px !important;
 }
+
+.progress-dropdown-list-item {
+  /* transition: all 1s !important; */
+}
+
+.dropdown-list-element-fade-out {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
+}
+
+.sort-by-check-mark {
+  float: right !important;
+}

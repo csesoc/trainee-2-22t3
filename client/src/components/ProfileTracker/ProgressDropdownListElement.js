@@ -7,6 +7,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import UndoIcon from "@mui/icons-material/Undo";
 
+import "./ProgressTrackerStyling.css";
+
 const ProgressDropdownListElement = ({
   _id,
   taskType,
@@ -63,7 +65,7 @@ const ProgressDropdownListElement = ({
     toggleCompletedIcon = <UndoIcon />;
   }
   return (
-    <div>
+    <div /*className={completed ? "dropdown-list-element-fade-out" : ""}*/>
       <Typography variant="h6">{name}</Typography>
 
       <Typography>Duration: {duration}</Typography>

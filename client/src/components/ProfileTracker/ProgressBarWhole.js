@@ -4,6 +4,7 @@ import ProgressDropdownList from "./ProgressDropdownList";
 import { white } from "@mui/material/colors";
 import ProgressBarDropdownButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
@@ -24,6 +25,58 @@ import {
 } from "@mui/material";
 
 import "./ProgressTrackerStyling.css";
+
+import { styled, alpha } from "@mui/material/styles";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Divider from "@mui/material/Divider";
+import Check from "@mui/icons-material/Check";
+import ListItemIcon from "@mui/material/ListItemIcon";
+
+const StyledMenu = styled((props) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "left",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "left",
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  "& .MuiPaper-root": {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 110,
+    backgroundColor: "rgb(96, 99, 106)",
+    // theme.palette.mode === "light"
+    //   ? "rgb(55, 55, 172)"
+    //   : theme.palette.grey[300],
+    boxShadow:
+      "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+    "& .MuiMenu-list": {
+      padding: "4px 0",
+    },
+    "& .MuiMenuItem-root": {
+      "& .MuiSvgIcon-root": {
+        fontSize: 18,
+        // color: "#36393f",
+        color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5),
+      },
+      "&:active": {
+        backgroundColor: "#36393f",
+        // backgroundColor: alpha(
+        //   theme.palette.primary.main,
+        //   theme.palette.action.selectedOpacity
+        // ),
+      },
+    },
+  },
+}));
 
 const ProgressBarWhole = ({
   ProgressBarType,
@@ -62,6 +115,35 @@ const ProgressBarWhole = ({
       setCompletedListIsShown(true);
     }
   };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openSortByMenu = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const [sortByMode, setSortByMode] = useState("date");
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleCloseByDate = () => {
+    // setAnchorEl(null);
+    setSortByMode("date");
+  };
+  const handleCloseByWeek = () => {
+    // setAnchorEl(null);
+    setSortByMode("week");
+  };
+  const handleCloseByYear = () => {
+    // setAnchorEl(null);
+    setSortByMode("year");
+  };
+  const handleCloseByName = () => {
+    // setAnchorEl(null);
+    setSortByMode("name");
+  };
+
+  const [isCompactView, setIsCompactView] = useState(false);
 
   return (
     <>
@@ -116,13 +198,83 @@ const ProgressBarWhole = ({
               {dialogTitle}
             </DialogTitle>
             <DialogContent>
-              <Button
+              <IconButton
                 variant="contained"
-                endIcon={<KeyboardArrowDownIcon />}
+                startIcon={<KeyboardArrowDownIcon />}
                 className="progress-bar-sort-by-button"
+                aria-controls={
+                  openSortByMenu ? "demo-customized-menu" : undefined
+                }
+                aria-haspopup="true"
+                aria-expanded={openSortByMenu ? "true" : undefined}
+                onClick={handleClick}
               >
-                Sort By
-              </Button>
+                <KeyboardArrowDownIcon />
+              </IconButton>
+              <StyledMenu
+                id="demo-customized-menu"
+                MenuListProps={{
+                  "aria-labelledby": "demo-customized-button",
+                }}
+                anchorEl={anchorEl}
+                open={openSortByMenu}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleCloseByDate} disableRipple>
+                  Date
+                  {sortByMode === "date" && (
+                    <ListItemIcon
+                      className="sort-by-check-mark"
+                      sx={{
+                        justifyContent: "right",
+                      }}
+                    >
+                      <Check />
+                    </ListItemIcon>
+                  )}
+                </MenuItem>
+                <MenuItem onClick={handleCloseByWeek} disableRipple>
+                  Week
+                  {sortByMode === "week" && (
+                    <ListItemIcon
+                      className="sort-by-check-mark"
+                      sx={{
+                        justifyContent: "right",
+                      }}
+                    >
+                      <Check />
+                    </ListItemIcon>
+                  )}
+                </MenuItem>
+                {/* <Divider sx={{ my: 0.5 }} /> */}
+                <MenuItem onClick={handleCloseByYear} disableRipple>
+                  Year
+                  {sortByMode === "year" && (
+                    <ListItemIcon
+                      className="sort-by-check-mark"
+                      sx={{
+                        justifyContent: "right",
+                      }}
+                    >
+                      <Check />
+                    </ListItemIcon>
+                  )}
+                </MenuItem>
+                <MenuItem onClick={handleCloseByName} disableRipple>
+                  Name
+                  {sortByMode === "name" && (
+                    <ListItemIcon
+                      className="sort-by-check-mark"
+                      sx={{
+                        justifyContent: "right",
+                      }}
+                    >
+                      <Check />
+                    </ListItemIcon>
+                  )}
+                </MenuItem>
+                <MenuItem>Compact View</MenuItem>
+              </StyledMenu>
               <DialogContentText className="dialog-content">
                 {/* Uncompleted Tasks */}
                 <ProgressDropdownList
@@ -130,6 +282,7 @@ const ProgressBarWhole = ({
                   progressBarType={ProgressBarType}
                   dataTaskCompletedStatus={false}
                   runUpdateTasks={runUpdateTasks}
+                  sortByMode={sortByMode}
                 />
                 {/* Completed Tasks */}
                 {completedListIsShown && (
@@ -138,6 +291,7 @@ const ProgressBarWhole = ({
                     progressBarType={ProgressBarType}
                     dataTaskCompletedStatus={true}
                     runUpdateTasks={runUpdateTasks}
+                    sortByMode={sortByMode}
                   />
                 )}
               </DialogContentText>

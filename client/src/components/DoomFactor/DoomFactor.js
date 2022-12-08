@@ -282,6 +282,7 @@ const DoomFactor = ({ updateBackgroundFireShown, doomFactor, id }) => {
                 <input
                   accept="image/*"
                   multiple
+                  hidden
                   type="file"
                   onChange={(event) => {
                     const file = event.target.files[0];
