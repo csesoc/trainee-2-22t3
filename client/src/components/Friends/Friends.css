@@ -73,7 +73,8 @@ body {
 .friend-box {
   border-radius: 0.8rem !important; 
   float: left !important;
-  width: 50% !important;
+  width: 49.19% !important;
+  margin: 0.3rem !important;
   cursor: pointer !important;
   position: relative !important;
   z-index: 0 !important;

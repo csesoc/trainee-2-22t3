@@ -4,17 +4,23 @@ import {
   Box,
   Button,
   Divider,
-  Dialog,
-  DialogContent,
+  // Dialog,
+  // DialogContent,
   CardMedia,
 } from "@mui/material";
 import "./Friends.css";
 import BackgroundFireVideo from "../BackgroundFire/background fire.mp4";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function FriendList() {
   const [friends, setFriends] = useState([]);
-  const [popup, setPopup] = useState(false);
+
+  const navigate = useNavigate();
+
+  const openFriendPage = (friend) => {
+    navigate(`/tracker/${friend}`);
+  }
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -49,7 +55,7 @@ export default function FriendList() {
   const showList = (friends.length) ? (
     friends.map(friendObj => {
       return (
-        <div className="friend-box" key={friendObj._id} onClick={e => e.stopPropagation() && setPopup(true)}>
+        <div className="friend-box" key={friendObj._id} onClick={() => openFriendPage(friendObj._id)}>
           <img 
             src={friendObj.profileImg} 
             alt="profile"
@@ -64,7 +70,7 @@ export default function FriendList() {
           >
             {friendObj.username}
           </Typography>
-          <Button className="remove-friend" onClick={() => removeFriend(friendObj._id)}>Remove</Button>  
+          <Button className="remove-friend" onClick={e => {e.stopPropagation(); removeFriend(friendObj._id)}}>Remove</Button>  
         </div>          
       );
     })
@@ -97,7 +103,7 @@ export default function FriendList() {
         <Box className="list-box" sx={{p: 3}}>
           {showList}
         </Box>
-        <Dialog
+        {/* <Dialog
           open={popup}
           onClose={() => setPopup(false)}
           maxWidth="m"
@@ -114,7 +120,7 @@ export default function FriendList() {
           <DialogContent>
             FRIENDS STUFF HERE
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
         <div className="background-fire-class">
           <CardMedia
             component="video"
