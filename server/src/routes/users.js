@@ -8,6 +8,18 @@ import { calculateTaskDate } from "./tasks.js";
 const router = express.Router();
 router.use(verifyJWT);
 
+// GET - /users/getUsers
+// Returns an array of all users
+router.get("/getUsers", async (req, res) => {
+  // See verifyJWT for where authUser comes from
+  // userObj = {_id: '63606ef4340d06fc62246242', username: 'Andrew2', email: 'test2@gmail.com', salt: ...
+  let userObj = req.authUser;
+  const userArray = await doomUsers
+    .find({}, { username: 1, _id: 0 })
+    .toArray();
+  res.send(userArray);
+});
+
 // GET - /users/getTasks
 // Returns an array of all courses
 router.get("/getTasks", async (req, res) => {

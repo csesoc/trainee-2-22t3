@@ -5,6 +5,7 @@ import RegisterPage from "./components/RegisterLogin/RegisterPage";
 import LoginPage from "./components/RegisterLogin/LoginPage";
 import Profile from "./components/Profile";
 import Friends from "./components/Friends/Friends";
+import FriendsAdd from "./components/Friends/FriendsAdd";
 import { experimental_sx as sx, ThemeProvider, createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -63,6 +64,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/friends" element={<Friends />} />
+          <Route path="/friends/add" element={<FriendsAdd />} />
           <Route path="/tracker/:id" element={<Profile />} />
           <Route path="/tracker" element={<Profile />} />
         </Routes>

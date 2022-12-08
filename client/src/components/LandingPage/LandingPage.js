@@ -1,6 +1,8 @@
 import { Typography, Button, Divider } from "@mui/material";
 import "./LandingPage.css";
 import { Link } from "react-router-dom";
+import "../DoomBuddies/ProfileSearchBar";
+import ProfileSearchBar from "../DoomBuddies/ProfileSearchBar";
 
 export default function LandingPage() {
   return (
@@ -19,8 +21,8 @@ export default function LandingPage() {
         >
           DOOM TRACKER
         </Typography>
-        <Link to="/login"> 
-          <Button 
+        <Link to="/login">
+          <Button
             variant="outlined"
             type="submit"
             className="landing-button-1"
@@ -40,12 +42,12 @@ export default function LandingPage() {
         >
           Don't have an account?
         </Typography>
-        <Link to="/register"> 
-          <Button 
+        <Link to="/register">
+          <Button
             href="#text-buttons"
             className="landing-button-2"
             sx={{ fontWeight: "normal" }}
-            style={{textTransform: 'none'}}
+            style={{ textTransform: 'none' }}
           >
             Sign up for Doom Tracker
           </Button>

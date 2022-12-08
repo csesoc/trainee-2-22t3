@@ -22,21 +22,23 @@ export default function FriendList() {
   }
 
   useEffect(() => {
-    const fetchFriends = async () => {
-      const response = await fetch(("http://localhost:5000/users/friends/get"), {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-        qs: {},
-      });
-      const json = await response.json();
-      setFriends(json);
-    };
-    fetchFriends();
+    // REPLACE WITH SEARCH BAR
+  //   const fetchFriends = async () => {
+  //     const response = await fetch(("http://localhost:5000/users/friends/get"), {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-type": "application/json",
+  //       },
+  //       credentials: "include",
+  //       qs: {},
+  //     });
+  //     const json = await response.json();
+  //     setFriends(json);
+  //   };
+  //   fetchFriends();
   }, [friends]);
 
+  // THIS BECOMES ADD FRIEND **when friend added should also be deleted off all users (not friends) list
   const removeFriend = async (_id) => {
     const response = await fetch(("http://localhost:5000/users/friends/delete"), {
       method: "DELETE",
@@ -79,7 +81,7 @@ export default function FriendList() {
       className="u-lonely-ass"
       align="center"
     >
-      Looking a bit lonely here. Go make some friends! 🐸
+      Wow you BNOC. Congratulations, you have befriend EVERYONE on Doom Tracker! 👍
     </Typography>  
   )
     
@@ -100,12 +102,12 @@ export default function FriendList() {
           className="friends-divider"
         />
         <Typography>CHUCK IN SEARCH BAR HERE</Typography>
-        <Link to="/friends/add">
+        <Link to="/friends">
           <Button 
             type="submit" 
             sx={{ fontWeight: "normal" }}
             // make css for this className
-            className="add-friend-link" 
+            className="back-friend-link" 
           >
             Add Friend
           </Button>
@@ -113,24 +115,6 @@ export default function FriendList() {
         <Box className="list-box" sx={{p: 3}}>
           {showList}
         </Box>
-        {/* <Dialog
-          open={popup}
-          onClose={() => setPopup(false)}
-          maxWidth="m"
-          PaperProps={{
-            style: {
-              backgroundColor: "rgb(96, 99, 106)",
-              border: "solid",
-              borderColor: "#36393f",
-              borderWidth: "5px",
-              borderRadius: "10px",
-            },
-          }}
-        >
-          <DialogContent>
-            FRIENDS STUFF HERE
-          </DialogContent>
-        </Dialog> */}
         <div className="background-fire-class">
           <CardMedia
             component="video"
