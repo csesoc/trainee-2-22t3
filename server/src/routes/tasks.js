@@ -125,7 +125,7 @@ router.put(
     if (foundTask === undefined) {
       return res.status(400).send({ error: "Task not found. Invalid task id" });
     }
-    if (foundTask.userId !== req.authUser._id.toString()) {
+    if (foundTask.userId.toString() !== req.authUser._id.toString()) {
       return res.status(403).send({
         error: "Logged in person does not have permission to edit task",
       });
@@ -192,7 +192,7 @@ router.delete(
     if (foundTask === undefined) {
       return res.status(400).send({ error: "Task not found. Invalid task id" });
     }
-    if (foundTask.userId !== req.authUser._id.toString()) {
+    if (foundTask.userId.toString() !== req.authUser._id.toString()) {
       return res
         .status(403)
         .send({ error: "Logged in person does not have permission to delete" });

@@ -33,6 +33,7 @@ const ProgressDropdownListElement = ({
         _id: _id,
         completed: completed,
       }),
+      // qs: { _id: _id, completed: completed },
       credentials: "include",
     };
 
