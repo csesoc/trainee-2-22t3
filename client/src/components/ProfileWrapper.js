@@ -43,7 +43,8 @@ const ProfileWrapper = () => {
           setDataTasks(dataTasks);
           console.log("useEffect");
           console.log(dataTasks);
-        });
+        })
+        .catch((error) => console.log(error));
     } else {
       fetch("http://localhost:5000/tasks/get", {
         credentials: "include",
@@ -57,7 +58,8 @@ const ProfileWrapper = () => {
               return task.userId === id;
             })
           );
-        });
+        })
+        .catch((error) => console.log(error));
     }
   }, [updateTasks, id]);
 
