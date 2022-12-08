@@ -2,16 +2,17 @@ import React from "react";
 import {
   Typography,
   Box,
-  Link,
   Button,
+  Divider,
+  Dialog,
+  DialogContent,
 } from "@mui/material";
 import "./Friends.css";
-import Popup from "./FriendsPopUp";
 import { useState, useEffect } from "react";
 
 export default function FriendList() {
   const [friends, setFriends] = useState([]);
-  const [popup, setPopup] = useState([false]);
+  const [popup, setPopup] = useState(false);
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -47,7 +48,7 @@ export default function FriendList() {
   const showList = (friends.length) ? (
     friends.map(friendObj => {
       return (
-        <div className="friend-box" key={friendObj._id}>
+        <div className="friend-box" key={friendObj._id} onClick={() => setPopup(true)}>
           <img 
             src={friendObj.profileImg} 
             alt="profile"
@@ -55,15 +56,13 @@ export default function FriendList() {
             height="70"
             className="profile-image"
           ></img>
-          <Link 
-            underline="hover"
+          <Typography 
             component="button"
             variant="h2" 
             className="friend-text" 
-            onClick={() => setPopup(true)}  
           >
             {friendObj.username}
-          </Link>
+          </Typography>
           <Button className="remove-friend" onClick={() => removeFriend(friendObj._id)}>Remove</Button>  
         </div>          
       );
@@ -89,12 +88,32 @@ export default function FriendList() {
         >
           💀 DOOM BUDDIES 💀
         </Typography>
+        <Divider 
+          variant="middle" 
+          style={{width:'100%'}} 
+          className="friends-divider"
+        />
         <Box className="list-box" sx={{p: 3}}>
           {showList}
         </Box>
-        <Popup trigger={popup} setTrigger={setPopup}>
-          <h3>POP UP HERE</h3>
-        </Popup>
+        <Dialog
+          open={popup}
+          onClose={() => setPopup(false)}
+          maxWidth="m"
+          PaperProps={{
+            style: {
+              backgroundColor: "rgb(96, 99, 106)",
+              border: "solid",
+              borderColor: "#36393f",
+              borderWidth: "5px",
+              borderRadius: "10px",
+            },
+          }}
+        >
+          <DialogContent>
+            FRIENDS STUFF HERE
+          </DialogContent>
+        </Dialog>
       </div>
     </>
   );

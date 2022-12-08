@@ -11,7 +11,6 @@ body {
   border-radius: 0.4rem;
   padding: 3rem;
   padding-top: 36px;
-  color: #ffffff;
 }
 
 .friends-title {
@@ -43,6 +42,8 @@ body {
   letter-spacing: 0.05em !important;
   margin-bottom: 12px !important;
   color: white !important;
+  background-color: transparent;
+  border: none;
   position: relative !important;
   bottom: 22px !important;
   left: 15px !important;
@@ -67,7 +68,6 @@ body {
 }
 
 .friend-box {
-  background-color: #878787 !important;
   border-radius: 0.8rem !important; 
   float: left !important;
   width: 50% !important;
@@ -164,3 +164,9 @@ body {
   padding-left: 15px !important;
   padding-right: 15px !important;
 }
+
+.friends-divider {
+  border-top: 5px solid #ffffff !important;
+  margin-top: 30px !important;
+}
+
