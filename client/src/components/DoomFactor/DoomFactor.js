@@ -25,9 +25,9 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import Checkbox from "@mui/material/Checkbox";
 
-import testProfileImage from "./testProfileImage.jpg";
+import AvatarProfileImage from "./testProfileImage.jpg";
 
-const DoomFactor = ({ updateBackgroundFireShown, doomFactor }) => {
+const DoomFactor = ({ updateBackgroundFireShown, doomFactor, id }) => {
   const [isShown, setIsShown] = useState(false);
   const [isShownOptionMenu, setIsShownOptionMenu] = useState(false);
   const [showDoomFactor, setShowDoomFactor] = useState(false);
@@ -64,6 +64,72 @@ const DoomFactor = ({ updateBackgroundFireShown, doomFactor }) => {
   const handleCheckboxShowDoomFactor = () => {
     setShowDoomFactor(!showDoomFactor);
   };
+
+  const [uploadProfileTrackerImage, setUploadProfileTrackerImage] =
+    useState("");
+  const [profileTrackerImage, setProfileTrackerImage] = useState("");
+  const [updateCounter, setUpdateCounter] = useState(0);
+
+  const runUpdateCounter = () => {
+    setUpdateCounter(updateCounter + 1);
+  };
+
+  const handleUploadProfileImg = () => {
+    const formData = new FormData();
+    // console.log("LOLOL");
+    // console.log(uploadProfileTrackerImage);
+    formData.append("avatar", profileTrackerImage);
+    // for (var key of formData.entries()) {
+    //   console.log(key[0] + ", " + key[1]);
+    // }
+    const postProfileImgRequestOptions = {
+      method: "POST",
+      // headers: {
+      //   "Content-type": "multipart/form-data",
+      // },
+      credentials: "include",
+      body: formData,
+    };
+    fetch(
+      "http://localhost:5000/users/uploadProfileImg",
+      postProfileImgRequestOptions
+    )
+      .then(() => runUpdateCounter())
+      .then(() => console.log(updateCounter));
+  };
+  const getProfileImgRequestOptions = {
+    method: "GET",
+    credentials: "include",
+  };
+  useEffect(() => {
+    if (id === undefined) {
+      fetch(
+        `http://localhost:5000/users/getProfileImg`,
+        getProfileImgRequestOptions
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setProfileTrackerImage(data.profileImgUrl);
+          console.log(profileTrackerImage);
+        })
+        .catch((error) => console.log(error));
+    } else {
+      fetch(
+        `http://localhost:5000/tasks/getOtherProfileImg?userId=${id}`,
+        getProfileImgRequestOptions
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setProfileTrackerImage(data.profileImgUrl);
+        })
+
+        .catch((error) => console.log(error));
+    }
+  }, [updateCounter]);
 
   return (
     <div>
@@ -111,7 +177,7 @@ const DoomFactor = ({ updateBackgroundFireShown, doomFactor }) => {
               Profile Picture Here
             </Typography> */}
             <Avatar
-              src={testProfileImage}
+              src={profileTrackerImage}
               sx={{
                 width: 200,
                 height: 200,
@@ -200,7 +266,6 @@ const DoomFactor = ({ updateBackgroundFireShown, doomFactor }) => {
           <DialogTitle>Options</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              <Button variant="contained">Change Profile Picture</Button>
               <FormGroup>
                 <FormControlLabel
                   control={
@@ -212,6 +277,22 @@ const DoomFactor = ({ updateBackgroundFireShown, doomFactor }) => {
                   label="Show Doom Factor"
                 />
               </FormGroup>
+              <Button variant="contained" component="label">
+                Change Profile Picture
+                <input
+                  accept="image/*"
+                  multiple
+                  type="file"
+                  onChange={(event) => {
+                    const file = event.target.files[0];
+                    setProfileTrackerImage(file);
+                    // console.log(profileTrackerImage);
+                  }}
+                />
+              </Button>
+              <Button variant="contained" onClick={handleUploadProfileImg}>
+                Upload
+              </Button>
             </DialogContentText>
           </DialogContent>
         </Dialog>

@@ -65,9 +65,7 @@ const BackgroundFire = ({ isShown, id, doomFactor }) => {
       </div>
 
       <Grow in={isShown} timeout={1500}>
-        <div className="doom-factor-number" zIndex="1">
-          {doomFactor}
-        </div>
+        <div className="doom-factor-number">{doomFactor}</div>
       </Grow>
     </div>
   );

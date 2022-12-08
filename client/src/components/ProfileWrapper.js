@@ -9,7 +9,7 @@ import "./ProfileStyling.css";
 import MiniDashboard from "./MiniDashboard/MiniDashboard";
 import BackgroundFire from "./BackgroundFire/BackgroundFire";
 import { useParams } from "react-router-dom";
-import { Divider, Fade } from "@mui/material";
+import { Divider, Fade, Typography } from "@mui/material";
 
 const ProfileWrapper = () => {
   const [dataTasks, setDataTasks] = useState([]);
@@ -59,9 +59,9 @@ const ProfileWrapper = () => {
           );
         });
     }
-  }, [updateTasks]);
+  }, [updateTasks, id]);
 
-  const [doomFactor, setDoomFactor] = useState(19);
+  const [doomFactor, setDoomFactor] = useState(0);
   const getRequestOptions = {
     method: "GET",
     credentials: "include",
@@ -81,9 +81,33 @@ const ProfileWrapper = () => {
         .then((res) => {
           return res.json();
         })
+        // .then((data) => {
+        //   console.log("helloooooooooooooo");
+        //   console.log(data.doomFactor);
+        // })
         .then((data) => setDoomFactor(data.doomFactor));
     }
-  }, []);
+  }, [updateTasks]);
+
+  const [profileUsername, setProfileUsername] = useState("Loading...");
+  useEffect(() => {
+    if (id === undefined) {
+      fetch(`http://localhost:5000/users/getUsername`, getRequestOptions)
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => setProfileUsername(data.username));
+    } else {
+      fetch(
+        `http://localhost:5000/tasks/getOtherUsername?userId=${id}`,
+        getRequestOptions
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => setProfileUsername(data.otherUsername));
+    }
+  });
 
   return (
     <div className="profile-wrapper">
@@ -101,7 +125,11 @@ const ProfileWrapper = () => {
       <DoomFactor
         updateBackgroundFireShown={updateBackgroundFireShown}
         doomFactor={doomFactor}
+        id={id}
       />
+      <Divider>
+        <Typography variant="h3">{profileUsername}</Typography>
+      </Divider>
       <Divider className="profile-section-divider">DOOM TRACKER</Divider>
       <div className="profile-mini-dashboard-tracker">
         <div className="profile-mini-dashboard">

@@ -1,6 +1,6 @@
 import express from "express";
 import { check, validationResult } from "express-validator";
-import { doomTasks } from "../database.js";
+import { doomTasks, doomUsers } from "../database.js";
 import { ObjectId } from "mongodb";
 import { verifyJWT } from "../middleware/verifyJWT.js";
 const router = express.Router();
@@ -38,6 +38,45 @@ router.get("/doomFactor", async (req, res) => {
   const numCompleted = completedTasks.length;
   return res.send({
     doomFactor: Math.floor(100 - (numCompleted / numTotal) * 100),
+  });
+});
+
+// GET - /tasks/getOtherProfileImg
+// gets profile image of other users
+// Brian Wang
+router.get("/getOtherProfileImg", async (req, res, next) => {
+  let userId = req.query.userId;
+  console.log(userId);
+  console.log(req.query.userId);
+
+  // 1. find inside database for matching userId - if none return error message
+  const foundUser = await doomUsers.findOne({ _id: ObjectId(userId) });
+  console.log(userId);
+  if (foundUser === undefined || foundUser === null) {
+    return res.status(400).send({ error: "User not found. Invalid userId" });
+  }
+
+  // 2. Valid userId
+  res.send({
+    otherProfileImg: foundUser.profileImg,
+  });
+});
+
+// GET - /tasks/getOtherUsername
+// gets username of other users
+// Brian Wang
+router.get("/getOtherUsername", async (req, res, next) => {
+  let userId = req.query.userId;
+
+  // 1. find inside database for matching userId - if none return error message
+  const foundUser = await doomUsers.findOne({ _id: ObjectId(userId) });
+  if (foundUser === undefined || foundUser === null) {
+    return res.status(400).send({ error: "User not found. Invalid userId" });
+  }
+
+  // 2. Valid userId
+  res.send({
+    otherUsername: foundUser.username,
   });
 });
 

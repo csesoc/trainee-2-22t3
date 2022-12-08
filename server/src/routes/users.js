@@ -121,6 +121,8 @@ router.post("/addCourse", async (req, res, next) => {
 // POST - /users/uploadProfileImg
 router.post("/uploadProfileImg", async (req, res, next) => {
   try {
+    console.log(req.files);
+
     if (!req.files) {
       return res.status(400).send({ error: "No files given" });
     }
@@ -142,6 +144,24 @@ router.post("/uploadProfileImg", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+});
+
+// GET - /users/getProfileImg
+// gets profile image of logged in user
+// Brian Wang
+router.get("/getProfileImg", async (req, res, next) => {
+  let userObj = req.authUser;
+  const profileDocument = await doomUsers.findOne({ _id: userObj._id });
+  res.send({ profileImgUrl: profileDocument.profileImg });
+});
+
+// GET - /users/getUsername
+// gets username of logged in user
+// Brian Wang
+router.get("/getUsername", async (req, res, next) => {
+  let userObj = req.authUser;
+  const profileDocument = await doomUsers.findOne({ _id: userObj._id });
+  res.send({ username: profileDocument.username });
 });
 
 // DEL - /users/dropCourse
