@@ -16,25 +16,73 @@ const ProgressDropdownList = ({
   useEffect(() => {
     setProgressDropdownList(dataTasks);
   }, [dataTasks]);
+  console.log(ProgressDropdownList);
+
+  // Compare function for sorting list by week
+  const compareByWeek = (a, b) => {
+    if (a.week < b.week) {
+      return -1;
+    }
+    if (a.week > b.week) {
+      return 1;
+    }
+    return 0;
+  };
+
+  // Compare function for sorting list by name
+  const compareByName = (a, b) => {
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+    return 0;
+  };
+
+  // Compare function for sorting list by name
+  const compareByDate = (a, b) => {
+    if (a.date < b.date) {
+      return -1;
+    }
+    if (a.date > b.date) {
+      return 1;
+    }
+    return 0;
+  };
+
+  // Compare function for sorting list by name
+  const compareByYear = (a, b) => {
+    if (a.year < b.year) {
+      return -1;
+    }
+    if (a.year > b.year) {
+      return 1;
+    }
+    return 0;
+  };
+  const [compareBy, setCompareBy] = useState(() => compareByName);
 
   // loop through each element in given array and return component
-  const showProgressDropdownList = ProgressDropdownList.map((ListElement) => {
-    return (
-      <Card
-        sx={{ my: 1, backgroundColor: "#3232ac", boxShadow: 4 }}
-        className="progress-dropdown-list-item"
-      >
-        <div key={ListElement._id}>
-          <ListItem>
-            <ProgressDropdownListElement
-              {...ListElement}
-              runUpdateTasks={runUpdateTasks}
-            />
-          </ListItem>
-        </div>
-      </Card>
-    );
-  });
+  const showProgressDropdownList = ProgressDropdownList.sort(compareBy).map(
+    (ListElement) => {
+      return (
+        <Card
+          sx={{ my: 1, backgroundColor: "#3232ac", boxShadow: 4 }}
+          className="progress-dropdown-list-item"
+        >
+          <div key={ListElement._id}>
+            <ListItem>
+              <ProgressDropdownListElement
+                {...ListElement}
+                runUpdateTasks={runUpdateTasks}
+              />
+            </ListItem>
+          </div>
+        </Card>
+      );
+    }
+  );
 
   let progressListTitle;
   if (dataTaskCompletedStatus) {

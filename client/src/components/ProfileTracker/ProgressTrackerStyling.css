@@ -128,3 +128,9 @@
   scale: 1.05;
   color: rgb(55, 55, 172) !important;
 }
+
+.progress-bar-sort-by-button {
+  position: absolute !important;
+  top: 10px !important;
+  left: 10px !important;
+}

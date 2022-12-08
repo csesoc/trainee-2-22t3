@@ -64,23 +64,22 @@ const ProgressDropdownListElement = ({
   }
   return (
     <div>
-      <div>
-        <Typography variant="h6">{name}</Typography>
-      </div>
-      <div>
-        <Typography>Duration: {duration}</Typography>
-      </div>
-      <div>
-        <IconButton onClick={handleToggleCompletedIcon}>
-          {toggleCompletedIcon}
-        </IconButton>
-        <IconButton>
-          <ModeEditIcon />
-        </IconButton>
-        <IconButton onClick={handleDeleteIcon}>
-          <DeleteIcon />
-        </IconButton>
-      </div>
+      <Typography variant="h6">{name}</Typography>
+
+      <Typography>Duration: {duration}</Typography>
+      <Typography>Week: {week}</Typography>
+      <Typography>
+        Term {term}, {year}
+      </Typography>
+      <IconButton onClick={handleToggleCompletedIcon}>
+        {toggleCompletedIcon}
+      </IconButton>
+      <IconButton>
+        <ModeEditIcon />
+      </IconButton>
+      <IconButton onClick={handleDeleteIcon}>
+        <DeleteIcon />
+      </IconButton>
     </div>
   );
 };

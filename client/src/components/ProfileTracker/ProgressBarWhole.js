@@ -13,6 +13,7 @@ import CompletedListDropdown from "./CompletedListDropdown";
 import DropdownButton from "@mui/material/IconButton";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import {
   Dialog,
@@ -115,6 +116,13 @@ const ProgressBarWhole = ({
               {dialogTitle}
             </DialogTitle>
             <DialogContent>
+              <Button
+                variant="contained"
+                endIcon={<KeyboardArrowDownIcon />}
+                className="progress-bar-sort-by-button"
+              >
+                Sort By
+              </Button>
               <DialogContentText className="dialog-content">
                 {/* Uncompleted Tasks */}
                 <ProgressDropdownList
