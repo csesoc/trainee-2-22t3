@@ -9,16 +9,6 @@ const router = express.Router();
 // Returns an array of all tasks
 router.get("/get", async (req, res) => {
   const tasksArray = await doomTasks.find().toArray();
-  for (let task of tasksArray) {
-    if (task.userId == undefined) {
-      continue;
-    }
-    console.log(task.userId, task.userId.toString());
-    await doomTasks.updateOne(
-      { _id: task._id },
-      { $set: { userId: task.userId.toString() } }
-    );
-  }
   res.send(tasksArray);
 });
 
