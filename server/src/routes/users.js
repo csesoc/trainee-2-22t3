@@ -166,8 +166,83 @@ router.get("/getUsername", async (req, res, next) => {
 
 // PUT - /users/setDoomRating
 // sets the daily doom rating of logged in user
+// doomRating object: rating, dateSelected and daySelected fields
 // Brian Wang
-router.put("/setDoomRating", async (req, res, next) => {});
+router.put("/setDoomRating", async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).send({ errors: errors.array()[0].msg });
+  }
+
+  // 1. Valid body
+  const { rating, dateSelected, daySelected } = req.body;
+  if (!rating || !dateSelected || !daySelected) {
+    // a field is missing handle error accordingly
+    return res.status(400).send({ error: "missing property" });
+  }
+  // if (!Object.hasOwn(req.body, "rating")) {
+  //   return res.status(400).send({ error: "missing rating property" });
+  // }
+  // if (!Object.hasOwn(req.body, "dateSelected")) {
+  //   return res.status(400).send({ error: "missing dateSelected property" });
+  // }
+  // if (!Object.hasOwn(req.body, "daySelected")) {
+  //   return res.status(400).send({ error: "missing daySelected property" });
+  // }
+
+  if (req.body.rating !== undefined && typeof req.body.rating !== "number") {
+    return res.status(400).send({ error: "doomFactor not number" });
+  }
+  if (
+    req.body.dateSelected !== undefined &&
+    typeof req.body.dateSelected !== "number"
+  ) {
+    return res.status(400).send({ error: "dateSelected not number" });
+  }
+  if (
+    req.body.daySelected !== undefined &&
+    typeof req.body.daySelected !== "number"
+  ) {
+    return res.status(400).send({ error: "daySelected not number" });
+  }
+
+  // 2. Update the data
+  let userObj = req.authUser;
+  let userId = req.authUser._id.toString();
+  console.log(userId);
+  await doomUsers.updateOne(
+    { _id: ObjectId(req.authUser._id) },
+    {
+      $set: {
+        doomRating: {
+          rating: rating,
+          dateSelected: dateSelected,
+          daySelected: daySelected,
+        },
+      },
+    }
+  );
+  return res.send("User doomRating Edited");
+});
+
+// GET - /users/getDoomRating
+// gets the daily doom
+// for non-logged in users, need to concat to fetch url "?urlId={id}"
+// (ik, it's kinda scuffed)
+router.get("/getDoomRating", async (req, res, next) => {
+  let userId = req.query.userId;
+  if (userId === undefined) {
+    userId = req.authUser._id.toString();
+    const profileDocument = await doomUsers.findOne({ _id: ObjectId(userId) });
+    return res.send({ doomRating: profileDocument.doomRating });
+  } else {
+    const profileDocument = await doomUsers.findOne({ _id: ObjectId(userId) });
+    if (profileDocument === undefined) {
+      return res.status(400).send({ error: "Task not found. Invalid task id" });
+    }
+    return res.send({ doomRating: profileDocument.doomRating });
+  }
+});
 
 // DEL - /users/dropCourse
 // Drops course from user

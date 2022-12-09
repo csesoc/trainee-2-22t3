@@ -12,6 +12,18 @@ router.get("/get", async (req, res) => {
   res.send(tasksArray);
 });
 
+// GET - /tasks/get/:id
+// Returns an array of all tasks
+// Brian Wang
+router.get("/get/:id", async (req, res) => {
+  const userId = req.params.id;
+  const tasksArray = await doomTasks
+    .find({ userId: ObjectId(userId) })
+    .toArray();
+  console.log(tasksArray);
+  res.send(tasksArray);
+});
+
 // GET - /tasks/doomFactor
 // Calculates the doom factor (a numerical representation of how behind the user is on work)
 // Requires in query:

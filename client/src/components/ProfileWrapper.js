@@ -46,19 +46,23 @@ const ProfileWrapper = () => {
         })
         .catch((error) => console.log(error));
     } else {
-      fetch("http://localhost:5000/tasks/get", {
+      fetch(`http://localhost:5000/tasks/get/${id}`, {
         credentials: "include",
       })
         .then((res) => {
           return res.json();
         })
-        .then((dataTasks) => {
-          setDataTasks(
-            dataTasks.filter((task) => {
-              return task.userId === id;
-            })
-          );
+        .then((data) => {
+          setDataTasks(data);
+          console.log(data);
         })
+        // .then((dataTasks) => {
+        //   setDataTasks(
+        //     dataTasks.filter((task) => {
+        //       return task.userId === id;
+        //     })
+        //   );
+        // })
         .catch((error) => console.log(error));
     }
   }, [updateTasks, id]);
