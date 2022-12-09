@@ -167,11 +167,12 @@ router.delete("/dropCourse", async (req, res, next) => {
   }
 });
 
+
 // GET - /users/friends/get
 // given user, gets an array of friend
 // objects with id, username and pfp
-router.get("/friends/get", async (req,res,next) => {
-  
+router.get("/friends/get", async (req, res, next) => {
+
   const userObj = req.authUser;
 
   if (userObj.friends === undefined) {
@@ -179,14 +180,13 @@ router.get("/friends/get", async (req,res,next) => {
   }
 
   const friendsList = [];
-
   let friendObj = {};
   for (let i = 0; i < userObj.friends.length; i++) {
-    let friend = await doomUsers.findOne({_id: ObjectId(userObj.friends[i])});
+    let friend = await doomUsers.findOne({ _id: ObjectId(userObj.friends[i]) });
     if (friend !== null) {
-      friendObj = { 
+      friendObj = {
         _id: ObjectId(friend._id),
-        username: friend.username, 
+        username: friend.username,
         profileImg: friend.profileImg,
       };
     }
@@ -254,7 +254,7 @@ router.post("/friends/post", async (req,res,next) => {
     }
 
     userObj.friends.push(foundFriend._id.toString());
-    await doomUsers.updateOne({_id: ObjectId(userObj._id)}, {$set: {friends: userObj.friends}});
+    await doomUsers.updateOne({ _id: ObjectId(userObj._id) }, { $set: { friends: userObj.friends } });
     return res.send(userObj.friends);
   } catch (error) {
     next(error);
@@ -264,21 +264,20 @@ router.post("/friends/post", async (req,res,next) => {
 // DELETE - /users/friends/delete
 // given user and friend id, 
 // deletes friend from user
-router.delete("/friends/delete", async (req,res,next) => {
+router.delete("/friends/delete", async (req, res, next) => {
   try {
     const userObj = req.authUser;
     const friendId = ObjectId(req.body._id);
-    
+
     if (friendId === undefined) {
       return res.status(400).send({ error: "friendId not given" });
     }
 
-    let foundFriend = await doomUsers.findOne({_id: ObjectId(friendId)});
+    let foundFriend = await doomUsers.findOne({ _id: ObjectId(friendId) });
 
     if (foundFriend === null || foundFriend._id.toString() === userObj._id.toString()) {
       return res.status(400).send({ error: "friendId is invalid" });
     }
-    
     if (userObj.friends === undefined) {
       userObj.friends = [];
     }
@@ -293,16 +292,16 @@ router.delete("/friends/delete", async (req,res,next) => {
 
     if (flag === false) {
       return res
-      .status(400)
-      .send({ error: "user isn't a friend" });
+        .status(400)
+        .send({ error: "user isn't a friend" });
     }
 
     const friendIndex = userObj.friends.indexOf(foundFriend._id.toString());
     userObj.friends.splice(friendIndex, 1);
-    await doomUsers.updateOne({_id: ObjectId(userObj._id)}, {$set: {friends: userObj.friends}});
+    await doomUsers.updateOne({ _id: ObjectId(userObj._id) }, { $set: { friends: userObj.friends } });
     return res.send(userObj.friends);
   } catch (error) {
-    next (error);
+    next(error);
   }
 });
 

@@ -32,7 +32,7 @@ export default function ProfileSearchBar({ currentFriends = false, notFriends = 
     }, []);
 
     const getFriends = async () => {
-        const response = fetch("http://localhost:5000/users/friends/get", {
+        const response = await fetch("http://localhost:5000/users/friends/get", {
             method: "GET",
             headers: {
                 "Content-type": "application/json"
@@ -40,7 +40,7 @@ export default function ProfileSearchBar({ currentFriends = false, notFriends = 
             credentials: "include",
         })
         const friendsList = await response.json();
-        return friendsList
+        return friendsList;
     }
 
 
@@ -57,20 +57,22 @@ export default function ProfileSearchBar({ currentFriends = false, notFriends = 
         // Clicking search icon should do the same
     }
 
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         // Filters search results based on how closely it matches with user input, 
         // And whether currentFriends or notFriends flags are true, maximum of 8 results shown
         setSearchInput(e.target.value);
 
+        const friendResults = await getFriends();
+
         if (e.target.value !== "") {
-            const friendUsernames = getFriends().map((friendObj) => friendObj.username)
+            const friendUsernames = friendResults.map((friendObj) => friendObj.username)
 
             if (currentFriends) {
-                setFilteredResults(searchResults.filter((user) => user.username in friendUsernames
+                setFilteredResults(searchResults.filter((user) => friendUsernames.includes(user.username)
                     && user.username.startsWith(e.target.value)).slice(0, 8))
             }
             else if (notFriends) {
-                setFilteredResults(searchResults.filter((user) => !(user.username in friendUsernames)
+                setFilteredResults(searchResults.filter((user) => !(friendUsernames.includes(user.username))
                     && user.username.startsWith(e.target.value)).slice(0, 8))
             }
             else {
