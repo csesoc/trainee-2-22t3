@@ -127,17 +127,18 @@ const ProfileWrapper = () => {
           doomFactor={doomFactor}
         />
       )}
-      <ProfilePageTitle className="profile-page-title" />
       {/* <div> */}
-      <ProfileSearchBar></ProfileSearchBar>
-      <ProfilePageTitle />
-      <div className="profile-doom-buddies-list-button">
+      <ProfileSearchBar runUpdateTasks={runUpdateTasks}></ProfileSearchBar>
+      <ProfilePageTitle className="profile-page-title" />
+      {/* <ProfilePageTitle /> */}
+      {/* <div className="profile-doom-buddies-list-button">
         <DoomBuddiesListButton />
-      </div>
+      </div> */}
       <DoomFactor
         updateBackgroundFireShown={updateBackgroundFireShown}
         doomFactor={doomFactor}
         id={id}
+        updateCounterProfileWrapper={updateTasks}
       />
       <Divider>
         <Typography variant="h3">{profileUsername}</Typography>

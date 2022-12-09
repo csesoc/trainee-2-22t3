@@ -28,7 +28,12 @@ import Checkbox from "@mui/material/Checkbox";
 
 import AvatarProfileImage from "./testProfileImage.jpg";
 
-const DoomFactor = ({ updateBackgroundFireShown, doomFactor, id }) => {
+const DoomFactor = ({
+  updateBackgroundFireShown,
+  doomFactor,
+  id,
+  updateCounterProfileWrapper,
+}) => {
   const [isShown, setIsShown] = useState(false);
   const [isShownOptionMenu, setIsShownOptionMenu] = useState(false);
   const [showDoomFactor, setShowDoomFactor] = useState(false);
@@ -130,7 +135,7 @@ const DoomFactor = ({ updateBackgroundFireShown, doomFactor, id }) => {
         .then((data) => console.log(data.otherProfileImg))
         .catch((error) => console.log(error));
     }
-  }, [updateCounter]);
+  }, [updateCounter, updateCounterProfileWrapper]);
 
   return (
     <div>

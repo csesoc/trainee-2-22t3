@@ -189,7 +189,8 @@ const ProgressBarWhole = ({
                 borderRadius: "10px",
               },
             }}
-            className="dialog-box"
+            className="
+            "
           >
             <DialogTitle align="center" id="dialog-title">
               {dialogTitle}

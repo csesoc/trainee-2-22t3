@@ -17,9 +17,7 @@ router.get("/get", async (req, res) => {
 // Brian Wang
 router.get("/get/:id", async (req, res) => {
   const userId = req.params.id;
-  const tasksArray = await doomTasks
-    .find({ userId: ObjectId(userId) })
-    .toArray();
+  const tasksArray = await doomTasks.find({ userId: userId }).toArray();
   console.log(tasksArray);
   res.send(tasksArray);
 });
@@ -36,16 +34,14 @@ router.get("/doomFactor", async (req, res) => {
   let userId = req.query.userId;
   console.log(userId);
   console.log(req.query.userId);
-  const totalTasks = await doomTasks
-    .find({ userId: ObjectId(userId) })
-    .toArray();
+  const totalTasks = await doomTasks.find({ userId: userId }).toArray();
   console.log(totalTasks);
   const numTotal = totalTasks.length;
   if (numTotal === 0) {
     return res.send({ doomFactor: 0 });
   }
   const completedTasks = await doomTasks
-    .find({ userId: ObjectId(userId), completed: true })
+    .find({ userId: userId, completed: true })
     .toArray();
   const numCompleted = completedTasks.length;
   return res.send({
