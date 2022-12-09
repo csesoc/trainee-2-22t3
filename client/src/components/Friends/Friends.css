@@ -190,12 +190,16 @@ body {
   font-size: 18px !important;
   text-transform: none !important;
   color: #000 !important;
+  position: relative !important;
+  float: right !important;
 }
 
 .back-friend-button {
   color: white !important;
   font-size: 18px !important;
   text-transform: none !important;
+  position: relative !important;
+  float: right !important;
 }
 
 .add-friend-link {

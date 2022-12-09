@@ -119,6 +119,7 @@ export default function FriendList() {
           src={BackgroundFireVideo}
           autoPlay
           loop
+          muted
         />
       </div>
     </>
