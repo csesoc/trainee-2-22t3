@@ -63,6 +63,7 @@ export default function ProfileSearchBar({ currentFriends = false, notFriends = 
 
         const friendResults = await getFriends();
 
+
         if (e.target.value !== "") {
             const friendUsernames = friendResults.map((friendObj) => friendObj.username)
 
@@ -71,6 +72,9 @@ export default function ProfileSearchBar({ currentFriends = false, notFriends = 
                     && user.username.startsWith(e.target.value)).slice(0, 8))
             }
             else if (notFriends) {
+                console.log(searchResults.filter((user) => !(friendUsernames.includes(user.username))
+                    && user.username.startsWith(e.target.value)).slice(0, 8))
+
                 setFilteredResults(searchResults.filter((user) => !(friendUsernames.includes(user.username))
                     && user.username.startsWith(e.target.value)).slice(0, 8))
             }
