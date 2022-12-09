@@ -1,0 +1,52 @@
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  background-color: black;
+  color: black;
+}
+
+.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+  background-color: black;
+}
+
+.css-11coafe-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+  background-color: black !important;
+}
+
+.MuiMenuItem-root:hover {
+  background-color: rgb(79, 78, 78) !important;
+}
+
+.title {
+  align-self: center !important;
+  margin-top: 0px !important;
+  font-size: 4.2vw !important;
+  transition: all 1s !important;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 60vw;
+  height: auto;
+  margin: 4rem auto;
+  border-radius: 0.4rem;
+  padding: 3rem;
+  background-color: #0f131a;
+  color: #ffffff;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.title:hover {
+  letter-spacing: 3px;
+  color: rgb(55, 55, 172) !important;
+  scale: 1.1;
+}
+
+.friends-title-div {
+  width: 85vw;
+  margin: auto;
+  display: flex;
+}

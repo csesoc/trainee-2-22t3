@@ -119,6 +119,7 @@ router.post("/addCourse", async (req, res, next) => {
     let courseId = req.body.courseId;
     // Error Checking
     if (courseId === undefined) {
+      console.log(req.body);
       return res.status(400).send({ error: "courseId not given" });
     }
     let foundCourse = await doomCourses.findOne({
@@ -169,6 +170,7 @@ router.post("/addCourse", async (req, res, next) => {
         tasks.push(task);
       }
     }
+    console.log("hi");
     // Add course to user
     userObj.courses.push(foundCourse._id.toString());
     await doomUsers.updateOne(
