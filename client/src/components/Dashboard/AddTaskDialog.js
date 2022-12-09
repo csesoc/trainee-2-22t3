@@ -55,7 +55,7 @@ export function AddTaskDialog(taskDialog, setTaskDialog, taskType, startDate, we
         completed: false,
         name: name,
         course: courseId,
-        date: date,
+        date: taskDate,
         week: week,
         term: term,
         year: date.getYear() + 1900,

@@ -15,9 +15,9 @@ export function TaskCard (name, course, date, duration, completed, progress, set
   const endTime = dayjs(endDate).format("hh:mmA");
 
   let courseStr = <Typography className="task-card-text1" sx={{mb:0, mt:0}}>{course}<br></br></Typography>;
-  if (num % 2 != 0) {
-    courseStr = <Typography className="task-card-text1-alt" sx={{mb:0, mt:0}}>{course}<br></br></Typography>;
-  }
+  // if (num % 2 != 0) {
+  //   courseStr = <Typography className="task-card-text1-alt" sx={{mb:0, mt:0}}>{course}<br></br></Typography>;
+  // }
 
   let dateStr = <Typography className="task-card-day-text">{day} {startTime}-{endTime}</Typography>;
   if (day === "Tue" || day === "Thu" || day === "Sat") {
