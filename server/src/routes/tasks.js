@@ -128,7 +128,7 @@ router.post(
     check("week")
       .exists()
       .withMessage("Week not inputted")
-      .isNumeric({ min: 1, max: 10 })
+      .isNumeric({ min: 1, max: 12 })
       .withMessage("Week is invalid"),
     check("term")
       .exists()
@@ -152,7 +152,7 @@ router.post(
         );
     }
     req.body.userId = req.authUser._id.toString();
-    doomTasks.insertOne(req.body);
+    await doomTasks.insertOne(req.body);
     res.send("Task Added");
   }
 );

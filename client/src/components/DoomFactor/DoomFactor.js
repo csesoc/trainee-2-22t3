@@ -32,7 +32,8 @@ const DoomFactor = ({ updateBackgroundFireShown, doomFactor, id }) => {
   const [isShown, setIsShown] = useState(false);
   const [isShownOptionMenu, setIsShownOptionMenu] = useState(false);
   const [showDoomFactor, setShowDoomFactor] = useState(false);
-
+  console.log("doomFactor");
+  console.log(doomFactor);
   const runOnMouseEnter = () => {
     setIsShown(true);
     updateBackgroundFireShown();

@@ -30,8 +30,8 @@ const ProfileWrapper = () => {
   };
 
   const { id } = useParams();
-  console.log("above");
-  console.log(id);
+  // console.log("above");
+  // console.log(id);
 
   useEffect(() => {
     if (id === undefined) {
@@ -80,7 +80,9 @@ const ProfileWrapper = () => {
         .then((res) => {
           return res.json();
         })
-        .then((data) => setDoomFactor(data.doomFactor));
+        .then((data) => console.log(data.doomFactor))
+        .then((data) => setDoomFactor(data.doomFactor))
+        .catch((error) => console.log(error));
     } else {
       fetch(
         `http://localhost:5000/tasks/doomFactor?userId=${id}`,
@@ -95,7 +97,7 @@ const ProfileWrapper = () => {
         // })
         .then((data) => setDoomFactor(data.doomFactor));
     }
-  }, [updateTasks]);
+  }, [updateTasks, id]);
 
   const [profileUsername, setProfileUsername] = useState("Loading...");
   useEffect(() => {

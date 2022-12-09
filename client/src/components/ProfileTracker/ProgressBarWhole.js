@@ -179,7 +179,7 @@ const ProgressBarWhole = ({
           <Dialog
             open={dropdownOpen}
             onClose={handleClickDropdownClose}
-            maxWidth="m"
+            maxWidth="md"
             PaperProps={{
               style: {
                 backgroundColor: "rgb(96, 99, 106)",
@@ -189,7 +189,7 @@ const ProgressBarWhole = ({
                 borderRadius: "10px",
               },
             }}
-            className="dialog-box"
+            className=""
           >
             <DialogTitle align="center" id="dialog-title">
               {dialogTitle}

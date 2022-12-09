@@ -8,11 +8,26 @@ import { calculateTaskDate } from "./tasks.js";
 const router = express.Router();
 router.use(verifyJWT);
 
+// GET - /users/getUsers
+// Returns an array of all users
+router.get("/getUsers", async (req, res) => {
+  // See verifyJWT for where authUser comes from
+  // userObj = {_id: '63606ef4340d06fc62246242', username: 'Andrew2', email: 'test2@gmail.com', salt: ...
+  let userObj = req.authUser;
+  const userArray = await doomUsers.find({}, { username: 1, _id: 0 }).toArray();
+  res.send(userArray);
+});
+
 // GET - /users/getTasks
 // Returns an array of all courses
 router.get("/getTasks", async (req, res) => {
   let userObj = req.authUser;
-  const tasksArray = await doomTasks.find({ userId: userObj._id }).toArray();
+  console.log(userObj._id.toString());
+  const tasksArray = await doomTasks
+    .find({ userId: { $in: [userObj._id.toString(), userObj._id] } })
+    .toArray();
+  console.log("getting tasks");
+  console.log(tasksArray);
   res.send(tasksArray);
 });
 
@@ -106,7 +121,6 @@ router.post("/addCourse", async (req, res, next) => {
     }
     // Add course to user
     userObj.courses.push(foundCourse._id.toString());
-    console.log(userObj.courses);
     await doomUsers.updateOne(
       { _id: ObjectId(userObj._id) },
       { $set: { courses: userObj.courses } }

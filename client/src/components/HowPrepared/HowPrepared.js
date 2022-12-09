@@ -5,8 +5,8 @@ import HowPreparedShare from "./HowPreparedShare";
 import "./HowPrepared.css";
 
 const HowPrepared = ({ userId }) => {
-  console.log("Hello");
-  console.log(userId);
+  // console.log("Hello");
+  // console.log(userId);
   return (
     <>
       <div className="how-prepared">
