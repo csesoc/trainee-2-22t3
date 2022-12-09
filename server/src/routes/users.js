@@ -14,9 +14,7 @@ router.get("/getUsers", async (req, res) => {
   // See verifyJWT for where authUser comes from
   // userObj = {_id: '63606ef4340d06fc62246242', username: 'Andrew2', email: 'test2@gmail.com', salt: ...
   let userObj = req.authUser;
-  const userArray = await doomUsers
-    .find({}, { username: 1, _id: 0 })
-    .toArray();
+  const userArray = await doomUsers.find({}, { username: 1, _id: 0 }).toArray();
   res.send(userArray);
 });
 
@@ -66,6 +64,7 @@ router.post("/addCourse", async (req, res, next) => {
     let courseId = req.body.courseId;
     // Error Checking
     if (courseId === undefined) {
+      console.log(req.body);
       return res.status(400).send({ error: "courseId not given" });
     }
     let foundCourse = await doomCourses.findOne({
@@ -116,6 +115,7 @@ router.post("/addCourse", async (req, res, next) => {
         tasks.push(task);
       }
     }
+    console.log("hi");
     // Add course to user
     userObj.courses.push(foundCourse._id.toString());
     console.log(userObj.courses);
