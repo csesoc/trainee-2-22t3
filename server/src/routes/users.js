@@ -8,14 +8,50 @@ import { calculateTaskDate } from "./tasks.js";
 const router = express.Router();
 router.use(verifyJWT);
 
+// GET - /users/getUsers
+// Returns an array of all users
+router.get("/getUsers", async (req, res) => {
+  // See verifyJWT for where authUser comes from
+  // userObj = {_id: '63606ef4340d06fc62246242', username: 'Andrew2', email: 'test2@gmail.com', salt: ...
+  let userObj = req.authUser;
+  const userArray = await doomUsers
+    .find({}, { username: 1, _id: 0 })
+    .toArray();
+  res.send(userArray);
+});
+
 // GET - /users/getTasks
 // Returns an array of all courses
 router.get("/getTasks", async (req, res) => {
   let userObj = req.authUser;
-  const tasksArray = await doomTasks
-    .find({ userId: userObj._id.toString() })
-    .toArray();
+  const tasksArray = await doomTasks.find({ userId: userObj._id }).toArray();
   res.send(tasksArray);
+});
+
+// GET - /tasks/doomFactor
+// Calculates the doom factor (a numerical representation of how behind the user is on work)
+// of the logged in user.
+//
+router.get("/doomFactor", async (req, res) => {
+  //// calculation....
+  let userId = req.authUser._id.toString();
+  console.log(userId);
+  console.log(req.query.userId);
+  const totalTasks = await doomTasks
+    .find({ userId: ObjectId(userId) })
+    .toArray();
+  console.log(totalTasks);
+  const numTotal = totalTasks.length;
+  if (numTotal === 0) {
+    return res.send({ doomFactor: 0 });
+  }
+  const completedTasks = await doomTasks
+    .find({ userId: ObjectId(userId), completed: true })
+    .toArray();
+  const numCompleted = completedTasks.length;
+  return res.send({
+    doomFactor: Math.floor(100 - (numCompleted / numTotal) * 100),
+  });
 });
 
 // POST - /users/addCourse
