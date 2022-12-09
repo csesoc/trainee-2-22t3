@@ -21,6 +21,7 @@ export default function Dashboard() {
   const [week, setWeek] = useState(0);
   const [uni, setUni] = useState();
   const [taskDialog, setTaskDialog] = useState("");
+  const [weeklyDoom, setWeeklyDoom] = useState([]);
 
   const findUni = async () => {
     if (uni !== undefined) {return;}
@@ -61,7 +62,6 @@ export default function Dashboard() {
   }, [taskDialog]);
 
   useEffect(() => {
-
   }, [updateTasks]);
 
   useEffect(() => {
@@ -86,6 +86,14 @@ export default function Dashboard() {
         } catch{};
         setDataTasks(fetchedTasks);
         setTaskProgress(fetchedTasks);
+      });
+      fetch(`http://localhost:5000/users/weeklyDoomFactor?=${dayjs(endDate, "DD/MM/YYYY")}`, {credentials: "include"})
+      .then((res) => {
+        return res.json();
+      })
+      .then((obj) => {
+        console.log(obj);
+        setWeeklyDoom(obj);
       });
   }, [startDate, updateTasks]);
 
@@ -165,7 +173,8 @@ export default function Dashboard() {
           <Typography className="weekly-box-text">Tasks left: 
           <span className="weekly-stat-counter">{getTaskStats("left")}</span></Typography>
           <Divider className="weekly-box-divider"></Divider>
-          <Typography className="weekly-box-text">Weekly doom:</Typography>
+          <Typography className="weekly-box-text">Weekly doom:
+          <span className="weekly-stat-counter">{weeklyDoom[0]}</span></Typography>
           <Divider className="weekly-box-divider"></Divider>
           <Typography className="weekly-box-text">Improvement:</Typography>
         </Box>
