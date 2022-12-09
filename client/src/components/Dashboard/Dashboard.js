@@ -7,6 +7,8 @@ import { WeeklyCalendar } from "./Calendar";
 import { AddTaskDialog } from "./AddTaskDialog";
 import "./Dashboard.css";
 import { calculateTaskDate } from "./Helpers";
+import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const [dataTasks, setDataTasks] = useState([]);
@@ -240,6 +242,12 @@ export default function Dashboard() {
           week,
           term
         )}
+        <div className="dashboard-home-button">
+          <Link to="../tracker">
+            <Button variant="contained">Home</Button>
+          </Link>
+        </div>
+
         <Typography
           variant="h2"
           class="dashboard-text"

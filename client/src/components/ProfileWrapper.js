@@ -8,7 +8,7 @@ import DoomBuddiesListButton from "./DoomBuddiesList/DoomBuddiesListButton";
 import "./ProfileStyling.css";
 import MiniDashboard from "./MiniDashboard/MiniDashboard";
 import BackgroundFire from "./BackgroundFire/BackgroundFire";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams, useNavigate } from "react-router-dom";
 import { Divider, Fade, Typography } from "@mui/material";
 import ProfileSearchBar from "./DoomBuddies/ProfileSearchBar";
 import { Link } from "react-router-dom";
@@ -35,6 +35,26 @@ const ProfileWrapper = () => {
   const { id } = useParams();
   console.log("above");
   console.log(id);
+
+  const [authUserId, setAuthUserId] = useState("");
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (id !== undefined) {
+      fetch("http://localhost:5000/users/getAuthUserId", {
+        credentials: "include",
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => setAuthUserId(data.authUserId))
+        .then(() => {
+          if (authUserId === id) {
+            navigate("/tracker");
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [updateTasks]);
 
   useEffect(() => {
     if (id === undefined) {
@@ -138,14 +158,23 @@ const ProfileWrapper = () => {
       <ProfilePageTitle className="profile-page-title" />
       {/* <ProfilePageTitle /> */}
       {/* <div className="profile-doom-buddies-list-button"> */}
-      <div className="profile-doom-buddies-list-button">
-        <Link to="../friends">
-          <Button variant="contained">Doom Buddies</Button>
-        </Link>
-        <Link to="../CourseAdd">
-          <Button variant="contained">Add Course</Button>
-        </Link>
-      </div>
+      {id === undefined ? (
+        <div className="profile-doom-buddies-list-button">
+          <Link to="../friends">
+            <Button variant="contained">Doom Buddies</Button>
+          </Link>
+          <Link to="../CourseAdd">
+            <Button variant="contained">Add Course</Button>
+          </Link>
+        </div>
+      ) : (
+        <div className="profile-doom-buddies-list-button">
+          <Link to="../tracker" onClick={runUpdateTasks}>
+            <Button variant="contained">Home</Button>
+          </Link>
+        </div>
+      )}
+
       <DoomFactor
         updateBackgroundFireShown={updateBackgroundFireShown}
         doomFactor={doomFactor}
@@ -158,7 +187,7 @@ const ProfileWrapper = () => {
       <Divider className="profile-section-divider">DOOM TRACKER</Divider>
       <div className="profile-mini-dashboard-tracker">
         <div className="profile-mini-dashboard">
-          <MiniDashboard dataTasks={dataTasks} />
+          <MiniDashboard dataTasks={dataTasks} userId={id} />
         </div>
         <div className="profile-tracker-profile">
           <ProfileTracker
@@ -172,7 +201,7 @@ const ProfileWrapper = () => {
 
       <Divider className="profile-section-divider">DOOM SELECTOR</Divider>
       <div className="how-prepared-profile">
-        <HowPrepared userId={id} />
+        <HowPrepared userId={id} runUpdateTasks={runUpdateTasks} />
       </div>
     </div>
   );

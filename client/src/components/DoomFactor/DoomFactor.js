@@ -108,6 +108,8 @@ const DoomFactor = ({
     credentials: "include",
   };
   useEffect(() => {
+    console.log("updateCounter");
+    console.log(updateCounterProfileWrapper);
     if (id === undefined) {
       fetch(
         `http://localhost:5000/users/getProfileImg`,
@@ -295,23 +297,29 @@ const DoomFactor = ({
                   label="Show Doom Factor"
                 />
               </FormGroup>
-              <Button variant="contained" component="label">
-                Change Profile Picture
-                <input
-                  accept="image/*"
-                  multiple
-                  hidden
-                  type="file"
-                  onChange={(event) => {
-                    const file = event.target.files[0];
-                    setProfileTrackerImage(file);
-                    // console.log(profileTrackerImage);
-                  }}
-                />
-              </Button>
-              <Button variant="contained" onClick={handleUploadProfileImg}>
-                Upload
-              </Button>
+              {id === undefined ? (
+                <div>
+                  <Button variant="contained" component="label">
+                    Change Profile Picture
+                    <input
+                      accept="image/*"
+                      multiple
+                      hidden
+                      type="file"
+                      onChange={(event) => {
+                        const file = event.target.files[0];
+                        setProfileTrackerImage(file);
+                        // console.log(profileTrackerImage);
+                      }}
+                    />
+                  </Button>
+                  <Button variant="contained" onClick={handleUploadProfileImg}>
+                    Upload
+                  </Button>
+                </div>
+              ) : (
+                <></>
+              )}
             </DialogContentText>
           </DialogContent>
         </Dialog>

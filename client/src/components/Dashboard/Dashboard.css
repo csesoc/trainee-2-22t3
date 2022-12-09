@@ -36,6 +36,13 @@ body {
   }
 }
 
+.dashboard-home-button {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin: 20px;
+}
+
 .dashboard-text {
   font-size: 64px;
   align-self: center;
@@ -50,12 +57,12 @@ body {
 }
 
 .weekly-stats {
-  display:flex;
+  display: flex;
   flex-direction: column;
 }
 
 .weekly-stat-counter {
-  float:right;
+  float: right;
   margin-right: 10px;
 }
 
@@ -84,11 +91,17 @@ body {
   margin: auto;
 }
 
-.weekly-box-text, .weekly-box-divider, .add-task-icon-sign, .week-divider, .tasks-divider, .dashboard-text {
+.weekly-box-text,
+.weekly-box-divider,
+.add-task-icon-sign,
+.week-divider,
+.tasks-divider,
+.dashboard-text {
   transition: all 1s;
 }
 
-.weekly-box-text:hover, .weekly-box-divider:hover {
+.weekly-box-text:hover,
+.weekly-box-divider:hover {
   scale: 1.1;
 }
 
@@ -112,7 +125,7 @@ body {
   scale: 1.05;
 }
 
-.add-task-icon:hover  {
+.add-task-icon:hover {
   background-color: #5865f2 !important;
 }
 
@@ -139,8 +152,8 @@ body {
 
 .weekly-box-divider {
   background-color: #ffffff;
-  width:280px;
-  height:3px;
+  width: 280px;
+  height: 3px;
   border-radius: 3px;
 }
 
@@ -150,8 +163,8 @@ body {
 
 .create-task-box-divider {
   background-color: #36393f;
-  width:400px;
-  height:5px;
+  width: 400px;
+  height: 5px;
 }
 
 .css-fcrm5i-MuiInputBase-root-MuiOutlinedInput-root {
@@ -194,30 +207,46 @@ body {
 }
 
 @keyframes card-transition-done {
-  from {background-color: white;}
-  to {background-color: rgb(55, 55, 172);}
+  from {
+    background-color: white;
+  }
+  to {
+    background-color: rgb(55, 55, 172);
+  }
 }
 
 @keyframes card-transition-not-done {
-  from {background-color: rgb(55, 55, 172);}
-  to {background-color: white;}
+  from {
+    background-color: rgb(55, 55, 172);
+  }
+  to {
+    background-color: white;
+  }
 }
 
 @keyframes card-header-transition-done {
-  from {color: black;}
-  to {color: white;}
+  from {
+    color: black;
+  }
+  to {
+    color: white;
+  }
 }
 
 @keyframes card-header-transition-not-done {
-  from {color: white;}
-  to {color: black;}
+  from {
+    color: white;
+  }
+  to {
+    color: black;
+  }
 }
 
 .task-card-header {
   color: black;
   align-self: center;
   margin: none;
-  padding:none;
+  padding: none;
   font-size: 20px;
   font-weight: bold;
 }
@@ -255,7 +284,7 @@ body {
   border-bottom-width: 5px !important;
   border-style: solid !important;
   border-color: white !important;
-  height:30px;
+  height: 30px;
   text-align: center;
   align-items: center;
   font-weight: bold;
@@ -263,10 +292,10 @@ body {
 
 .divider-container {
   transform: translateX(-15px);
-  display:grid;
+  display: grid;
   flex-wrap: wrap;
   min-width: 420px !important;
-  justify-content:space-between;
+  justify-content: space-between;
   grid-template-columns: repeat(auto-fill, 170px);
   grid-gap: 1rem;
 }
@@ -300,7 +329,6 @@ body {
 }
 
 .select-box {
-  
 }
 
 .duration-box {
@@ -348,7 +376,7 @@ body {
 }
 
 .css-1ws8119-MuiDivider-root {
-  margin-top:10px !important;
+  margin-top: 10px !important;
   margin-bottom: 10px !important;
 }
 
@@ -357,7 +385,8 @@ body {
   margin-right: 10px !important;
 }
 
-.css-uoyvse-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .css-qceo8l-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+.css-uoyvse-MuiButtonBase-root-MuiPickersDay-root.Mui-selected,
+.css-qceo8l-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
   background-color: #5865f2 !important;
 }
 

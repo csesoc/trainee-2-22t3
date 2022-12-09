@@ -47,7 +47,7 @@ const BackgroundFire = ({ isShown, id, doomFactor }) => {
 
   return (
     <div>
-      <div className="background-fire-class">
+      <div className="background-fire-class-profile-tracker">
         <Fade
           in={isShownBackgroundFireVideo}
           {...(isShownBackgroundFireVideo ? { timeout: 1000 } : {})}

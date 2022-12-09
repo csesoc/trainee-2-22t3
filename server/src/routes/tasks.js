@@ -95,6 +95,35 @@ router.get("/getOtherUsername", async (req, res, next) => {
   }
 });
 
+// GET - /tasks/getOtherDoomRating
+// gets doom rating of other users
+// Brian Wang
+router.get("/getOtherDoomRating", async (req, res, next) => {
+  try {
+    let userId = req.query.userId;
+
+    // 1. find inside database for matching userId - if none return error message
+    const foundUser = await doomUsers.findOne({ _id: ObjectId(userId) });
+    if (foundUser === undefined || foundUser === null) {
+      return res.status(400).send({ error: "User not found. Invalid userId" });
+    }
+    console.log("YOYO");
+    console.log(foundUser);
+    console.log(foundUser.doomRating.rating);
+    console.log(foundUser.doomRating);
+    // 2. valid userId
+    return res.send({
+      otherDoomRating: {
+        rating: foundUser.doomRating.rating,
+        dateSelected: foundUser.doomRating.dateSelected,
+        daySelected: foundUser.doomRating.daySelected,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.use(verifyJWT);
 
 // POST - /tasks/post
