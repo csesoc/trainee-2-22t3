@@ -4,6 +4,7 @@ import { doomCourses, doomUni, doomTasks, doomUsers } from "../database.js";
 import { ObjectId } from "mongodb";
 import { verifyJWT } from "../middleware/verifyJWT.js";
 import { calculateTaskDate } from "./tasks.js";
+import { startOfWeek, endOfWeek } from "date-fns";
 
 const router = express.Router();
 router.use(verifyJWT);
@@ -24,7 +25,7 @@ router.get("/getTasks", async (req, res) => {
   let userObj = req.authUser;
   console.log(userObj._id.toString());
   const tasksArray = await doomTasks
-    .find({ userId: userObj._id.toString() })
+    .find({ userId: { $in: [userObj._id.toString(), userObj._id] } })
     .toArray();
   res.send(tasksArray);
 });
@@ -37,12 +38,9 @@ router.get("/getTasks", async (req, res) => {
 router.get("/weeklyDoomFactor", async (req, res) => {
   let userId = req.authUser._id.toString();
   let dateObj = new Date(req.query.date * 1000);
-  let start = dateObj.getDate() - dateObj.getDay();
-  let end = start + 6;
-  let startDay = new Date(dateObj.setDate(start));
-  startDay.setHours(0, 0, 0, 0);
-  let endDay = new Date(dateObj.setDate(end));
-  endDay.setHours(23, 59, 59, 0);
+  let startDay = startOfWeek(dateObj);
+  let endDay = endOfWeek(dateObj);
+  console.log(startDay, endDay);
   let currStartTime = startDay.getTime() / 1000;
   let currEndTime = endDay.getTime() / 1000;
   let weekSeconds = 3600 * 24 * 7;
@@ -53,26 +51,29 @@ router.get("/weeklyDoomFactor", async (req, res) => {
   ];
   let doomFactor = {};
   for (let time of times) {
-    console.log(time[1], time[2]);
+    console.log(time[1], req.query.date, time[2]);
     const totalTasks = await doomTasks
       .find({
         date: {
           $gt: time[1],
           $lt: time[2],
         },
+        userId: userId,
       })
       .toArray();
     const numTotal = totalTasks.length;
     if (numTotal === 0) {
       doomFactor[time[0]] = 0;
     } else {
+      console.log(userId);
       const completedTasks = await doomTasks
         .find({
-          userId: ObjectId(userId),
+          userId: userId,
           completed: true,
-          date: { $gt: times[1], $lt: times[2] },
+          date: { $gt: time[1], $lt: time[2] },
         })
         .toArray();
+      console.log(completedTasks);
       const numCompleted = completedTasks.length;
       doomFactor[time[0]] = Math.floor(100 - (numCompleted / numTotal) * 100);
     }
@@ -163,7 +164,7 @@ router.post("/addCourse", async (req, res, next) => {
           term: taskTemplate.term,
           year: taskTemplate.year,
           date: date.date,
-          userId: userObj._id,
+          userId: userObj._id.toString(),
         };
         tasks.push(task);
       }
