@@ -65,14 +65,16 @@ export default function Dashboard() {
   }, [updateTasks]);
 
   useEffect(() => {
-    if (uni == undefined) {return;}
     setWeek(0);
-    for (let i = 0; i < 12; i++) {
+    if (uni != undefined) {  
+      for (let i = 0; i < 12; i++) {
       let thisWeekDate = new Date(calculateTaskDate(i, term, 2022, uni).date * 1000);
       let nextWeekDate = new Date(calculateTaskDate(i + 1, term, 2022, uni).date * 1000);
       if (thisWeekDate <= new Date(dayjs(endDate, "DD/MM/YYYY"))
       && nextWeekDate >= new Date(dayjs(endDate, "DD/MM/YYYY"))) {setWeek(i + 1);}
+      }
     }
+
     fetch("http://localhost:5000/users/getTasks", {credentials: "include"})
       .then((res) => {
         return res.json();

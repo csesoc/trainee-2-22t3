@@ -24,7 +24,8 @@ router.get("/getUsers", async (req, res) => {
 // Returns an array of all courses
 router.get("/getTasks", async (req, res) => {
   let userObj = req.authUser;
-  const tasksArray = await doomTasks.find({ userId: userObj._id }).toArray();
+  console.log(userObj._id.toString());
+  const tasksArray = await doomTasks.find({ userId: userObj._id.toString() }).toArray();
   res.send(tasksArray);
 });
 
@@ -118,7 +119,6 @@ router.post("/addCourse", async (req, res, next) => {
     }
     // Add course to user
     userObj.courses.push(foundCourse._id.toString());
-    console.log(userObj.courses);
     await doomUsers.updateOne(
       { _id: ObjectId(userObj._id) },
       { $set: { courses: userObj.courses } }

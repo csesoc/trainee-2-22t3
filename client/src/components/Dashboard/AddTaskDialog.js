@@ -14,6 +14,7 @@ export function AddTaskDialog(taskDialog, setTaskDialog, taskType, startDate, we
   const [day, setDay] = useState(1);
   const [time, setTime] = useState(new Date());
   const [duration, setDuration] = useState(0);
+  const [errors, setErrors] = useState([false, false, false]);
 
   useEffect(() => {
     if (taskDialog === taskType) {
@@ -24,6 +25,9 @@ export function AddTaskDialog(taskDialog, setTaskDialog, taskType, startDate, we
   }, [taskDialog]);
 
   const handleClose = () => {
+    setName("");
+    setCourseId("");
+    setDuration(0);
     setTaskDialog("");
     setIsOpen(false);
   }
@@ -33,8 +37,9 @@ export function AddTaskDialog(taskDialog, setTaskDialog, taskType, startDate, we
   }, [])
 
   const handleSubmit = () => {
-    if (name === "") {document.getElementById("name").error = true; return;}
-    if (duration === 0) {document.getElementById("duration").value = 7; return;}
+    if (name === "") { setErrors([true, false, false]); return;}
+    if (courseId === "") { setErrors([false, true, false]); return;}
+    if (duration === 0 || isNaN(duration)) {setErrors([false, false, true]); return;}
     let taskDate = dayjs(startDate, "DD/MM/YYYY") + (day * 1000 * 60 * 60 * 24);
     taskDate += 1000 * 60 * ((60 * new Date(time).getHours()) + new Date(time).getMinutes());
     const date = new Date(taskDate);
@@ -71,6 +76,7 @@ export function AddTaskDialog(taskDialog, setTaskDialog, taskType, startDate, we
         margin="dense"
         id="name"
         type="text"
+        error={errors[0]}
         fullWidth
         onChange={(event) => setName(event.target.value)}
       />
@@ -82,6 +88,7 @@ export function AddTaskDialog(taskDialog, setTaskDialog, taskType, startDate, we
         margin="dense"
         id="courseId"
         type="text"
+        error={errors[1]}
         fullWidth
         onChange={(event) => setCourseId(event.target.value)}
       />
@@ -119,6 +126,7 @@ export function AddTaskDialog(taskDialog, setTaskDialog, taskType, startDate, we
           InputLabelProps={{
             shrink: true,
           }}
+          error={errors[2]}
           onChange={(event) => setDuration(event.target.value)}
       />
       </div>

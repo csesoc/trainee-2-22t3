@@ -46,6 +46,7 @@ body {
 .selector-screen {
   display: flex;
   flex-wrap: wrap;
+  align-self: center;
 }
 
 .weekly-stats {
@@ -241,6 +242,10 @@ body {
 
 .task-card-day-text-alt {
   color: #5865f2 !important;
+}
+
+.task-card-buttons {
+  transform: translateX(70px);
 }
 
 .tasks-divider {

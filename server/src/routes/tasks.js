@@ -101,7 +101,7 @@ router.post(
         );
     }
     req.body.userId = req.authUser._id.toString();
-    doomTasks.insertOne(req.body);
+    await doomTasks.insertOne(req.body);
     res.send("Task Added");
   }
 );

@@ -71,15 +71,14 @@ export function TaskCard (name, course, date, duration, completed, progress, set
       {dateStr}
     </CardContent>
     <CardActions sx={{pt: 0}}>
-    <IconButton className="done-icon" onClick={() => handleDone()} sx={{ml: 1.8}}>
+      <div className='task-card-buttons'>
+    <IconButton onClick={() => handleDone()} sx={{ml: 1.8}}>
       <DoneOutlineIcon />
-    </IconButton>
-    <IconButton>
-      <ModeEditIcon />
     </IconButton>
     <IconButton onClick={() => handleDelete()}>
       <DeleteIcon />
     </IconButton>
+    </div>
     </CardActions>
     </Card>
   )
