@@ -164,6 +164,11 @@ router.get("/getUsername", async (req, res, next) => {
   res.send({ username: profileDocument.username });
 });
 
+// PUT - /users/setDoomRating
+// sets the daily doom rating of logged in user
+// Brian Wang
+router.put("/setDoomRating", async (req, res, next) => {});
+
 // DEL - /users/dropCourse
 // Drops course from user
 // Also deletes all tasks assigned to that user from the course.
