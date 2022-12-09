@@ -112,14 +112,14 @@ export default function FriendList() {
         <Box className="list-box" sx={{p: 3}}>
           {showList}
         </Box>
-        <div className="background-fire-class">
-          <CardMedia
-            component="video"
-            src={BackgroundFireVideo}
-            autoPlay
-            loop
-          />
-        </div>
+      </div>
+      <div className="background-fire-class">
+        <CardMedia
+          component="video"
+          src={BackgroundFireVideo}
+          autoPlay
+          loop
+        />
       </div>
     </>
   );

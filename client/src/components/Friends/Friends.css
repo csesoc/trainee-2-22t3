@@ -179,7 +179,7 @@ body {
   width: 100%;
   height: auto;
   bottom: 0; 
-  object-fit: cover;
+  object-fit: cover !important;
   transition: all 1s;
   -webkit-filter: blur(6px);
   filter: brightness(60%) blur(6px);
