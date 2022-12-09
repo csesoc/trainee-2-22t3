@@ -4,13 +4,13 @@ import {
   Box,
   Button,
   Divider,
-  Link,
   CardMedia,
 } from "@mui/material";
 import "./Friends.css";
 import BackgroundFireVideo from "../BackgroundFire/background fire.mp4";
+import ProfileSearchBar from "../DoomBuddies/ProfileSearchBar";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function FriendList() {
   const [friends, setFriends] = useState([]);
@@ -22,26 +22,24 @@ export default function FriendList() {
   }
 
   useEffect(() => {
-    // REPLACE WITH SEARCH BAR
-  //   const fetchFriends = async () => {
-  //     const response = await fetch(("http://localhost:5000/users/friends/get"), {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-type": "application/json",
-  //       },
-  //       credentials: "include",
-  //       qs: {},
-  //     });
-  //     const json = await response.json();
-  //     setFriends(json);
-  //   };
-  //   fetchFriends();
+    const getUsers = async () => {
+      const response = await fetch("http://localhost:5000/users/notFriends/get", {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+        },
+        credentials: "include",
+      });
+      const users = await response.json();
+      setFriends(users);
+    }
+    getUsers();
   }, [friends]);
 
-  // THIS BECOMES ADD FRIEND **when friend added should also be deleted off all users (not friends) list
-  const removeFriend = async (_id) => {
-    const response = await fetch(("http://localhost:5000/users/friends/delete"), {
-      method: "DELETE",
+
+  const addFriend = async (_id) => {
+    const response = await fetch(("http://localhost:5000/users/friends/post"), {
+      method: "POST",
       headers: {
         "Content-type": "application/json",
       },
@@ -71,18 +69,12 @@ export default function FriendList() {
           >
             {friendObj.username}
           </Typography>
-          <Button className="remove-friend" onClick={e => {e.stopPropagation(); removeFriend(friendObj._id)}}>Remove</Button>  
+          <Button className="remove-friend" onClick={e => {e.stopPropagation(); addFriend(friendObj._id)}}>Add</Button>  
         </div>          
       );
     })
   ) : (
-    <Typography 
-      variant="h2" 
-      className="u-lonely-ass"
-      align="center"
-    >
-      Wow you BNOC. Congratulations, you have befriend EVERYONE on Doom Tracker! 👍
-    </Typography>  
+    <Typography></Typography>  
   )
     
   return (
@@ -101,15 +93,15 @@ export default function FriendList() {
           style={{width:'100%'}} 
           className="friends-divider"
         />
-        <Typography>CHUCK IN SEARCH BAR HERE</Typography>
-        <Link to="/friends">
+        <ProfileSearchBar currentFriends={false} notFriends={true}></ProfileSearchBar>
+        <Link to="/friends" className="add-friend-link">
           <Button 
             type="submit" 
             sx={{ fontWeight: "normal" }}
             // make css for this className
-            className="back-friend-link" 
+            className="back-friend-button" 
           >
-            Add Friend
+            All Friends
           </Button>
         </Link>
         <Box className="list-box" sx={{p: 3}}>

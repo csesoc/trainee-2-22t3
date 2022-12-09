@@ -60,10 +60,6 @@ body {
   letter-spacing: 0.05em !important;
 }
 
-.list-box {
-  margin-top: 30px;
-}
-
 .list-box:after {
   content: "";
   display: table;
@@ -176,11 +172,11 @@ body {
 
 .background-fire-class {
   overflow: hidden;
-  display: flex;
-  position: absolute;
-  z-index: -1;
+  display: block;
+  position: fixed;
+  z-index: -1 !important;
   left: 0;
-  width: 100%; 
+  width: 100%;
   height: auto;
   bottom: 0; 
   object-fit: cover;
@@ -188,3 +184,42 @@ body {
   -webkit-filter: blur(6px);
   filter: brightness(60%) blur(6px);
 } 
+
+.add-friend-button {
+  background-color: #E3E3E3 !important;
+  font-size: 18px !important;
+  text-transform: none !important;
+  color: #000 !important;
+}
+
+.back-friend-button {
+  color: white !important;
+  font-size: 18px !important;
+  text-transform: none !important;
+}
+
+.add-friend-link {
+  text-decoration: none !important;
+}
+
+.add-friend-link:link {
+  text-decoration: none !important;
+}
+
+.add-friend-link:visited {
+  text-decoration: none !important;
+}
+
+.add-friend-link:hover {
+  text-decoration: none !important;
+}
+
+.add-friend-link:active {
+  text-decoration: none !important;
+}
+
+.search-bar {
+  position: relative;
+  margin: 30px;
+  width: 100%;
+}

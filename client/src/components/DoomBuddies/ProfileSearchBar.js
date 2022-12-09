@@ -1,11 +1,13 @@
-import { TextField, InputAdornment, IconButton, Menu, MenuItem, Popper, ListItemIcon, ListItemText, ClickAwayListener } from "@mui/material";
+import { TextField, InputAdornment, IconButton, MenuItem, Popper, ListItemIcon, ListItemText, ClickAwayListener } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
+import "../Friends/Friends.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function ProfileSearchBar() {
-    // TODO: Empty string shows all search results in database
+export default function ProfileSearchBar({ currentFriends = false, notFriends = false }) {
+    // By default, displays all users in the database
+    // Can specify filter for search results based on props
 
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -16,7 +18,7 @@ export default function ProfileSearchBar() {
 
     useEffect(() => {
         const getUsers = async () => {
-            const response = await fetch("http://localhost:5000/users/getUsers", {
+            const response = await fetch("http://localhost:5000/users/notFriends/get", {
                 method: "GET",
                 headers: {
                     "Content-type": "application/json",
@@ -29,6 +31,19 @@ export default function ProfileSearchBar() {
         getUsers();
     }, []);
 
+    const getFriends = async () => {
+        const response = fetch("http://localhost:5000/users/friends/get", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json"
+            },
+            credentials: "include",
+        })
+        const friendsList = await response.json();
+        return friendsList
+    }
+
+
     const openUserTracker = (user) => {
         // Open the page with the user's id
         console.log(user);
@@ -39,16 +54,29 @@ export default function ProfileSearchBar() {
         e.preventDefault();
         console.log(`Form submitted with input value ${searchInput}`);
         // If form is submitted should show page with list of profiles with closest matching usernames with search result
+        // Clicking search icon should do the same
     }
 
     const handleChange = (e) => {
+        // Filters search results based on how closely it matches with user input, 
+        // And whether currentFriends or notFriends flags are true, maximum of 8 results shown
         setSearchInput(e.target.value);
-        console.log(e.target.value);
 
         if (e.target.value !== "") {
-            setFilteredResults(searchResults.filter((user) => {
-                return user.username.startsWith(e.target.value);
-            }))
+            const friendUsernames = getFriends().map((friendObj) => friendObj.username)
+
+            if (currentFriends) {
+                setFilteredResults(searchResults.filter((user) => user.username in friendUsernames
+                    && user.username.startsWith(e.target.value)).slice(0, 8))
+            }
+            else if (notFriends) {
+                setFilteredResults(searchResults.filter((user) => !(user.username in friendUsernames)
+                    && user.username.startsWith(e.target.value)).slice(0, 8))
+            }
+            else {
+                setFilteredResults(searchResults.filter((user) => user.username.startsWith(e.target.value)).slice(0, 8))
+            }
+
         } else {
             setFilteredResults([])
         }
@@ -62,7 +90,7 @@ export default function ProfileSearchBar() {
             setOpenPopper(false)
             setAnchorEl(null)
         }}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="search-bar">
                 <TextField variant="outlined" autoComplete="off" onChange={handleChange} onClick={(e) => {
                     setAnchorEl(e.currentTarget)
                     setOpenPopper(true)

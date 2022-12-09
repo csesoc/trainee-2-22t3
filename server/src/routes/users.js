@@ -194,6 +194,33 @@ router.get("/friends/get", async (req,res,next) => {
   return res.send(friendsList);
 });
 
+// GET - /users/notFriends/get
+// given user, gets an array of users 
+// objects with id, username and pfp
+// that are NOT friends
+router.get("/notFriends/get", async (req,res,next) => {
+  
+  const userObj = req.authUser;
+
+  if (userObj.friends === undefined) {
+    userObj.friends = [];
+  }
+  
+  const friendsList = userObj.friends;
+  friendsList.push(userObj._id.toString());
+
+  const usersArray = await doomUsers.find().toArray();
+
+  for (const friend of friendsList) {
+    if (usersArray.find(e => e._id.toString() === friend) !== undefined) {
+      const friendIndex = usersArray.findIndex(e => e._id.toString() === friend);
+      usersArray.splice(friendIndex, 1);
+    }
+  }
+
+  return res.send(usersArray);
+});
+
 
 // POST - /users/friends/post
 // given user and friend id, 

@@ -4,13 +4,13 @@ import {
   Box,
   Button,
   Divider,
-  Link,
   CardMedia,
 } from "@mui/material";
 import "./Friends.css";
 import BackgroundFireVideo from "../BackgroundFire/background fire.mp4";
+import ProfileSearchBar from "../DoomBuddies/ProfileSearchBar";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function FriendList() {
   const [friends, setFriends] = useState([]);
@@ -99,13 +99,13 @@ export default function FriendList() {
           style={{width:'100%'}} 
           className="friends-divider"
         />
-        <Typography>CHUCK IN SEARCH BAR HERE</Typography>
-        <Link to="/friends/add">
+        <ProfileSearchBar currentFriends={true} notFriends={false}></ProfileSearchBar>
+        <Link to="/friends/add" className="add-friend-link">
           <Button 
             type="submit" 
             sx={{ fontWeight: "normal" }}
-            // make css for this className
-            className="add-friend-link" 
+            variant="contained"
+            className="add-friend-button" 
           >
             Add Friend
           </Button>
@@ -113,24 +113,6 @@ export default function FriendList() {
         <Box className="list-box" sx={{p: 3}}>
           {showList}
         </Box>
-        {/* <Dialog
-          open={popup}
-          onClose={() => setPopup(false)}
-          maxWidth="m"
-          PaperProps={{
-            style: {
-              backgroundColor: "rgb(96, 99, 106)",
-              border: "solid",
-              borderColor: "#36393f",
-              borderWidth: "5px",
-              borderRadius: "10px",
-            },
-          }}
-        >
-          <DialogContent>
-            FRIENDS STUFF HERE
-          </DialogContent>
-        </Dialog> */}
         <div className="background-fire-class">
           <CardMedia
             component="video"
