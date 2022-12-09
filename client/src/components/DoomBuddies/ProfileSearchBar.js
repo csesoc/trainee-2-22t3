@@ -18,7 +18,13 @@ export default function ProfileSearchBar({ currentFriends = false, notFriends = 
 
     useEffect(() => {
         const getUsers = async () => {
-            const response = await fetch("http://localhost:5000/users/notFriends/get", {
+            let link = "http://localhost:5000/users/notFriends/get";
+            if (notFriends) {
+              link = "http://localhost:5000/users/notFriends/get";
+            } else {
+              link = "http://localhost:5000/users/getUsers";
+            }
+            const response = await fetch(link, {
                 method: "GET",
                 headers: {
                     "Content-type": "application/json",
@@ -82,17 +88,17 @@ export default function ProfileSearchBar({ currentFriends = false, notFriends = 
         } else {
             setFilteredResults([])
         }
-
+        console.log(filteredResults);
         // If MenuItem is selected, then it should navigate to page "http://localhost:3000/tracker/$id" i.e. that user's profile page
         // Where $id refers to the id of the person clicked on, 
     }
 
     return (
-        <ClickAwayListener sx={{width: 1}} onClickAway={() => {
+        <ClickAwayListener onClickAway={() => {
             setOpenPopper(false)
             setAnchorEl(null)
         }}>
-            <form onSubmit={handleSubmit} className="search-bar">
+            <form onSubmit={handleSubmit}>
                 <TextField variant="outlined" autoComplete="off" onChange={handleChange} onClick={(e) => {
                     setAnchorEl(e.currentTarget)
                     setOpenPopper(true)

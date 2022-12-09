@@ -5,7 +5,9 @@ import {
   Button,
   Divider,
   CardMedia,
+  ListItemIcon,
 } from "@mui/material";
+import PersonIcon from '@mui/icons-material/Person';
 import "./Friends.css";
 import BackgroundFireVideo from "../BackgroundFire/background fire.mp4";
 import ProfileSearchBar from "../DoomBuddies/ProfileSearchBar";
@@ -57,8 +59,8 @@ export default function FriendList() {
           <img 
             src={friendObj.profileImg} 
             alt="profile"
-            width="70"
-            height="70"
+            width="60"
+            height="60"
             className="profile-image"
           ></img>
           <Typography 
@@ -84,6 +86,18 @@ export default function FriendList() {
     
   return (
     <>
+      <div className="return-profile"> 
+        <Button 
+          href="/tracker"
+          sx={{ fontWeight: "normal" }}
+          className="profile-button" 
+        >
+          <ListItemIcon>
+            <PersonIcon className="profile-icon" color="info"></PersonIcon>
+          </ListItemIcon>
+          <Typography className="hover-text">Profile</Typography>
+        </Button>
+      </div>
       <div className="friends-container">
         <Typography  
           variant="h2" 
@@ -99,16 +113,15 @@ export default function FriendList() {
           className="friends-divider"
         />
         <ProfileSearchBar currentFriends={true} notFriends={false}></ProfileSearchBar>
-        <Link to="/friends/add" className="add-friend-link">
-          <Button 
-            type="submit" 
-            sx={{ fontWeight: "normal" }}
-            variant="contained"
-            className="add-friend-button" 
-          >
-            Add Friend
-          </Button>
-        </Link>
+        <Button 
+          href="/friends/add"
+          sx={{ fontWeight: "normal" }}
+          variant="contained"
+          className="friend-button white-button" 
+        >
+          Add Friend
+        </Button>
+        {/* style={{overflowY: "auto", overflowX: "hidden", height: "60vh"}} */}
         <Box className="list-box" sx={{p: 3}}>
           {showList}
         </Box>

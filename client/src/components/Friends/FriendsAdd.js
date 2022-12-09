@@ -6,6 +6,7 @@ import {
   Divider,
   CardMedia,
 } from "@mui/material";
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import "./Friends.css";
 import BackgroundFireVideo from "../BackgroundFire/background fire.mp4";
 import ProfileSearchBar from "../DoomBuddies/ProfileSearchBar";
@@ -58,8 +59,8 @@ export default function FriendList() {
           <img 
             src={friendObj.profileImg} 
             alt="profile"
-            width="70"
-            height="70"
+            width="60"
+            height="60"
             className="profile-image"
           ></img>
           <Typography 
@@ -69,12 +70,20 @@ export default function FriendList() {
           >
             {friendObj.username}
           </Typography>
-          <Button className="remove-friend" onClick={e => {e.stopPropagation(); addFriend(friendObj._id)}}>Add</Button>  
+          <Button className="remove-friend" onClick={e => {e.stopPropagation(); addFriend(friendObj._id)}}>
+            <PersonAddIcon color="info"></PersonAddIcon>
+          </Button>  
         </div>          
       );
     })
   ) : (
-    <Typography></Typography>  
+    <Typography 
+      variant="h2" 
+      className="u-lonely-ass"
+      align="center"
+    >
+      Congratulations you have befriended everyone and become a BNOC! 🎉 
+    </Typography>  
   )
     
   return (
@@ -94,16 +103,14 @@ export default function FriendList() {
           className="friends-divider"
         />
         <ProfileSearchBar currentFriends={false} notFriends={true}></ProfileSearchBar>
-        <Link to="/friends" className="add-friend-link">
-          <Button 
-            type="submit" 
-            sx={{ fontWeight: "normal" }}
-            // make css for this className
-            className="back-friend-button" 
-          >
-            All Friends
-          </Button>
-        </Link>
+        <Button 
+          href="/friends"
+          sx={{ fontWeight: "normal" }}
+          variant="contained"
+          className="friend-button black-button" 
+        >
+          All Friends
+        </Button>
         <Box className="list-box" sx={{p: 3}}>
           {showList}
         </Box>
