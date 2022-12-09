@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import "./CourseAdd.css";
+import { Link } from "react-router-dom";
 
 const names = ["asdf", "bvdsa"];
 
@@ -70,6 +71,9 @@ const CourseAdd = () => {
     <>
       <div className="container">
         <div className="title-div">
+          <Link to="../tracker">
+            <Button variant="contained">Home</Button>
+          </Link>
           <Typography variant="h1" className="title" align="center">
             Add Course
           </Typography>

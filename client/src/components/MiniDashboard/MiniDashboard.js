@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Typography, Divider, Box } from "@mui/material";
 import "./MiniDashboard.css";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 
 // New Stuff
 import { calculateTaskDate } from "../Dashboard/Helpers";
@@ -160,13 +161,15 @@ const MiniDashboard = ({ dataTasks }) => {
     <div>
       <div className="weekly-stats">
         <div>
-          <Divider className="week-divider" sx={{ mt: 0 }}>
-            WEEK {week}
-            <Typography className="week-subtext">
-              {startDate}
-              {/* - {endDate} */}
-            </Typography>
-          </Divider>
+          <Link to="../dashboard">
+            <Divider className="week-divider" sx={{ mt: 0 }}>
+              WEEK {week}
+              <Typography className="week-subtext">
+                {startDate}
+                {/* - {endDate} */}
+              </Typography>
+            </Divider>
+          </Link>
         </div>
         <div>
           <Box className="week-box">

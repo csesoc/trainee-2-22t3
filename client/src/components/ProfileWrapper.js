@@ -11,6 +11,8 @@ import BackgroundFire from "./BackgroundFire/BackgroundFire";
 import { useParams } from "react-router-dom";
 import { Divider, Fade, Typography } from "@mui/material";
 import ProfileSearchBar from "./DoomBuddies/ProfileSearchBar";
+import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const ProfileWrapper = () => {
   const [dataTasks, setDataTasks] = useState([]);
@@ -128,12 +130,22 @@ const ProfileWrapper = () => {
         />
       )}
       {/* <div> */}
-      <ProfileSearchBar runUpdateTasks={runUpdateTasks}></ProfileSearchBar>
+      <div className="profile-tracker-search-bar">
+        <ProfileSearchBar runUpdateTasks={runUpdateTasks}></ProfileSearchBar>
+      </div>
+
+      <br />
       <ProfilePageTitle className="profile-page-title" />
       {/* <ProfilePageTitle /> */}
-      {/* <div className="profile-doom-buddies-list-button">
-        <DoomBuddiesListButton />
-      </div> */}
+      {/* <div className="profile-doom-buddies-list-button"> */}
+      <div className="profile-doom-buddies-list-button">
+        <Link to="../friends">
+          <Button variant="contained">Doom Buddies</Button>
+        </Link>
+        <Link to="../CourseAdd">
+          <Button variant="contained">Add Course</Button>
+        </Link>
+      </div>
       <DoomFactor
         updateBackgroundFireShown={updateBackgroundFireShown}
         doomFactor={doomFactor}

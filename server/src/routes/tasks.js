@@ -56,36 +56,43 @@ router.get("/getOtherProfileImg", async (req, res, next) => {
   let userId = req.query.userId;
   console.log(userId);
   console.log(req.query.userId);
+  try {
+    // 1. find inside database for matching userId - if none return error message
+    const foundUser = await doomUsers.findOne({ _id: ObjectId(userId) });
+    console.log(userId);
+    if (foundUser === undefined || foundUser === null) {
+      return res.status(400).send({ error: "User not found. Invalid userId" });
+    }
 
-  // 1. find inside database for matching userId - if none return error message
-  const foundUser = await doomUsers.findOne({ _id: ObjectId(userId) });
-  console.log(userId);
-  if (foundUser === undefined || foundUser === null) {
-    return res.status(400).send({ error: "User not found. Invalid userId" });
+    // 2. Valid userId
+    res.send({
+      otherProfileImg: foundUser.profileImg,
+    });
+  } catch (error) {
+    next(error);
   }
-
-  // 2. Valid userId
-  res.send({
-    otherProfileImg: foundUser.profileImg,
-  });
 });
 
 // GET - /tasks/getOtherUsername
 // gets username of other users
 // Brian Wang
 router.get("/getOtherUsername", async (req, res, next) => {
-  let userId = req.query.userId;
+  try {
+    let userId = req.query.userId;
 
-  // 1. find inside database for matching userId - if none return error message
-  const foundUser = await doomUsers.findOne({ _id: ObjectId(userId) });
-  if (foundUser === undefined || foundUser === null) {
-    return res.status(400).send({ error: "User not found. Invalid userId" });
+    // 1. find inside database for matching userId - if none return error message
+    const foundUser = await doomUsers.findOne({ _id: ObjectId(userId) });
+    if (foundUser === undefined || foundUser === null) {
+      return res.status(400).send({ error: "User not found. Invalid userId" });
+    }
+
+    // 2. Valid userId
+    res.send({
+      otherUsername: foundUser.username,
+    });
+  } catch (error) {
+    next(error);
   }
-
-  // 2. Valid userId
-  res.send({
-    otherUsername: foundUser.username,
-  });
 });
 
 router.use(verifyJWT);

@@ -1,0 +1,273 @@
+body {
+  background-color: #0e0e10;
+}
+
+.return-profile {
+  position: relative;
+  right: 50px;
+  top: 50px;
+}
+
+.profile-button {
+  white-space: nowrap !important;
+  position: relative !important;
+  float: right !important;
+  width: 5% !important;
+  margin-right: 0 !important;
+  margin-left: auto !important;
+  bottom: 35px !important;
+}
+
+.profile-icon {
+  position: relative !important;
+  left: 50px !important;
+}
+
+.css-6lijc5-MuiSvgIcon-root {
+  font-size: 28px !important;
+}
+
+.friends-container {
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  height: auto;
+  margin: 4rem auto;
+  border-radius: 0.4rem;
+  padding: 3rem;
+  padding-top: 36px;
+}
+
+.friends-title {
+  align-self: center !important;
+  margin-top: 0px !important;
+  font-size: 4.2vw !important;
+  transition: all 1s !important;
+}
+
+.friends-title:hover {
+  letter-spacing: 3px;
+  color: rgb(55, 55, 172) !important;
+  scale: 1.1;
+}
+
+.friends-title-div {
+  width: 85vw;
+  margin: auto;
+}
+
+.profile-image {
+  border-radius: 50%;
+  margin-left: 15px;
+  margin-top: 12px;
+  object-fit: cover;
+}
+
+.friend-text {
+  font-size: 16px !important;
+  letter-spacing: 0.05em !important;
+  margin-bottom: 12px !important;
+  color: white !important;
+  background-color: transparent;
+  border: none;
+  position: relative !important;
+  bottom: 22px !important;
+  left: 15px !important;
+}
+
+.u-lonely-ass {
+  font-size: 25px !important;
+  margin-left: 10px !important;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+  color: white !important;
+  font-weight: bold !important;
+  letter-spacing: 0.05em !important;
+}
+
+.list-box {
+  position: relative !important;
+  bottom: 20px !important;
+}
+
+.list-box:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.friend-box {
+  border-radius: 0.8rem !important; 
+  float: left !important;
+  width: 49.19% !important;
+  margin: 0.3rem !important;
+  cursor: pointer !important;
+  position: relative !important;
+  z-index: 0 !important;
+  transition: all 1s !important;
+}
+
+.friend-box:not(:last-child) {
+  margin-bottom: 0.8rem;
+}
+
+@media screen and (max-width: 1280px) {
+  .friend-box {
+    width: 100% !important;
+  }
+}
+
+.friend-box:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ffffff,
+    #E3E3E3,
+    #BCBCBC,
+    #858484,
+    #6D6D6D,
+    #4F4F4F, 
+    #222,
+    #111,
+    #0e0e10
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowingfriend-box 20s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowingfriend-box {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.friend-box:active {
+  color: #000;
+}
+
+.friend-box:active:after {
+  background: transparent;
+}
+
+.friend-box:hover:before {
+  opacity: 1;
+}
+
+.friend-box:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #222222;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+.remove-friend {
+  font-size: 16px !important;
+  color: white !important;
+  position: relative !important;
+  text-transform: lowercase !important;
+  letter-spacing: 0.05em !important;
+  background-color: #181818 !important;
+  float: right !important;
+  top: 28px !important;
+  right: 15px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+.friends-divider {
+  border-top: 5px solid #ffffff !important;
+  margin-top: 30px !important;
+}
+
+.background-fire-class {
+  overflow: hidden;
+  display: block;
+  position: fixed;
+  z-index: -1 !important;
+  left: 0;
+  width: 100%;
+  height: auto;
+  bottom: 0; 
+  object-fit: cover !important;
+  transition: all 1s;
+  -webkit-filter: blur(6px);
+  filter: brightness(60%) blur(6px);
+} 
+
+.friend-button {
+  white-space: nowrap !important;
+  font-size: 16px !important;
+  text-transform: none !important;
+  position: relative !important;
+  float: right !important;
+  width: 10% !important;
+  margin-right: 0 !important;
+  margin-left: auto !important;
+  bottom: 30px !important;
+}
+
+.white-button {
+  background-color: #E3E3E3 !important;
+  color: #000 !important;
+}
+
+.black-button {
+  color: white !important;
+}
+
+.add-friend-link {
+  text-decoration: none !important;
+}
+
+.add-friend-link:link {
+  text-decoration: none !important;
+}
+
+.add-friend-link:visited {
+  text-decoration: none !important;
+}
+
+.add-friend-link:hover {
+  text-decoration: none !important;
+}
+
+.add-friend-link:active {
+  text-decoration: none !important;
+}
+
+.css-xmg0jq-MuiFormControl-root-MuiTextField-root {
+  position: relative !important;
+  width: 86% !important;
+  float: left !important;
+  left: 30px !important;
+  top: 20px !important;
+}
+
+.css-advny6-MuiPopper-root {
+  background-color: #000 !important;
+}
+
+.css-1n3gzv9-MuiButtonBase-root-MuiMenuItem-root:hover {
+  background-color: #4F4F4F !important;
+}

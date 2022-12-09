@@ -8,6 +8,8 @@ const sampleData = {
       token: "trhdrtdyrthd",
       tasks: ["tasks._id"],
       courses: ["courses._id"],
+      _id: "5471230548920175fgdfas",
+      friends: ["name"],
     },
   ],
   tasks: [

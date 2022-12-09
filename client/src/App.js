@@ -6,6 +6,8 @@ import LoginPage from "./components/RegisterLogin/LoginPage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Profile from "./components/Profile";
 import CourseAdd from "./components/CourseAdd/CourseAdd";
+import Friends from "./components/Friends/Friends";
+import FriendsAdd from "./components/Friends/FriendsAdd";
 import {
   experimental_sx as sx,
   ThemeProvider,
@@ -61,10 +63,10 @@ const theme = createTheme({
         root: {
           color: "#9291ff",
         },
-      }
-    }
-  }
-})
+      },
+    },
+  },
+});
 
 function App() {
   return (
@@ -74,10 +76,12 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/tracker/:id" element={<Profile />} />
           <Route path="/tracker" element={<Profile />} />
           <Route path="/courseAdd" element={<CourseAdd />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/friends" element={<Friends />} />
+          <Route path="/friends/add" element={<FriendsAdd />} />
         </Routes>
       </Router>
     </ThemeProvider>

@@ -1,4 +1,5 @@
 .profile-page-title {
+  margin-top: 90px !important;
   transition: all 1s;
 }
 
@@ -12,4 +13,8 @@
   /* stops side scrolling when hovering over title */
   width: 85vw;
   margin: auto;
+}
+
+.profile-tracker-search-bar {
+  width: 40% !important;
 }

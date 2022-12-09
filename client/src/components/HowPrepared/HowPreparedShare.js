@@ -6,6 +6,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import testImage from "./testImage.jpg";
 import { Snackbar } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import {
   Dialog,
@@ -62,6 +63,7 @@ const HowPreparedShare = () => {
           ></img>
           <div align="center">
             <IconButton>Doom Buddies</IconButton>
+
             <IconButton>
               <FacebookIcon />
             </IconButton>
