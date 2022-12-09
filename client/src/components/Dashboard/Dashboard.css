@@ -223,6 +223,10 @@ body {
   font-weight: bold;
 }
 
+.task-card-day-text {
+  color: gray !important;
+}
+
 .tasks-divider {
   background: transparent;
   border-bottom-left-radius: 6px;
@@ -248,6 +252,7 @@ body {
 
 .add-task-icon {
   margin-left: 10px !important;
+  margin-top: 10px !important;
 }
 
 .add-task-icon-sign {

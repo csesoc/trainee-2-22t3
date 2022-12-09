@@ -3,10 +3,16 @@ import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
+import dayjs from 'dayjs';
 import './Dashboard.css';
 
-export function TaskCard (course, taskType, year, term, week, completed, progress, setProgress, num) {
+export function TaskCard (name, course, date, duration, completed, progress, setProgress, num, taskChanged, setTaskChanged) {
   let cardId = `card_${num}`;
+
+  const day = dayjs(date).format("ddd");
+  const startTime = dayjs(date).format("hh:mm");
+  let endDate = (new Date(date).setHours(new Date(date).getHours() + duration / 3600));
+  const endTime = dayjs(endDate).format("hh:mmA");
 
   const handleDone = () => {
     let card = document.getElementById(`card${cardId}`);
@@ -25,12 +31,14 @@ export function TaskCard (course, taskType, year, term, week, completed, progres
       newProgress[num] = "not done";
       completed = false;
     }
+    setTaskChanged(taskChanged + 1);
     setProgress(newProgress);
   }
 
   const handleDelete = () => {
     let newProgress = [...progress];
     newProgress[num] = "deleted";
+    setTaskChanged(taskChanged + 1);
     setProgress(newProgress);
   }
 
@@ -47,11 +55,12 @@ export function TaskCard (course, taskType, year, term, week, completed, progres
       <Typography className="task-card-header" id={`card-header${cardId}`} 
       variant="h5" align="center" 
       sx={{fontWeight:"bold", color:txtString}}>
-        {course}
+        {name}
       </Typography>
       <Typography className="task-card-text1" sx={{mb:0, mt:0}}>
-        {year}T{term} Week {week}<br></br>{taskType}
+        {course}<br></br>
       </Typography>
+      <Typography className="task-card-day-text">{day} {startTime}-{endTime}</Typography>
     </CardContent>
     <CardActions sx={{pt: 0}}>
     <IconButton className="done-icon" onClick={() => handleDone()} sx={{ml: 1.8}}>
