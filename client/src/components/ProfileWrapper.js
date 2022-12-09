@@ -10,6 +10,7 @@ import MiniDashboard from "./MiniDashboard/MiniDashboard";
 import BackgroundFire from "./BackgroundFire/BackgroundFire";
 import { useParams } from "react-router-dom";
 import { Divider, Fade, Typography } from "@mui/material";
+import ProfileSearchBar from "./DoomBuddies/ProfileSearchBar";
 
 const ProfileWrapper = () => {
   const [dataTasks, setDataTasks] = useState([]);
@@ -127,6 +128,9 @@ const ProfileWrapper = () => {
         />
       )}
       <ProfilePageTitle className="profile-page-title" />
+      {/* <div> */}
+      <ProfileSearchBar></ProfileSearchBar>
+      <ProfilePageTitle />
       <div className="profile-doom-buddies-list-button">
         <DoomBuddiesListButton />
       </div>

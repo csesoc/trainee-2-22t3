@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage/LandingPage";
 import RegisterPage from "./components/RegisterLogin/RegisterPage";
 import LoginPage from "./components/RegisterLogin/LoginPage";
+import Dashboard from "./components/Dashboard/Dashboard";
 import Profile from "./components/Profile";
 import {
   experimental_sx as sx,
@@ -54,8 +55,15 @@ const theme = createTheme({
         }),
       },
     },
-  },
-});
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          color: "#9291ff",
+        },
+      }
+    }
+  }
+})
 
 function App() {
   return (
@@ -65,6 +73,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/tracker/:id" element={<Profile />} />
           <Route path="/tracker" element={<Profile />} />
         </Routes>

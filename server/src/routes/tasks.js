@@ -9,6 +9,16 @@ const router = express.Router();
 // Returns an array of all tasks
 router.get("/get", async (req, res) => {
   const tasksArray = await doomTasks.find().toArray();
+  for (let task of tasksArray) {
+    if (task.userId == undefined) {
+      continue;
+    }
+    console.log(task.userId, task.userId.toString());
+    await doomTasks.updateOne(
+      { _id: task._id },
+      { $set: { userId: task.userId.toString() } }
+    );
+  }
   res.send(tasksArray);
 });
 
@@ -128,7 +138,7 @@ router.post(
     check("week")
       .exists()
       .withMessage("Week not inputted")
-      .isNumeric({ min: 1, max: 10 })
+      .isNumeric({ min: 1, max: 12 })
       .withMessage("Week is invalid"),
     check("term")
       .exists()
@@ -152,7 +162,7 @@ router.post(
         );
     }
     req.body.userId = req.authUser._id.toString();
-    doomTasks.insertOne(req.body);
+    await doomTasks.insertOne(req.body);
     res.send("Task Added");
   }
 );
