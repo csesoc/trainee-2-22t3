@@ -7,7 +7,7 @@ import ProfileSearchBar from "../DoomBuddies/ProfileSearchBar";
 export default function LandingPage() {
   return (
     <>
-      <ProfileSearchBar></ProfileSearchBar>
+      <ProfileSearchBar currentFriends={true} notFriends={false}></ProfileSearchBar>
       <div class="landing-container">
         <img
           src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/microsoft/310/skull_1f480.png"
