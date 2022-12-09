@@ -3,23 +3,43 @@
   display: flex;
   flex-direction: column;
   width: 60vm;
-  border: #ffffff 1px solid;
+  /* border: #ffffff 1px solid; */
   height: auto;
-  margin: 1rem;
+  margin: 0rem;
   padding: 3rem;
   border-radius: 0.4rem;
-  background-color: #0f131a;
+  border-width: 3px !important;
+  /* background-color: #0f131a; */
   justify-content: center;
 }
 
 #profile-tracker-title {
-  color: #ffffff;
-  border: 2px #ffffff solid;
+  background-color: transparent;
+  width: 97%;
+  height: 80%;
+  border-radius: 50px;
+  border-color: white !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bolder;
+  transition: all 1s;
+}
+
+#profile-tracker-title:hover {
+  letter-spacing: 10px !important;
+  scale: 1.05;
+  border-color: rgb(55, 55, 172) !important;
 }
 
 /* Progress Bar Components */
 .progress-bar-whole {
   margin: 10px;
+  /* border: 3px white solid; */
+}
+
+.progress-bar-header {
 }
 
 .progress-bar-label {
@@ -30,7 +50,7 @@
 }
 
 .progress-bar:hover {
-  scale: 1.1;
+  scale: 1.03;
 }
 
 .dialog-box {
@@ -80,10 +100,52 @@
   transition: all 1s;
   font-size: 20px !important;
   font-weight: bold !important;
+  margin-left: auto !important;
+  order: 2;
+}
+
+.progress-bar-percentage:hover {
+  scale: 1.05;
+  color: rgb(55, 55, 172) !important;
 }
 
 .progress-bar-label {
   transition: all 1s;
   font-size: 20px !important;
   font-weight: bold !important;
+}
+
+.progress-bar-label:hover {
+  scale: 1.05;
+  color: rgb(55, 55, 172) !important;
+}
+
+.progress-bar-dropdown-button {
+  transition: all 1s;
+}
+
+.progress-bar-dropdown-button:hover {
+  scale: 1.05;
+  color: rgb(55, 55, 172) !important;
+}
+
+.progress-bar-sort-by-button {
+  position: absolute !important;
+  top: 10px !important;
+  left: 10px !important;
+}
+
+.progress-dropdown-list-item {
+  /* transition: all 1s !important; */
+}
+
+.dropdown-list-element-fade-out {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
+}
+
+.sort-by-check-mark {
+  float: right !important;
 }

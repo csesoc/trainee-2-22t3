@@ -4,14 +4,22 @@ import HowPreparedSelector from "./HowPreparedSelector";
 import HowPreparedShare from "./HowPreparedShare";
 import "./HowPrepared.css";
 
-const HowPrepared = () => {
+const HowPrepared = ({ userId }) => {
+  console.log("Hello");
+  console.log(userId);
   return (
     <>
       <div className="how-prepared">
-        <Typography variant="h5" className="how-prepared-title">
-          How doomed are you feeling today?
+        <Typography
+          className="how-prepared-title"
+          sx={{
+            fontSize: "30px",
+            fontWeight: "bold",
+          }}
+        >
+          DAILY CHECK IN
         </Typography>
-        <HowPreparedSelector />
+        <HowPreparedSelector userId={userId} />
         <HowPreparedShare />
       </div>
     </>

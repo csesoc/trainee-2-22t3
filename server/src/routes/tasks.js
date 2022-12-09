@@ -1,6 +1,6 @@
 import express from "express";
 import { check, validationResult } from "express-validator";
-import { doomTasks } from "../database.js";
+import { doomTasks, doomUsers } from "../database.js";
 import { ObjectId } from "mongodb";
 import { verifyJWT } from "../middleware/verifyJWT.js";
 const router = express.Router();
@@ -9,6 +9,16 @@ const router = express.Router();
 // Returns an array of all tasks
 router.get("/get", async (req, res) => {
   const tasksArray = await doomTasks.find().toArray();
+  res.send(tasksArray);
+});
+
+// GET - /tasks/get/:id
+// Returns an array of all tasks
+// Brian Wang
+router.get("/get/:id", async (req, res) => {
+  const userId = req.params.id;
+  const tasksArray = await doomTasks.find({ userId: userId }).toArray();
+  console.log(tasksArray);
   res.send(tasksArray);
 });
 
@@ -24,21 +34,65 @@ router.get("/doomFactor", async (req, res) => {
   let userId = req.query.userId;
   console.log(userId);
   console.log(req.query.userId);
-  const totalTasks = await doomTasks
-    .find({ userId: ObjectId(userId) })
-    .toArray();
+  const totalTasks = await doomTasks.find({ userId: userId }).toArray();
   console.log(totalTasks);
   const numTotal = totalTasks.length;
   if (numTotal === 0) {
     return res.send({ doomFactor: 0 });
   }
   const completedTasks = await doomTasks
-    .find({ userId: ObjectId(userId), completed: true })
+    .find({ userId: userId, completed: true })
     .toArray();
   const numCompleted = completedTasks.length;
   return res.send({
     doomFactor: Math.floor(100 - (numCompleted / numTotal) * 100),
   });
+});
+
+// GET - /tasks/getOtherProfileImg
+// gets profile image of other users
+// Brian Wang
+router.get("/getOtherProfileImg", async (req, res, next) => {
+  let userId = req.query.userId;
+  console.log(userId);
+  console.log(req.query.userId);
+  try {
+    // 1. find inside database for matching userId - if none return error message
+    const foundUser = await doomUsers.findOne({ _id: ObjectId(userId) });
+    console.log(userId);
+    if (foundUser === undefined || foundUser === null) {
+      return res.status(400).send({ error: "User not found. Invalid userId" });
+    }
+
+    // 2. Valid userId
+    res.send({
+      otherProfileImg: foundUser.profileImg,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET - /tasks/getOtherUsername
+// gets username of other users
+// Brian Wang
+router.get("/getOtherUsername", async (req, res, next) => {
+  try {
+    let userId = req.query.userId;
+
+    // 1. find inside database for matching userId - if none return error message
+    const foundUser = await doomUsers.findOne({ _id: ObjectId(userId) });
+    if (foundUser === undefined || foundUser === null) {
+      return res.status(400).send({ error: "User not found. Invalid userId" });
+    }
+
+    // 2. Valid userId
+    res.send({
+      otherUsername: foundUser.username,
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.use(verifyJWT);
@@ -77,7 +131,7 @@ router.post(
     check("week")
       .exists()
       .withMessage("Week not inputted")
-      .isNumeric({ min: 1, max: 10 })
+      .isNumeric({ min: 1, max: 12 })
       .withMessage("Week is invalid"),
     check("term")
       .exists()
@@ -101,7 +155,7 @@ router.post(
         );
     }
     req.body.userId = req.authUser._id.toString();
-    doomTasks.insertOne(req.body);
+    await doomTasks.insertOne(req.body);
     res.send("Task Added");
   }
 );
@@ -125,7 +179,7 @@ router.put(
     if (foundTask === undefined) {
       return res.status(400).send({ error: "Task not found. Invalid task id" });
     }
-    if (foundTask.userId !== req.authUser._id.toString()) {
+    if (foundTask.userId.toString() !== req.authUser._id.toString()) {
       return res.status(403).send({
         error: "Logged in person does not have permission to edit task",
       });
@@ -192,7 +246,7 @@ router.delete(
     if (foundTask === undefined) {
       return res.status(400).send({ error: "Task not found. Invalid task id" });
     }
-    if (foundTask.userId !== req.authUser._id.toString()) {
+    if (foundTask.userId.toString() !== req.authUser._id.toString()) {
       return res
         .status(403)
         .send({ error: "Logged in person does not have permission to delete" });

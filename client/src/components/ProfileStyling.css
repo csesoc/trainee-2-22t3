@@ -1,18 +1,75 @@
 body {
   color: #ffffff;
   background-color: #0e0e10;
+  /* min-width: 590px; */
+  width: auto !important;
+  background-color: black;
+}
+
+.profile-wrapper {
+  position: relative;
 }
 
 .profile-tracker-profile {
-  border: #ffffff 2px solid;
+  /* border: #ffffff 2px solid; */
+  flex-basis: 70%;
 }
 
 .how-prepared-profile {
-  border: #ffffff 2px solid;
+  /* border: #ffffff 2px solid; */
 }
 
 .profile-doom-buddies-list-button {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.profile-section-divider {
+  background: transparent;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-width: 5px !important;
+  border-style: solid !important;
+  border-color: white !important;
+  height: 30px;
+  text-align: center;
+  align-items: center;
+  font-weight: bold;
+  width: calc(100% - 100px);
+  margin: auto !important;
+  transition: 1s all;
+}
+
+.profile-section-divider:hover {
+  /* color: rgb(55, 55, 172) !important; */
+  letter-spacing: 10px;
+  scale: 1.05;
+  border-color: rgb(55, 55, 172) !important;
+}
+
+.profile-mini-dashboard-tracker {
+  background-color: #0f131a;
+  border-radius: 15px;
+  /* border: white solid 2px; */
+  margin: 10px;
+}
+
+@media (min-width: 750px) {
+  .profile-mini-dashboard-tracker {
+    display: flex;
+    flex-direction: row;
+    /* border: white 3px solid; */
+    background-color: #0f131a;
+    margin: 10px 50px;
+    border-radius: 15px;
+  }
+}
+
+.profile-mini-dashboard {
+  flex-basis: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
 }

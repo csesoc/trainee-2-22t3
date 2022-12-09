@@ -1,18 +1,15 @@
 import { Typography, Button, Divider } from "@mui/material";
 import "./LandingPage.css";
 import { Link } from "react-router-dom";
-import "../DoomBuddies/ProfileSearchBar";
-import ProfileSearchBar from "../DoomBuddies/ProfileSearchBar";
 
 export default function LandingPage() {
   return (
     <>
-      <ProfileSearchBar></ProfileSearchBar>
       <div class="landing-container">
         <img
           src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/microsoft/310/skull_1f480.png"
           alt="skull"
-          class="landing-skull"
+          className="landing-skull"
         ></img>
         <Typography
           variant="h2"
@@ -26,7 +23,7 @@ export default function LandingPage() {
           <Button
             variant="outlined"
             type="submit"
-            class="landing-button-1"
+            className="landing-button-1"
             sx={{ fontWeight: "normal" }}
           >
             Login
@@ -46,7 +43,7 @@ export default function LandingPage() {
         <Link to="/register">
           <Button
             href="#text-buttons"
-            class="landing-button-2"
+            className="landing-button-2"
             sx={{ fontWeight: "normal" }}
             style={{ textTransform: 'none' }}
           >

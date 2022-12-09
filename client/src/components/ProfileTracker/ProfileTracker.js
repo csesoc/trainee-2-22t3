@@ -4,14 +4,13 @@ import { Button, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import "./ProgressTrackerStyling.css";
 import { useParams } from "react-router-dom";
+import { Divider } from "@mui/material";
 
 const ProfileTracker = ({ runUpdateTasks, dataTasks, id }) => {
   return (
     <>
       <div className="profile-tracker-container">
-        <Typography variant="h5" id="profile-tracker-title">
-          Tracker
-        </Typography>
+        <Divider id="profile-tracker-title">PROGRESS</Divider>
         {/* Filter by taskType */}
         <ProgressBarWhole
           ProgressBarType="Lectures"

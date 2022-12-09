@@ -7,6 +7,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import UndoIcon from "@mui/icons-material/Undo";
 
+import "./ProgressTrackerStyling.css";
+
 const ProgressDropdownListElement = ({
   _id,
   taskType,
@@ -18,6 +20,7 @@ const ProgressDropdownListElement = ({
   term,
   year,
   runUpdateTasks,
+  userId,
 }) => {
   const [updateCompletedStatus, setUpdateCompletedStatus] = useState();
   const handleToggleCompletedIcon = () => {
@@ -26,17 +29,32 @@ const ProgressDropdownListElement = ({
     } else {
       completed = true;
     }
-    const requestOptions = {
+    const putRequestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         _id: _id,
         completed: completed,
       }),
+      // qs: { _id: _id, completed: completed },
       credentials: "include",
     };
 
-    fetch("http://localhost:5000/tasks/put", requestOptions)
+    fetch("http://localhost:5000/tasks/put", putRequestOptions)
+      .then(() => runUpdateTasks())
+      .catch((error) => console.log(error));
+  };
+
+  const handleDeleteIcon = () => {
+    const deleteRequestOptions = {
+      method: "DELETE",
+      header: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    };
+
+    fetch(`http://localhost:5000/tasks/delete?_id=${_id}`, deleteRequestOptions)
       .then(() => runUpdateTasks())
       .catch((error) => console.log(error));
   };
@@ -48,24 +66,29 @@ const ProgressDropdownListElement = ({
     toggleCompletedIcon = <UndoIcon />;
   }
   return (
-    <div>
-      <div>
-        <Typography variant="h6">{name}</Typography>
-      </div>
-      <div>
-        <Typography>Duration: {duration}</Typography>
-      </div>
-      <div>
-        <IconButton onClick={handleToggleCompletedIcon}>
-          {toggleCompletedIcon}
-        </IconButton>
-        <IconButton>
-          <ModeEditIcon />
-        </IconButton>
-        <IconButton>
-          <DeleteIcon />
-        </IconButton>
-      </div>
+    <div /*className={completed ? "dropdown-list-element-fade-out" : ""}*/>
+      <Typography variant="h6">{name}</Typography>
+
+      <Typography>Duration: {duration}</Typography>
+      <Typography>Week: {week}</Typography>
+      <Typography>
+        Term {term}, {year}
+      </Typography>
+      {userId === undefined ? (
+        <div>
+          <IconButton onClick={handleToggleCompletedIcon}>
+            {toggleCompletedIcon}
+          </IconButton>
+          <IconButton>
+            <ModeEditIcon />
+          </IconButton>
+          <IconButton onClick={handleDeleteIcon}>
+            <DeleteIcon />
+          </IconButton>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

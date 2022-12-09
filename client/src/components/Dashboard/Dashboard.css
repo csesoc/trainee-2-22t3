@@ -1,0 +1,401 @@
+body {
+  background-color: #0e0e10;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  height: auto;
+  margin: 4rem auto;
+  border-radius: 0.4rem;
+  padding: 3rem;
+  padding-top: 36px;
+  background-color: #0f131a;
+  color: #ffffff;
+}
+
+@media (max-width: 400px) {
+  .dashboard-container {
+    padding-left: calc(7%) !important;
+  }
+}
+
+@media (max-width: 370px) {
+  .weekly-stats {
+    width: 96% !important;
+  }
+  .week-divider {
+    width: 96% !important;
+  }
+  .week-box {
+    width: 96% !important;
+  }
+  .weekly-box-divider {
+    width: 96% !important;
+  }
+}
+
+.dashboard-text {
+  font-size: 64px;
+  align-self: center;
+  margin-top: 0px;
+  overflow: none;
+}
+
+.selector-screen {
+  display: flex;
+  flex-wrap: wrap;
+  align-self: center;
+}
+
+.weekly-stats {
+  display:flex;
+  flex-direction: column;
+}
+
+.weekly-stat-counter {
+  float:right;
+  margin-right: 10px;
+}
+
+.week-divider {
+  background-color: transparent;
+  width: 300px;
+  height: 70px;
+  border-radius: 50px;
+  border-color: white !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+.week-subtext {
+  font-size: 14px !important;
+}
+
+.week-box {
+  background-color: transparent;
+  width: 280px;
+  height: 200px;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.weekly-box-text, .weekly-box-divider, .add-task-icon-sign, .week-divider, .tasks-divider, .dashboard-text {
+  transition: all 1s;
+}
+
+.weekly-box-text:hover, .weekly-box-divider:hover {
+  scale: 1.1;
+}
+
+.task-card:hover {
+  scale: 1.05;
+}
+
+/* .dashboard-text:hover {
+  scale: 1.2;
+  letter-spacing: 20px;
+} */
+
+.tasks-divider:hover {
+  scale: 1.05;
+  border-color: rgb(55, 55, 172) !important;
+  letter-spacing: 10px;
+}
+
+.week-divider:hover {
+  border-color: rgb(55, 55, 172) !important;
+  scale: 1.05;
+}
+
+.add-task-icon:hover  {
+  background-color: #5865f2 !important;
+}
+
+.add-task-icon:hover > .add-task-icon-sign {
+  transition: all 1s ease-in-out;
+  transform: rotate(180deg);
+}
+
+.weekly-box-text:hover {
+  color: rgb(55, 55, 172);
+}
+
+.weekly-box-divider:hover {
+  background-color: rgb(55, 55, 172);
+}
+
+.weekly-box-text {
+  font-size: 20px !important;
+  font-weight: bold !important;
+  margin-left: 10px !important;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.weekly-box-divider {
+  background-color: #ffffff;
+  width:280px;
+  height:3px;
+  border-radius: 3px;
+}
+
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  background-color: #36393f !important;
+}
+
+.create-task-box-divider {
+  background-color: #36393f;
+  width:400px;
+  height:5px;
+}
+
+.css-fcrm5i-MuiInputBase-root-MuiOutlinedInput-root {
+  background-color: #232323 !important;
+}
+
+.Mui-focused {
+  color: rgb(55, 55, 172) !important;
+}
+
+.MuiOutlinedInput-root {
+  color: white !important;
+}
+
+.css-1hnl2uv-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused {
+  background-color: #232323 !important;
+}
+
+.create-task-term-select {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+
+.css-1hnl2uv-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+  min-width: 90px !important;
+}
+
+.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+  background-color: #232323 !important;
+}
+
+.tasks-container {
+  min-width: 420px !important;
+}
+
+.task-card {
+  width: 185px;
+  border-radius: 20px !important;
+  margin: 10px;
+}
+
+@keyframes card-transition-done {
+  from {background-color: white;}
+  to {background-color: rgb(55, 55, 172);}
+}
+
+@keyframes card-transition-not-done {
+  from {background-color: rgb(55, 55, 172);}
+  to {background-color: white;}
+}
+
+@keyframes card-header-transition-done {
+  from {color: black;}
+  to {color: white;}
+}
+
+@keyframes card-header-transition-not-done {
+  from {color: white;}
+  to {color: black;}
+}
+
+.task-card-header {
+  color: black;
+  align-self: center;
+  margin: none;
+  padding:none;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.task-card-text1 {
+  color: gray !important;
+  margin: 0px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.task-card-text1-alt {
+  color: #5865f2 !important;
+  margin: 0px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.task-card-day-text {
+  color: gray !important;
+}
+
+.task-card-day-text-alt {
+  color: #5865f2 !important;
+}
+
+.task-card-buttons {
+  transform: translateX(70px);
+}
+
+.tasks-divider {
+  background: transparent;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-width: 5px !important;
+  border-style: solid !important;
+  border-color: white !important;
+  height:30px;
+  text-align: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.divider-container {
+  transform: translateX(-15px);
+  display:grid;
+  flex-wrap: wrap;
+  min-width: 420px !important;
+  justify-content:space-between;
+  grid-template-columns: repeat(auto-fill, 170px);
+  grid-gap: 1rem;
+}
+
+.add-task-icon {
+  margin-left: 10px !important;
+  margin-top: 10px !important;
+}
+
+.add-task-icon-sign {
+  color: white !important;
+}
+
+.dialog-box {
+  display: grid;
+  grid-template-columns: 150px 150px 130px;
+  grid-column-gap: 15px;
+}
+
+.dialog-box-text {
+  align-self: center !important;
+  text-align: left !important;
+}
+
+.text-field-box {
+  max-width: 150px;
+}
+
+.css-7foc6i-MuiFormControl-root-MuiTextField-root {
+  margin-top: 0px !important;
+}
+
+.select-box {
+  
+}
+
+.duration-box {
+  width: 100px !important;
+}
+
+.time-picker {
+  width: 140px;
+  margin-top: 23px !important;
+}
+
+.switch-box-text {
+  align-self: center !important;
+  text-align: left !important;
+}
+
+.switch-box-underline {
+  background-color: #5865f2 !important;
+  width: 60px;
+  height: 2px;
+  border-radius: 1px;
+}
+
+.css-jsexje-MuiSwitch-thumb {
+  background-color: #5865f2 !important;
+}
+
+.MuiSwitch-track {
+  background-color: rgb(11, 11, 31) !important;
+}
+
+.css-kq46vq-MuiTypography-root {
+  color: white !important;
+}
+
+.dialog-submit-button {
+  background-color: rgb(55, 55, 172) !important;
+  margin-top: 23px !important;
+  width: 100px;
+  height: 55px;
+}
+
+.css-1jm66jt-MuiClockPicker-root {
+  background-color: #595f6c !important;
+}
+
+.css-1ws8119-MuiDivider-root {
+  margin-top:10px !important;
+  margin-bottom: 10px !important;
+}
+
+.css-169iwlq-MuiCalendarPicker-root {
+  margin-left: 0px !important;
+  margin-right: 10px !important;
+}
+
+.css-uoyvse-MuiButtonBase-root-MuiPickersDay-root.Mui-selected, .css-qceo8l-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+  background-color: #5865f2 !important;
+}
+
+.css-6t5f1e-MuiDayPicker-monthContainer {
+  max-height: 300px !important;
+  background-color: transparent;
+  padding-top: 5px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border-width: 5px !important;
+  border-color: #ffffff;
+  border-top-width: 0px !important;
+  border-style: solid !important;
+  margin-bottom: 10px;
+}
+
+.css-1vozmwx-MuiTypography-root-MuiDayPicker-weekDayLabel {
+  color: white !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.css-qklzlb-MuiDayPicker-header {
+  background-color: transparent;
+  border-width: 5px !important;
+  border-bottom-width: 0px !important;
+  border-top-width: 0px !important;
+  border-style: solid !important;
+}
+
+.css-nk89i7-MuiPickersCalendarHeader-root {
+  background-color: transparent;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-width: 5px !important;
+  border-bottom-width: 0px !important;
+  border-style: solid !important;
+  padding-top: 6px !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
