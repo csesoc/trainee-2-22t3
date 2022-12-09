@@ -4,6 +4,7 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import RegisterPage from "./components/RegisterLogin/RegisterPage";
 import LoginPage from "./components/RegisterLogin/LoginPage";
 import Profile from "./components/Profile";
+import CourseAdd from "./components/CourseAdd/CourseAdd";
 import {
   experimental_sx as sx,
   ThemeProvider,
@@ -67,6 +68,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/tracker/:id" element={<Profile />} />
           <Route path="/tracker" element={<Profile />} />
+          <Route path="/courseAdd" element={<CourseAdd />} />
         </Routes>
       </Router>
     </ThemeProvider>
