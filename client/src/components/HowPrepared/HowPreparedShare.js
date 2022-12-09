@@ -53,14 +53,14 @@ const HowPreparedShare = () => {
           },
         }}
       >
+        <DialogTitle align="center">Doom Certificate</DialogTitle>
         <DialogContent className="how-prepared-share-dialog-content">
-          Doom Certificate
           <img
             src={testImage}
             width="400px"
             onClick={handleDoomCertificateClick}
           ></img>
-          <div>
+          <div align="center">
             <IconButton>Doom Buddies</IconButton>
             <IconButton>
               <FacebookIcon />

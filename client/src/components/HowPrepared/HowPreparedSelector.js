@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Rating, Typography } from "@mui/material";
 import BlackSkullsvg from "./BlackSkullsvg";
 import WhiteSkullsvg from "./WhiteSkullsvg";
@@ -26,10 +26,38 @@ function getLabelText(value) {
   return `${value}`;
 }
 
-const HowPreparedSelector = () => {
-  const [value, setValue] = useState(1);
+const HowPreparedSelector = ({ userId }) => {
+  const [value, setValue] = useState(0);
+  const [newValue, setNewValue] = useState(0);
+  const [pressedSubmit, setPressedSubmit] = useState(false);
   const [hover, setHover] = useState(-1);
   const [maxDoomShown, setMaxDoomShown] = useState(false);
+
+  // Calculates day of the week (e.g., Monday: 1, Tuesday: 2 etc.)
+  const d = new Date();
+  let day = d.getDay();
+
+  const putHowPreparedSubmitRequestOptions = {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      rating: value,
+      dateSelected: Date.now(),
+      daySelected: day,
+    }),
+    credentials: "include",
+  };
+  const handleHowPreparedSubmit = () => {
+    console.log(putHowPreparedSubmitRequestOptions.body);
+    // setPressedSubmit(true);
+    setNewValue(value);
+    fetch(
+      "http://localhost:5000/users/setDoomRating",
+      putHowPreparedSubmitRequestOptions
+    )
+      .then()
+      .catch((error) => console.log(error));
+  };
 
   const maxDoomSelector = () => {
     return (
@@ -56,24 +84,72 @@ const HowPreparedSelector = () => {
     }
   };
 
+  const getDoomRatingOptions = {
+    method: "GET",
+    credentials: "include",
+  };
+  useEffect(() => {
+    fetch(
+      `http://localhost:5000/users/getDoomRating?urlId=${userId}`,
+      getDoomRatingOptions
+    )
+      .then((res) => {
+        return res.json();
+      })
+      // .then((data) => setValue(data.doomRating.rating))
+      // .then(() => {
+      //   if (newValue !== value) {
+      //     value = newValue;
+      //   }
+      // })
+      .then((data) => setValue(data.doomRating.rating))
+      .then((data) => console.log("this is a test"))
+      .then((data) => console.log(data.doomRating.rating))
+      .then((data) => {
+        if (data.value === 0) {
+          setValue(0);
+        }
+      })
+      .then((data) => console.log(data.doomRating.rating))
+      .catch((error) => console.log(error));
+  }, [userId]);
+
   return (
     <>
       <div className="how-prepared-rating">
         <div className="how-prepared-selector">
-          <Rating
-            icon={<WhiteSkullsvg />}
-            emptyIcon={<BlackSkullsvg />}
-            precision={0.5}
-            value={value}
-            getLabelText={getLabelText}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-            onChangeActive={(event, newHover) => {
-              setHover(newHover);
-            }}
-            className="how-prepared-rating-selector"
-          />
+          {userId === undefined ? (
+            <Rating
+              icon={<WhiteSkullsvg />}
+              emptyIcon={<BlackSkullsvg />}
+              precision={0.5}
+              value={value}
+              getLabelText={getLabelText}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+              onChangeActive={(event, newHover) => {
+                setHover(newHover);
+              }}
+              className="how-prepared-rating-selector"
+            />
+          ) : (
+            <Rating
+              icon={<WhiteSkullsvg />}
+              emptyIcon={<BlackSkullsvg />}
+              precision={0.5}
+              value={value}
+              getLabelText={getLabelText}
+              // onChange={(event, newValue) => {
+              //   setValue(newValue);
+              // }}
+              // onChangeActive={(event, newHover) => {
+              //   setHover(newHover);
+              // }}
+              className="how-prepared-rating-selector"
+              readOnly
+            />
+          )}
         </div>
 
         <Typography className="how-prepared-rating-label">
@@ -81,7 +157,20 @@ const HowPreparedSelector = () => {
             <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
           )}
         </Typography>
-        <Button variant="contained">Submit</Button>
+        {userId === undefined ? (
+          <Button variant="contained" onClick={handleHowPreparedSubmit}>
+            Submit
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            onClick={handleHowPreparedSubmit}
+            disabled
+          >
+            Submit
+          </Button>
+        )}
+
         <IconButton
           className="how-prepared-dropdown-arrow"
           onClick={handleClickDropdownSelector}

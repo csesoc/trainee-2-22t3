@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import BackgroundFireVideo from "./background fire pepe.mp4";
 import "./BackgroundFire.css";
-import { Fade, Grow, CardMedia } from "@mui/material";
+import { Fade, Grow, CardMedia, Typography } from "@mui/material";
 
 const BackgroundFire = ({ isShown, id, doomFactor }) => {
   const [isShownBackgroundFireVideo, setIsShownBackgroundFireVideo] =
@@ -57,6 +57,7 @@ const BackgroundFire = ({ isShown, id, doomFactor }) => {
             className="background-fire-video-fade-in"
             src={BackgroundFireVideo}
             autoPlay
+            muted
           />
           {/* <video loop autoPlay className="background-fire-video-fade-in">
             <source src={BackgroundFireVideo} />
@@ -65,7 +66,25 @@ const BackgroundFire = ({ isShown, id, doomFactor }) => {
       </div>
 
       <Grow in={isShown} timeout={1500}>
-        <div className="doom-factor-number">{doomFactor}</div>
+        <div className="doom-factor-number">
+          {/* <Typography
+            variant="h2"
+            sx={{
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+              fontWeight: "bold",
+              fontSize: "100px",
+              color: `rgb(200, ${200 - doomFactor * 2}, ${
+                200 - doomFactor * 2
+              })`,
+            }}
+            className="doom-factor-number-typography"
+          >
+            {doomFactor}
+          </Typography> */}
+          <h1 className="doom-factor-number-typography">{doomFactor}</h1>
+        </div>
       </Grow>
     </div>
   );

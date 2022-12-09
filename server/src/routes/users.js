@@ -169,17 +169,23 @@ router.get("/getUsername", async (req, res, next) => {
 // doomRating object: rating, dateSelected and daySelected fields
 // Brian Wang
 router.put("/setDoomRating", async (req, res, next) => {
+  let userId = req.authUser._id.toString();
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).send({ errors: errors.array()[0].msg });
   }
 
   // 1. Valid body
+  console.log(req.body);
+  // let rating = parseInt(req.body.rating);
+  // let dateSelected = parseInt(req.body.dateSelected);
+  // let daySelected = parseInt(req.body.daySelected);
   const { rating, dateSelected, daySelected } = req.body;
   if (!rating || !dateSelected || !daySelected) {
     // a field is missing handle error accordingly
     return res.status(400).send({ error: "missing property" });
   }
+
   // if (!Object.hasOwn(req.body, "rating")) {
   //   return res.status(400).send({ error: "missing rating property" });
   // }
@@ -208,7 +214,7 @@ router.put("/setDoomRating", async (req, res, next) => {
 
   // 2. Update the data
   let userObj = req.authUser;
-  let userId = req.authUser._id.toString();
+
   console.log(userId);
   await doomUsers.updateOne(
     { _id: ObjectId(req.authUser._id) },
@@ -234,11 +240,27 @@ router.get("/getDoomRating", async (req, res, next) => {
   if (userId === undefined) {
     userId = req.authUser._id.toString();
     const profileDocument = await doomUsers.findOne({ _id: ObjectId(userId) });
+    if (
+      profileDocument.doomRating === undefined ||
+      profileDocument.doomRating === null
+    ) {
+      return res.send({
+        doomRating: { rating: 0, dateSelected: 0, daySelected: 0 },
+      });
+    }
     return res.send({ doomRating: profileDocument.doomRating });
   } else {
     const profileDocument = await doomUsers.findOne({ _id: ObjectId(userId) });
     if (profileDocument === undefined) {
       return res.status(400).send({ error: "Task not found. Invalid task id" });
+    }
+    if (
+      profileDocument.doomRating === undefined ||
+      profileDocument.doomRating === null
+    ) {
+      return res.send({
+        doomRating: { rating: 0, dateSelected: 0, daySelected: 0 },
+      });
     }
     return res.send({ doomRating: profileDocument.doomRating });
   }

@@ -20,6 +20,7 @@ const ProgressDropdownListElement = ({
   term,
   year,
   runUpdateTasks,
+  userId,
 }) => {
   const [updateCompletedStatus, setUpdateCompletedStatus] = useState();
   const handleToggleCompletedIcon = () => {
@@ -73,15 +74,21 @@ const ProgressDropdownListElement = ({
       <Typography>
         Term {term}, {year}
       </Typography>
-      <IconButton onClick={handleToggleCompletedIcon}>
-        {toggleCompletedIcon}
-      </IconButton>
-      <IconButton>
-        <ModeEditIcon />
-      </IconButton>
-      <IconButton onClick={handleDeleteIcon}>
-        <DeleteIcon />
-      </IconButton>
+      {userId === undefined ? (
+        <div>
+          <IconButton onClick={handleToggleCompletedIcon}>
+            {toggleCompletedIcon}
+          </IconButton>
+          <IconButton>
+            <ModeEditIcon />
+          </IconButton>
+          <IconButton onClick={handleDeleteIcon}>
+            <DeleteIcon />
+          </IconButton>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

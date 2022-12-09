@@ -1,6 +1,9 @@
 body {
   color: #ffffff;
   background-color: #0e0e10;
+  /* min-width: 590px; */
+  width: auto !important;
+  background-color: black;
 }
 
 .profile-wrapper {

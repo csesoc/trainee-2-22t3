@@ -50,6 +50,8 @@
 .show-doom-factor-grow {
   position: absolute;
   top: 0px;
+
+  transition: all 1s !important;
 }
 
 .doom-factor-words {
@@ -63,10 +65,29 @@
   position: absolute;
   right: -100px;
   top: 15px;
+  color: rgb(117, 117, 174) !important;
+}
+
+.show-doom-factor-grow:hover {
+  scale: 1.1 !important;
+  color: rgb(55, 55, 172) !important;
 }
 
 .factor-part {
   position: absolute;
   top: 115px;
   right: -100px;
+}
+
+.doom-factor-background-fire-embers {
+  position: absolute;
+
+  overflow: hidden !important;
+  top: -300px !important;
+  left: 0px !important;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  position: fixed;
+  opacity: 0.4;
 }

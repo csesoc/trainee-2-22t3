@@ -12,6 +12,7 @@ const ProgressDropdownList = ({
   dataTaskCompletedStatus,
   runUpdateTasks,
   sortByMode,
+  userId,
 }) => {
   // iterates through sample data to add relevant data to dropdown
   const [ProgressDropdownList, setProgressDropdownList] = useState([]);
@@ -90,6 +91,7 @@ const ProgressDropdownList = ({
               <ProgressDropdownListElement
                 {...ListElement}
                 runUpdateTasks={runUpdateTasks}
+                userId={userId}
               />
             </ListItem>
           </div>

@@ -6,6 +6,7 @@ import SkullVideo from "./blue fire skull.mov.mp4";
 import "./DoomFactor.css";
 import zIndex from "@mui/material/styles/zIndex";
 import FireVideo from "../BackgroundFire/background fire.mp4";
+import FireEmbersVideo from "./doom factor view background fire embers.mp4";
 
 import {
   Dialog,
@@ -124,9 +125,9 @@ const DoomFactor = ({ updateBackgroundFireShown, doomFactor, id }) => {
           return res.json();
         })
         .then((data) => {
-          setProfileTrackerImage(data.profileImgUrl);
+          setProfileTrackerImage(data.otherProfileImg);
         })
-
+        .then((data) => console.log(data.otherProfileImg))
         .catch((error) => console.log(error));
     }
   }, [updateCounter]);
@@ -164,7 +165,7 @@ const DoomFactor = ({ updateBackgroundFireShown, doomFactor, id }) => {
               height: 200,
               borderWidth: 0,
               borderColor: "black",
-              left: showDoomFactor ? "150px" : "0px",
+              left: showDoomFactor ? "130px" : "0px",
             }}
             className="doom-factor-avatar"
           >
@@ -194,7 +195,11 @@ const DoomFactor = ({ updateBackgroundFireShown, doomFactor, id }) => {
               className="avatar-flaming-skull-video"
             >
               <Typography
-                sx={{ color: "black", opacity: showDoomFactor ? "1" : "0" }}
+                sx={{
+                  color: "black",
+                  opacity: showDoomFactor ? "1" : "0",
+                  fontWeight: "bold",
+                }}
                 className="doom-factor-value"
                 variant="h1"
               >
@@ -220,10 +225,11 @@ const DoomFactor = ({ updateBackgroundFireShown, doomFactor, id }) => {
               <Typography
                 className="doom-part"
                 variant="h1"
+                fontSize="85px"
                 align="right"
-                sx={{ fontWeight: "bold" }}
-                left="-180px"
-                top="-190px"
+                sx={{ fontWeight: "bold", color: "rgb(55, 55, 172)" }}
+                left="-145px"
+                top="-180px"
               >
                 DOOM
               </Typography>
@@ -237,15 +243,22 @@ const DoomFactor = ({ updateBackgroundFireShown, doomFactor, id }) => {
               <Typography
                 className="factor-part"
                 variant="h2"
-                fontSize="60px"
+                fontSize="55px"
                 align="right"
-                sx={{ fontWeight: "bold" }}
-                left="-130px"
+                sx={{ fontWeight: "bold", color: "rgb(117, 117, 174)" }}
+                left="-110px"
                 top="-90px"
               >
                 FACTOR
               </Typography>
             </Grow>
+          </div>
+          <div className="doom-factor-background-fire-embers">
+            {/* <Fade in={showDoomFactor}> */}
+            <video loop autoPlay muted>
+              <source src={FireEmbersVideo} />
+            </video>
+            {/* </Fade> */}
           </div>
         </div>
         <Dialog

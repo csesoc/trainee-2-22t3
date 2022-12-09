@@ -30,6 +30,8 @@ const ProfileWrapper = () => {
   };
 
   const { id } = useParams();
+  console.log("above");
+  console.log(id);
 
   useEffect(() => {
     if (id === undefined) {
@@ -153,7 +155,7 @@ const ProfileWrapper = () => {
 
       <Divider className="profile-section-divider">DOOM SELECTOR</Divider>
       <div className="how-prepared-profile">
-        <HowPrepared />
+        <HowPrepared userId={id} />
       </div>
     </div>
   );

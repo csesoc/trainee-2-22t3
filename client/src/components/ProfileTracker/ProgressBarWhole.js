@@ -159,16 +159,13 @@ const ProgressBarWhole = ({
           <Typography variant="h6" className="progress-bar-label">
             {ProgressBarType}
           </Typography>
-          {userId === undefined ? (
-            <ProgressBarDropdownButton onClick={handleClickDropdownOpen}>
-              <ArrowDropDownIcon
-                style={{ color: "white" }}
-                className="progress-bar-dropdown-button"
-              />
-            </ProgressBarDropdownButton>
-          ) : (
-            <></>
-          )}
+
+          <ProgressBarDropdownButton onClick={handleClickDropdownOpen}>
+            <ArrowDropDownIcon
+              style={{ color: "white" }}
+              className="progress-bar-dropdown-button"
+            />
+          </ProgressBarDropdownButton>
 
           <Typography className="progress-bar-percentage">
             {dataTasks.length === 0 ? (
@@ -283,6 +280,7 @@ const ProgressBarWhole = ({
                   dataTaskCompletedStatus={false}
                   runUpdateTasks={runUpdateTasks}
                   sortByMode={sortByMode}
+                  userId={userId}
                 />
                 {/* Completed Tasks */}
                 {completedListIsShown && (
@@ -292,6 +290,7 @@ const ProgressBarWhole = ({
                     dataTaskCompletedStatus={true}
                     runUpdateTasks={runUpdateTasks}
                     sortByMode={sortByMode}
+                    userId={userId}
                   />
                 )}
               </DialogContentText>
