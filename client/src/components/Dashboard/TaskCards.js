@@ -14,6 +14,16 @@ export function TaskCard (name, course, date, duration, completed, progress, set
   let endDate = (new Date(date).setHours(new Date(date).getHours() + duration / 3600));
   const endTime = dayjs(endDate).format("hh:mmA");
 
+  let courseStr = <Typography className="task-card-text1" sx={{mb:0, mt:0}}>{course}<br></br></Typography>;
+  if (num % 2 != 0) {
+    courseStr = <Typography className="task-card-text1-alt" sx={{mb:0, mt:0}}>{course}<br></br></Typography>;
+  }
+
+  let dateStr = <Typography className="task-card-day-text">{day} {startTime}-{endTime}</Typography>;
+  if (day === "Tue" || day === "Thu" || day === "Sat") {
+    dateStr = <Typography className="task-card-day-text-alt">{day} {startTime}-{endTime}</Typography>;
+  }
+
   const handleDone = () => {
     let card = document.getElementById(`card${cardId}`);
     let cardHeader = document.getElementById(`card-header${cardId}`);
@@ -57,10 +67,8 @@ export function TaskCard (name, course, date, duration, completed, progress, set
       sx={{fontWeight:"bold", color:txtString}}>
         {name}
       </Typography>
-      <Typography className="task-card-text1" sx={{mb:0, mt:0}}>
-        {course}<br></br>
-      </Typography>
-      <Typography className="task-card-day-text">{day} {startTime}-{endTime}</Typography>
+      {courseStr}
+      {dateStr}
     </CardContent>
     <CardActions sx={{pt: 0}}>
     <IconButton className="done-icon" onClick={() => handleDone()} sx={{ml: 1.8}}>

@@ -40,6 +40,7 @@ body {
   font-size: 64px;
   align-self: center;
   margin-top: 0px;
+  overflow: none;
 }
 
 .selector-screen {
@@ -86,14 +87,18 @@ body {
   transition: all 1s;
 }
 
-.weekly-box-text:hover, .weekly-box-divider:hover, .task-card:hover {
+.weekly-box-text:hover, .weekly-box-divider:hover {
   scale: 1.1;
 }
 
-.dashboard-text:hover {
+.task-card:hover {
+  scale: 1.05;
+}
+
+/* .dashboard-text:hover {
   scale: 1.2;
   letter-spacing: 20px;
-}
+} */
 
 .tasks-divider:hover {
   scale: 1.05;
@@ -182,7 +187,7 @@ body {
 }
 
 .task-card {
-  width: 180px;
+  width: 185px;
   border-radius: 20px !important;
   margin: 10px;
 }
@@ -223,8 +228,19 @@ body {
   font-weight: bold;
 }
 
+.task-card-text1-alt {
+  color: #5865f2 !important;
+  margin: 0px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
 .task-card-day-text {
   color: gray !important;
+}
+
+.task-card-day-text-alt {
+  color: #5865f2 !important;
 }
 
 .tasks-divider {

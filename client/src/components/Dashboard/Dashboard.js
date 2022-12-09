@@ -40,7 +40,6 @@ export default function Dashboard() {
       if (i === -1) {i = uni.terms.length - 1;}
       if (new Date() > uni.terms[uni.terms.length - 1].startDate * 1000) {term = uni.terms[uni.terms.length - 1].term;}
       if (new Date() > uni.terms[i].startDate * 1000) {
-        console.log(new Date(), new Date(uni.terms[i].startDate * 1000));
         setTerm(i + 1);
       }
       else {findTerm( i - 1);}
@@ -67,14 +66,13 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (uni == undefined) {return;}
+    setWeek(0);
     for (let i = 0; i < 12; i++) {
       let thisWeekDate = new Date(calculateTaskDate(i, term, 2022, uni).date * 1000);
       let nextWeekDate = new Date(calculateTaskDate(i + 1, term, 2022, uni).date * 1000);
-      console.log(thisWeekDate, nextWeekDate, new Date(dayjs(endDate, "DD/MM/YYYY")), i);
       if (thisWeekDate <= new Date(dayjs(endDate, "DD/MM/YYYY"))
-      && nextWeekDate >= new Date(dayjs(endDate, "DD/MM/YYYY"))) {console.log("week", i); setWeek(i + 1);}
+      && nextWeekDate >= new Date(dayjs(endDate, "DD/MM/YYYY"))) {setWeek(i + 1);}
     }
-    console.log(week);
     fetch("http://localhost:5000/users/getTasks", {credentials: "include"})
       .then((res) => {
         return res.json();
@@ -115,13 +113,6 @@ export default function Dashboard() {
     }
     runUpdateTasks();
   }, [taskChanged]);
-
-  useEffect(() => {
-    //console.log(new Date(calculateTaskDate(7, 3, 2022, uni).date * 1000));
-  }, [week])
-
-  console.log("dataTasks", dataTasks);
-  console.log("taskProgress", taskProgress);
 
   const TaskCardList = (taskType) => {
     let returnObj = [];

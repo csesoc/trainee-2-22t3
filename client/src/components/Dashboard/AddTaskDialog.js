@@ -30,10 +30,11 @@ export function AddTaskDialog(taskDialog, setTaskDialog, taskType, startDate, we
 
   useEffect(() => {
     
-  })
+  }, [])
 
   const handleSubmit = () => {
-    if (duration === 0) {handleClose(); return;}
+    if (name === "") {document.getElementById("name").error = true; return;}
+    if (duration === 0) {document.getElementById("duration").value = 7; return;}
     let taskDate = dayjs(startDate, "DD/MM/YYYY") + (day * 1000 * 60 * 60 * 24);
     taskDate += 1000 * 60 * ((60 * new Date(time).getHours()) + new Date(time).getMinutes());
     const date = new Date(taskDate);
