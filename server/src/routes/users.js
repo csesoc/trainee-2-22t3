@@ -14,9 +14,7 @@ router.get("/getUsers", async (req, res) => {
   // See verifyJWT for where authUser comes from
   // userObj = {_id: '63606ef4340d06fc62246242', username: 'Andrew2', email: 'test2@gmail.com', salt: ...
   let userObj = req.authUser;
-  const userArray = await doomUsers
-    .find({}, { username: 1, _id: 0 })
-    .toArray();
+  const userArray = await doomUsers.find({}, { username: 1, _id: 0 }).toArray();
   res.send(userArray);
 });
 
@@ -25,11 +23,64 @@ router.get("/getUsers", async (req, res) => {
 router.get("/getTasks", async (req, res) => {
   let userObj = req.authUser;
   console.log(userObj._id.toString());
-  const tasksArray = await doomTasks.find({ userId: userObj._id.toString() }).toArray();
+  const tasksArray = await doomTasks
+    .find({ userId: userObj._id.toString() })
+    .toArray();
   res.send(tasksArray);
 });
 
-// GET - /tasks/doomFactor
+// GET - /users/weeklyDoomFactor
+// Calculates the doom factor for the current week, previous week and the week after given a date.
+// query: {
+//  date: integer
+//}
+router.get("/weeklyDoomFactor", async (req, res) => {
+  let userId = req.authUser._id.toString();
+  let dateObj = new Date(req.query.date * 1000);
+  let start = dateObj.getDate() - dateObj.getDay();
+  let end = start + 6;
+  let startDay = new Date(dateObj.setDate(start));
+  startDay.setHours(0, 0, 0, 0);
+  let endDay = new Date(dateObj.setDate(end));
+  endDay.setHours(23, 59, 59, 0);
+  let currStartTime = startDay.getTime() / 1000;
+  let currEndTime = endDay.getTime() / 1000;
+  let weekSeconds = 3600 * 24 * 7;
+  let times = [
+    ["curr", currStartTime, currEndTime],
+    ["prev", currStartTime - weekSeconds, currEndTime - weekSeconds],
+    ["next", currStartTime + weekSeconds, currEndTime + weekSeconds],
+  ];
+  let doomFactor = {};
+  for (let time of times) {
+    console.log(time[1], time[2]);
+    const totalTasks = await doomTasks
+      .find({
+        date: {
+          $gt: time[1],
+          $lt: time[2],
+        },
+      })
+      .toArray();
+    const numTotal = totalTasks.length;
+    if (numTotal === 0) {
+      doomFactor[time[0]] = 0;
+    } else {
+      const completedTasks = await doomTasks
+        .find({
+          userId: ObjectId(userId),
+          completed: true,
+          date: { $gt: times[1], $lt: times[2] },
+        })
+        .toArray();
+      const numCompleted = completedTasks.length;
+      doomFactor[time[0]] = Math.floor(100 - (numCompleted / numTotal) * 100);
+    }
+  }
+  return res.send(doomFactor);
+});
+
+// GET - /users/doomFactor
 // Calculates the doom factor (a numerical representation of how behind the user is on work)
 // of the logged in user.
 //
