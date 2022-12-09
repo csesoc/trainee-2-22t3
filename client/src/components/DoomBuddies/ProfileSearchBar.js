@@ -86,7 +86,7 @@ export default function ProfileSearchBar({ currentFriends = false, notFriends = 
     }
 
     return (
-        <ClickAwayListener onClickAway={() => {
+        <ClickAwayListener sx={{width: 1}} onClickAway={() => {
             setOpenPopper(false)
             setAnchorEl(null)
         }}>

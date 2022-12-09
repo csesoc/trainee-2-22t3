@@ -179,6 +179,7 @@ router.get("/friends/get", async (req,res,next) => {
   }
 
   const friendsList = [];
+
   let friendObj = {};
   for (let i = 0; i < userObj.friends.length; i++) {
     let friend = await doomUsers.findOne({_id: ObjectId(userObj.friends[i])});

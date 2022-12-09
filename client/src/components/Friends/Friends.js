@@ -29,7 +29,6 @@ export default function FriendList() {
           "Content-type": "application/json",
         },
         credentials: "include",
-        qs: {},
       });
       const json = await response.json();
       setFriends(json);
