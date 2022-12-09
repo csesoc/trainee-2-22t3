@@ -8,7 +8,6 @@ import DoomBuddiesListButton from "./DoomBuddiesList/DoomBuddiesListButton";
 import "./ProfileStyling.css";
 import MiniDashboard from "./MiniDashboard/MiniDashboard";
 import { useParams } from "react-router-dom";
-import ProfileSearchBar from "./DoomBuddies/ProfileSearchBar";
 
 const ProfileWrapper = () => {
   const [dataTasks, setDataTasks] = useState([]);
@@ -53,7 +52,6 @@ const ProfileWrapper = () => {
 
   return (
     <div>
-      <ProfileSearchBar></ProfileSearchBar>
       <ProfilePageTitle />
       <div className="profile-doom-buddies-list-button">
         <DoomBuddiesListButton />
