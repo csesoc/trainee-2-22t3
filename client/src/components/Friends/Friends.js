@@ -12,7 +12,7 @@ import "./Friends.css";
 import BackgroundFireVideo from "../BackgroundFire/background fire.mp4";
 import ProfileSearchBar from "../DoomBuddies/ProfileSearchBar";
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function FriendList() {
   const [friends, setFriends] = useState([]);
@@ -95,7 +95,6 @@ export default function FriendList() {
           <ListItemIcon>
             <PersonIcon className="profile-icon" color="info"></PersonIcon>
           </ListItemIcon>
-          <Typography className="hover-text">Profile</Typography>
         </Button>
       </div>
       <div className="friends-container">

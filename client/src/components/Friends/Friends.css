@@ -20,30 +20,11 @@ body {
 
 .profile-icon {
   position: relative !important;
-  left: 30px !important;
+  left: 50px !important;
 }
 
-.hover-text div{
-  position: relative !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  -webkit-transition: visibility 0s, opacity 0.5s linear !important; 
-  transition: visibility 0s, opacity 0.5s linear !important;
-  color: white !important;
-}
-
-.hover-text:before {
-  content: attr(data-hover) !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  position: absolute !important;
-  z-index: 1 !important;
-}
-
-.hovertext:hover:before {
-  opacity: 1 !important;
-  visibility: visible !important;
-  opacity: 0.7 !important;
+.css-6lijc5-MuiSvgIcon-root {
+  font-size: 28px !important;
 }
 
 .friends-container {

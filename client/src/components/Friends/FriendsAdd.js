@@ -5,13 +5,16 @@ import {
   Button,
   Divider,
   CardMedia,
+  ListItemIcon,
+
 } from "@mui/material";
+import PersonIcon from '@mui/icons-material/Person';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import "./Friends.css";
 import BackgroundFireVideo from "../BackgroundFire/background fire.mp4";
 import ProfileSearchBar from "../DoomBuddies/ProfileSearchBar";
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function FriendList() {
   const [friends, setFriends] = useState([]);
@@ -88,6 +91,17 @@ export default function FriendList() {
     
   return (
     <>
+      <div className="return-profile"> 
+        <Button 
+          href="/tracker"
+          sx={{ fontWeight: "normal" }}
+          className="profile-button" 
+        >
+          <ListItemIcon>
+            <PersonIcon className="profile-icon" color="info"></PersonIcon>
+          </ListItemIcon>
+        </Button>
+      </div>
       <div className="friends-container">
         <Typography  
           variant="h2" 
