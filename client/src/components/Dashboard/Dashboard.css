@@ -43,6 +43,13 @@ body {
   margin: 20px;
 }
 
+.dashboard-add-course-button {
+  position: absolute;
+  top: 40px;
+  right: 0px;
+  margin: 20px;
+}
+
 .dashboard-text {
   font-size: 64px;
   align-self: center;

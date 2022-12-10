@@ -203,7 +203,10 @@ const DoomFactor = ({
             >
               <Typography
                 sx={{
-                  color: "black",
+                  // color: `rgb(200, ${200 - doomFactor * 2}, ${
+                  //   200 - doomFactor * 2
+                  // })`,
+                  color: "rgb(12, 12, 12)",
                   opacity: showDoomFactor ? "1" : "0",
                   fontWeight: "bold",
                 }}
@@ -218,9 +221,27 @@ const DoomFactor = ({
               {...(isShown ? { timeout: 700 } : {})}
               className="avatar-flaming-skull-video"
             >
-              <video width="500" height="500" loop autoPlay>
-                <source src={SkullVideo} type="video/mp4" />
-              </video>
+              <div>
+                <video width="500" height="500" loop autoPlay muted>
+                  <source src={SkullVideo} type="video/mp4" />
+                </video>
+              </div>
+            </Grow>
+            <Grow
+              in={isShown}
+              {...(isShown ? { timeout: 700 } : {})}
+              // className="avatar-flaming-skull-video"
+            >
+              <Typography
+                sx={{
+                  color: `rgb(200, ${200 - doomFactor * 2}, ${
+                    200 - doomFactor * 2
+                  })`,
+                }}
+                className="doomFactor-in-skull"
+              >
+                {doomFactor}
+              </Typography>
             </Grow>
           </Avatar>
           <div className="doom-factor-words">

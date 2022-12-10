@@ -83,7 +83,7 @@ const BackgroundFire = ({ isShown, id, doomFactor }) => {
           >
             {doomFactor}
           </Typography> */}
-          <h1 className="doom-factor-number-typography">{doomFactor}</h1>
+          {/* <h1 className="doom-factor-number-typography">{doomFactor}</h1> */}
         </div>
       </Grow>
     </div>

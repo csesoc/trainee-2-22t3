@@ -247,6 +247,11 @@ export default function Dashboard() {
             <Button variant="contained">Home</Button>
           </Link>
         </div>
+        <div className="dashboard-add-course-button">
+          <Link to="../CourseAdd">
+            <Button variant="contained">Add Course</Button>
+          </Link>
+        </div>
 
         <Typography
           variant="h2"
@@ -259,13 +264,18 @@ export default function Dashboard() {
         <div className="selector-screen">
           {WeeklyCalendar(setStartDate, setEndDate, setWeek, uni, term)}
           <div className="weekly-stats">
-            <Divider className="week-divider" sx={{ mt: 0 }}>
-              WEEK {week}
-              <br></br>
-              <Typography className="week-subtext">
-                {startDate} - {endDate}
-              </Typography>
-            </Divider>
+            <Link
+              to="../tracker"
+              style={{ textDecoration: "none", color: "#fff" }}
+            >
+              <Divider className="week-divider" sx={{ mt: 0 }}>
+                WEEK {week}
+                <br></br>
+                <Typography className="week-subtext">
+                  {startDate} - {endDate}
+                </Typography>
+              </Divider>
+            </Link>
             <Box className="week-box">
               <Typography className="weekly-box-text">
                 Tasks done:

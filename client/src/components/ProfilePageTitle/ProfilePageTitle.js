@@ -11,7 +11,7 @@ const ProfilePageTitle = () => {
         sx={{ fontWeight: "bold" }}
         className="profile-page-title"
       >
-        💀 PROFILE TRACKER 💀
+        💀 DOOM TRACKER 💀
       </Typography>
     </div>
   );

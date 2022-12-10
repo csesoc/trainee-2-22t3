@@ -162,7 +162,10 @@ const MiniDashboard = ({ dataTasks, userId }) => {
       <div className="weekly-stats">
         <div>
           {userId === undefined ? (
-            <Link to="../dashboard" style={{ textDecoration: "none" }}>
+            <Link
+              to="../dashboard"
+              style={{ textDecoration: "none", color: "#fff" }}
+            >
               <Divider className="week-divider" sx={{ mt: 0 }}>
                 WEEK {week}
                 <Typography className="week-subtext">
