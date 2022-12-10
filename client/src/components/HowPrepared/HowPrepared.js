@@ -4,7 +4,7 @@ import HowPreparedSelector from "./HowPreparedSelector";
 import HowPreparedShare from "./HowPreparedShare";
 import "./HowPrepared.css";
 
-const HowPrepared = ({ userId }) => {
+const HowPrepared = ({ userId, runUpdateTasks }) => {
   console.log("Hello");
   console.log(userId);
   return (
@@ -19,7 +19,7 @@ const HowPrepared = ({ userId }) => {
         >
           DAILY CHECK IN
         </Typography>
-        <HowPreparedSelector userId={userId} />
+        <HowPreparedSelector userId={userId} runUpdateTasks={runUpdateTasks} />
         <HowPreparedShare />
       </div>
     </>

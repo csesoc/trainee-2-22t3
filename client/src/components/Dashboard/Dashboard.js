@@ -7,6 +7,8 @@ import { WeeklyCalendar } from "./Calendar";
 import { AddTaskDialog } from "./AddTaskDialog";
 import "./Dashboard.css";
 import { calculateTaskDate } from "./Helpers";
+import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const [dataTasks, setDataTasks] = useState([]);
@@ -240,6 +242,17 @@ export default function Dashboard() {
           week,
           term
         )}
+        <div className="dashboard-home-button">
+          <Link to="../tracker">
+            <Button variant="contained">Home</Button>
+          </Link>
+        </div>
+        <div className="dashboard-add-course-button">
+          <Link to="../CourseAdd">
+            <Button variant="contained">Add Course</Button>
+          </Link>
+        </div>
+
         <Typography
           variant="h2"
           class="dashboard-text"
@@ -251,13 +264,18 @@ export default function Dashboard() {
         <div className="selector-screen">
           {WeeklyCalendar(setStartDate, setEndDate, setWeek, uni, term)}
           <div className="weekly-stats">
-            <Divider className="week-divider" sx={{ mt: 0 }}>
-              WEEK {week}
-              <br></br>
-              <Typography className="week-subtext">
-                {startDate} - {endDate}
-              </Typography>
-            </Divider>
+            <Link
+              to="../tracker"
+              style={{ textDecoration: "none", color: "#fff" }}
+            >
+              <Divider className="week-divider" sx={{ mt: 0 }}>
+                WEEK {week}
+                <br></br>
+                <Typography className="week-subtext">
+                  {startDate} - {endDate}
+                </Typography>
+              </Divider>
+            </Link>
             <Box className="week-box">
               <Typography className="weekly-box-text">
                 Tasks done:

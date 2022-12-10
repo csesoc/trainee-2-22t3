@@ -47,7 +47,7 @@ const BackgroundFire = ({ isShown, id, doomFactor }) => {
 
   return (
     <div>
-      <div className="background-fire-class">
+      <div className="background-fire-class-profile-tracker">
         <Fade
           in={isShownBackgroundFireVideo}
           {...(isShownBackgroundFireVideo ? { timeout: 1000 } : {})}
@@ -83,7 +83,7 @@ const BackgroundFire = ({ isShown, id, doomFactor }) => {
           >
             {doomFactor}
           </Typography> */}
-          <h1 className="doom-factor-number-typography">{doomFactor}</h1>
+          {/* <h1 className="doom-factor-number-typography">{doomFactor}</h1> */}
         </div>
       </Grow>
     </div>

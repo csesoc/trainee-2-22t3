@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 export default function ProfileSearchBar({
   currentFriends = false,
   notFriends = false,
+  runUpdateTasks,
 }) {
   // By default, displays all users in the database
   // Can specify filter for search results based on props
@@ -65,6 +66,7 @@ export default function ProfileSearchBar({
     // Open the page with the user's id
     console.log(user);
     navigate(`/tracker/${user._id}`);
+    runUpdateTasks();
   };
 
   const handleSubmit = (e) => {

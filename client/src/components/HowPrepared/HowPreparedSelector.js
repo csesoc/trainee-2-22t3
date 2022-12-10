@@ -26,7 +26,7 @@ function getLabelText(value) {
   return `${value}`;
 }
 
-const HowPreparedSelector = ({ userId }) => {
+const HowPreparedSelector = ({ userId, runUpdateTasks }) => {
   const [value, setValue] = useState(0);
   const [newValue, setNewValue] = useState(0);
   const [pressedSubmit, setPressedSubmit] = useState(false);
@@ -84,34 +84,49 @@ const HowPreparedSelector = ({ userId }) => {
     }
   };
 
+  const [getValue, setGetValue] = useState(0);
   const getDoomRatingOptions = {
+    headers: { "Content-Type": "application/json" },
     method: "GET",
     credentials: "include",
   };
   useEffect(() => {
-    fetch(
-      `http://localhost:5000/users/getDoomRating?urlId=${userId}`,
-      getDoomRatingOptions
-    )
-      .then((res) => {
-        return res.json();
-      })
-      // .then((data) => setValue(data.doomRating.rating))
-      // .then(() => {
-      //   if (newValue !== value) {
-      //     value = newValue;
-      //   }
-      // })
-      .then((data) => setValue(data.doomRating.rating))
-      .then((data) => console.log("this is a test"))
-      .then((data) => console.log(data.doomRating.rating))
-      .then((data) => {
-        if (data.value === 0) {
-          setValue(0);
-        }
-      })
-      .then((data) => console.log(data.doomRating.rating))
-      .catch((error) => console.log(error));
+    if (userId !== undefined) {
+      fetch(
+        `http://localhost:5000/tasks/getOtherDoomRating?userId=${userId}`,
+        getDoomRatingOptions
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then(() => console.log("HELLLLOOO"))
+        .then((data) => console.log(data))
+        .then((data) => setGetValue(data.otherDoomRating.rating))
+        .then(() => runUpdateTasks())
+        .catch((error) => console.log(error));
+    } else {
+      fetch(`http://localhost:5000/users/getDoomRating`, getDoomRatingOptions)
+        .then((res) => {
+          return res.json();
+        })
+        // .then((data) => setValue(data.doomRating.rating))
+        // .then(() => {
+        //   if (newValue !== value) {
+        //     value = newValue;
+        //   }
+        // })
+        .then((data) => setValue(data.doomRating.rating))
+
+        .then((data) => console.log(data.doomRating.rating))
+        .then((data) => {
+          if (data.value === 0) {
+            setValue(0);
+          }
+        })
+        .then((data) => console.log(data.doomRating.rating))
+        .then(() => runUpdateTasks())
+        .catch((error) => console.log(error));
+    }
   }, [userId]);
 
   return (
@@ -138,7 +153,7 @@ const HowPreparedSelector = ({ userId }) => {
               icon={<WhiteSkullsvg />}
               emptyIcon={<BlackSkullsvg />}
               precision={0.5}
-              value={value}
+              value={getValue}
               getLabelText={getLabelText}
               // onChange={(event, newValue) => {
               //   setValue(newValue);
@@ -171,12 +186,12 @@ const HowPreparedSelector = ({ userId }) => {
           </Button>
         )}
 
-        <IconButton
+        {/* <IconButton
           className="how-prepared-dropdown-arrow"
           onClick={handleClickDropdownSelector}
         >
           <ArrowDropDownIcon />
-        </IconButton>
+        </IconButton> */}
         {maxDoomShown && (
           <div>
             <Rating

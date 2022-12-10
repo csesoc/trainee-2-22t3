@@ -32,6 +32,13 @@
 .doom-factor-value {
   position: absolute;
   transition: all 0.6s;
+  z-index: 3 !important;
+  /* text-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa,
+    0 0 82px #0fa, 0 0 40px #0fa, 0 0 30px #0fa, 0 0 1px #0fa !important; */
+
+  text-shadow: 1px 1px 2px black !important;
+  /* text-align: center !important; */
+  /* animation: doom-factor-number-pulse 4s ease-in-out infinite !important; */
 }
 
 .background-fire {
@@ -90,4 +97,30 @@
   z-index: -1;
   position: fixed;
   opacity: 0.4;
+}
+
+.doomFactor-in-skull {
+  position: absolute;
+  z-index: 3 !important;
+  /* color: rgb(200, 12, 12) !important; */
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: bold !important;
+  font-size: 100px !important;
+  text-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa,
+    0 0 82px #0fa, 0 0 40px #0fa, 0 0 30px #0fa, 0 0 1px #0fa;
+  /* text-align: center !important; */
+  animation: doom-factor-number-pulse 4s ease-in-out infinite !important;
+}
+
+@keyframes doom-factor-number-pulse {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.1;
+  }
+  100% {
+    scale: 1;
+  }
 }

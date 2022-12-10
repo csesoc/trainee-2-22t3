@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 // New Stuff
 import { calculateTaskDate } from "../Dashboard/Helpers";
 
-const MiniDashboard = ({ dataTasks }) => {
+const MiniDashboard = ({ dataTasks, userId }) => {
   // NEW STUFF
 
   // const [dataTasks, setDataTasks] = useState([]);
@@ -161,7 +161,20 @@ const MiniDashboard = ({ dataTasks }) => {
     <div>
       <div className="weekly-stats">
         <div>
-          <Link to="../dashboard">
+          {userId === undefined ? (
+            <Link
+              to="../dashboard"
+              style={{ textDecoration: "none", color: "#fff" }}
+            >
+              <Divider className="week-divider" sx={{ mt: 0 }}>
+                WEEK {week}
+                <Typography className="week-subtext">
+                  {startDate}
+                  {/* - {endDate} */}
+                </Typography>
+              </Divider>
+            </Link>
+          ) : (
             <Divider className="week-divider" sx={{ mt: 0 }}>
               WEEK {week}
               <Typography className="week-subtext">
@@ -169,7 +182,7 @@ const MiniDashboard = ({ dataTasks }) => {
                 {/* - {endDate} */}
               </Typography>
             </Divider>
-          </Link>
+          )}
         </div>
         <div>
           <Box className="week-box">
