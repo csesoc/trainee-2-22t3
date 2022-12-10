@@ -16,10 +16,14 @@ router.get("/get", async (req, res) => {
 // Returns an array of all tasks
 // Brian Wang
 router.get("/get/:id", async (req, res) => {
-  const userId = req.params.id;
-  const tasksArray = await doomTasks.find({ userId: userId }).toArray();
-  console.log(tasksArray);
-  res.send(tasksArray);
+  try {
+    const userId = req.params.id;
+    const tasksArray = await doomTasks.find({ userId: userId }).toArray();
+    console.log(tasksArray);
+    res.send(tasksArray);
+  } catch (error) {
+    next(error);
+  }
 });
 
 // GET - /tasks/doomFactor

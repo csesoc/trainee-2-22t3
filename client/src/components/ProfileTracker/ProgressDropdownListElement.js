@@ -69,7 +69,7 @@ const ProgressDropdownListElement = ({
     <div /*className={completed ? "dropdown-list-element-fade-out" : ""}*/>
       <Typography variant="h6">{name}</Typography>
 
-      <Typography>Duration: {duration}</Typography>
+      <Typography>Duration: {duration / 3600} Hours</Typography>
       <Typography>Week: {week}</Typography>
       <Typography>
         Term {term}, {year}
@@ -79,9 +79,9 @@ const ProgressDropdownListElement = ({
           <IconButton onClick={handleToggleCompletedIcon}>
             {toggleCompletedIcon}
           </IconButton>
-          <IconButton>
+          {/* <IconButton>
             <ModeEditIcon />
-          </IconButton>
+          </IconButton> */}
           <IconButton onClick={handleDeleteIcon}>
             <DeleteIcon />
           </IconButton>

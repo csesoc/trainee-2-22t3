@@ -223,18 +223,26 @@ router.post("/uploadProfileImg", async (req, res, next) => {
 // gets profile image of logged in user
 // Brian Wang
 router.get("/getProfileImg", async (req, res, next) => {
-  let userObj = req.authUser;
-  const profileDocument = await doomUsers.findOne({ _id: userObj._id });
-  res.send({ profileImgUrl: profileDocument.profileImg });
+  try {
+    let userObj = req.authUser;
+    const profileDocument = await doomUsers.findOne({ _id: userObj._id });
+    res.send({ profileImgUrl: profileDocument.profileImg });
+  } catch (error) {
+    next(error);
+  }
 });
 
 // GET - /users/getUsername
 // gets username of logged in user
 // Brian Wang
 router.get("/getUsername", async (req, res, next) => {
-  let userObj = req.authUser;
-  const profileDocument = await doomUsers.findOne({ _id: userObj._id });
-  res.send({ username: profileDocument.username });
+  try {
+    let userObj = req.authUser;
+    const profileDocument = await doomUsers.findOne({ _id: userObj._id });
+    res.send({ username: profileDocument.username });
+  } catch (error) {
+    next(error);
+  }
 });
 
 // PUT - /users/setDoomRating
@@ -242,66 +250,70 @@ router.get("/getUsername", async (req, res, next) => {
 // doomRating object: rating, dateSelected and daySelected fields
 // Brian Wang
 router.put("/setDoomRating", async (req, res, next) => {
-  let userId = req.authUser._id.toString();
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).send({ errors: errors.array()[0].msg });
-  }
-
-  // 1. Valid body
-  console.log(req.body);
-  // let rating = parseInt(req.body.rating);
-  // let dateSelected = parseInt(req.body.dateSelected);
-  // let daySelected = parseInt(req.body.daySelected);
-  const { rating, dateSelected, daySelected } = req.body;
-  if (!rating || !dateSelected || !daySelected) {
-    // a field is missing handle error accordingly
-    return res.status(400).send({ error: "missing property" });
-  }
-
-  // if (!Object.hasOwn(req.body, "rating")) {
-  //   return res.status(400).send({ error: "missing rating property" });
-  // }
-  // if (!Object.hasOwn(req.body, "dateSelected")) {
-  //   return res.status(400).send({ error: "missing dateSelected property" });
-  // }
-  // if (!Object.hasOwn(req.body, "daySelected")) {
-  //   return res.status(400).send({ error: "missing daySelected property" });
-  // }
-
-  if (req.body.rating !== undefined && typeof req.body.rating !== "number") {
-    return res.status(400).send({ error: "doomFactor not number" });
-  }
-  if (
-    req.body.dateSelected !== undefined &&
-    typeof req.body.dateSelected !== "number"
-  ) {
-    return res.status(400).send({ error: "dateSelected not number" });
-  }
-  if (
-    req.body.daySelected !== undefined &&
-    typeof req.body.daySelected !== "number"
-  ) {
-    return res.status(400).send({ error: "daySelected not number" });
-  }
-
-  // 2. Update the data
-  let userObj = req.authUser;
-
-  console.log(userId);
-  await doomUsers.updateOne(
-    { _id: ObjectId(req.authUser._id) },
-    {
-      $set: {
-        doomRating: {
-          rating: rating,
-          dateSelected: dateSelected,
-          daySelected: daySelected,
-        },
-      },
+  try {
+    let userId = req.authUser._id.toString();
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).send({ errors: errors.array()[0].msg });
     }
-  );
-  return res.send("User doomRating Edited");
+
+    // 1. Valid body
+    console.log(req.body);
+    // let rating = parseInt(req.body.rating);
+    // let dateSelected = parseInt(req.body.dateSelected);
+    // let daySelected = parseInt(req.body.daySelected);
+    const { rating, dateSelected, daySelected } = req.body;
+    if (!rating || !dateSelected || !daySelected) {
+      // a field is missing handle error accordingly
+      return res.status(400).send({ error: "missing property" });
+    }
+
+    // if (!Object.hasOwn(req.body, "rating")) {
+    //   return res.status(400).send({ error: "missing rating property" });
+    // }
+    // if (!Object.hasOwn(req.body, "dateSelected")) {
+    //   return res.status(400).send({ error: "missing dateSelected property" });
+    // }
+    // if (!Object.hasOwn(req.body, "daySelected")) {
+    //   return res.status(400).send({ error: "missing daySelected property" });
+    // }
+
+    if (req.body.rating !== undefined && typeof req.body.rating !== "number") {
+      return res.status(400).send({ error: "doomFactor not number" });
+    }
+    if (
+      req.body.dateSelected !== undefined &&
+      typeof req.body.dateSelected !== "number"
+    ) {
+      return res.status(400).send({ error: "dateSelected not number" });
+    }
+    if (
+      req.body.daySelected !== undefined &&
+      typeof req.body.daySelected !== "number"
+    ) {
+      return res.status(400).send({ error: "daySelected not number" });
+    }
+
+    // 2. Update the data
+    let userObj = req.authUser;
+
+    console.log(userId);
+    await doomUsers.updateOne(
+      { _id: ObjectId(req.authUser._id) },
+      {
+        $set: {
+          doomRating: {
+            rating: rating,
+            dateSelected: dateSelected,
+            daySelected: daySelected,
+          },
+        },
+      }
+    );
+    return res.send("User doomRating Edited");
+  } catch (error) {
+    next();
+  }
 });
 
 // GET - /users/getDoomRating
@@ -309,24 +321,32 @@ router.put("/setDoomRating", async (req, res, next) => {
 // for non-logged in users, need to concat to fetch url "?urlId={id}"
 // (ik, it's kinda scuffed)
 router.get("/getDoomRating", async (req, res, next) => {
-  let userId = req.authUser._id;
-  if (userId === undefined) {
-    return res.status(400).send({ error: "Task not found. Invalid task id" });
-  } else {
-    const profileDocument = await doomUsers.findOne({ _id: ObjectId(userId) });
-    if (profileDocument === undefined) {
+  try {
+    let userId = req.authUser._id;
+    if (userId === undefined) {
       return res.status(400).send({ error: "Task not found. Invalid task id" });
+    } else {
+      const profileDocument = await doomUsers.findOne({
+        _id: ObjectId(userId),
+      });
+      if (profileDocument === undefined) {
+        return res
+          .status(400)
+          .send({ error: "Task not found. Invalid task id" });
+      }
+      console.log("Hello");
+      console.log(profileDocument.doomRating.rating);
+      console.log("yo");
+      return res.send({
+        doomRating: {
+          rating: profileDocument.doomRating.rating,
+          dateSelected: profileDocument.doomRating.dateSelected,
+          daySelected: profileDocument.doomRating.dateSelected,
+        },
+      });
     }
-    console.log("Hello");
-    console.log(profileDocument.doomRating.rating);
-    console.log("yo");
-    return res.send({
-      doomRating: {
-        rating: profileDocument.doomRating.rating,
-        dateSelected: profileDocument.doomRating.dateSelected,
-        daySelected: profileDocument.doomRating.dateSelected,
-      },
-    });
+  } catch (error) {
+    next(error);
   }
 });
 
