@@ -33,8 +33,6 @@ const ProfileWrapper = () => {
   };
 
   const { id } = useParams();
-  console.log("above");
-  console.log(id);
 
   const [authUserId, setAuthUserId] = useState("");
   const navigate = useNavigate();
@@ -66,8 +64,6 @@ const ProfileWrapper = () => {
         })
         .then((dataTasks) => {
           setDataTasks(dataTasks);
-          console.log("useEffect");
-          console.log(dataTasks);
         })
         .catch((error) => console.log(error));
     } else {
@@ -79,7 +75,6 @@ const ProfileWrapper = () => {
         })
         .then((data) => {
           setDataTasks(data);
-          console.log(data);
         })
         // .then((dataTasks) => {
         //   setDataTasks(
@@ -112,10 +107,6 @@ const ProfileWrapper = () => {
         .then((res) => {
           return res.json();
         })
-        // .then((data) => {
-        //   console.log("helloooooooooooooo");
-        //   console.log(data.doomFactor);
-        // })
         .then((data) => setDoomFactor(data.doomFactor));
     }
   }, [updateTasks]);

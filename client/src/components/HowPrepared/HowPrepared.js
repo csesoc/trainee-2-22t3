@@ -5,8 +5,6 @@ import HowPreparedShare from "./HowPreparedShare";
 import "./HowPrepared.css";
 
 const HowPrepared = ({ userId, runUpdateTasks }) => {
-  console.log("Hello");
-  console.log(userId);
   return (
     <>
       <div className="how-prepared">

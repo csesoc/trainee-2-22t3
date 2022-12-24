@@ -99,8 +99,7 @@ const HowPreparedSelector = ({ userId, runUpdateTasks }) => {
         .then((res) => {
           return res.json();
         })
-        .then(() => console.log("HELLLLOOO"))
-        .then((data) => console.log(data))
+        // .then((data) => console.log(data))
         .then((data) => setGetValue(data.otherDoomRating.rating))
         .then(() => runUpdateTasks())
         .catch((error) => console.log(error));
@@ -109,15 +108,7 @@ const HowPreparedSelector = ({ userId, runUpdateTasks }) => {
         .then((res) => {
           return res.json();
         })
-        // .then((data) => setValue(data.doomRating.rating))
-        // .then(() => {
-        //   if (newValue !== value) {
-        //     value = newValue;
-        //   }
-        // })
         .then((data) => setValue(data.doomRating.rating))
-
-        .then((data) => console.log(data.doomRating.rating))
         .then((data) => {
           if (data.value === 0) {
             setValue(0);

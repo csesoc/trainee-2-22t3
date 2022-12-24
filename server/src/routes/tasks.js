@@ -107,10 +107,6 @@ router.get("/getOtherDoomRating", async (req, res, next) => {
     if (foundUser === undefined || foundUser === null) {
       return res.status(400).send({ error: "User not found. Invalid userId" });
     }
-    console.log("YOYO");
-    console.log(foundUser);
-    console.log(foundUser.doomRating.rating);
-    console.log(foundUser.doomRating);
     // 2. valid userId
     return res.send({
       otherDoomRating: {

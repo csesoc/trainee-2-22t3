@@ -317,9 +317,6 @@ router.get("/getDoomRating", async (req, res, next) => {
     if (profileDocument === undefined) {
       return res.status(400).send({ error: "Task not found. Invalid task id" });
     }
-    console.log("Hello");
-    console.log(profileDocument.doomRating.rating);
-    console.log("yo");
     return res.send({
       doomRating: {
         rating: profileDocument.doomRating.rating,
