@@ -12,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import "./RegisterLogin.css";
+import env from "react-dotenv";
 
 export default function RegisterPage() {
   const [inputs, setInputs] = useState({
@@ -69,7 +70,7 @@ export default function RegisterPage() {
       courses: [],
     };
 
-    const response = await fetch("http://localhost:5000/auth/register", {
+    const response = await fetch(env.BE_URL + "/auth/register", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import "./RegisterLogin.css";
+import env from "react-dotenv";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -41,7 +42,7 @@ export default function LoginPage() {
       password: password,
     };
     const currErrors = {};
-    const response = await fetch("http://localhost:5000/auth/login", {
+    const response = await fetch(env.BE_URL + "/auth/login", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

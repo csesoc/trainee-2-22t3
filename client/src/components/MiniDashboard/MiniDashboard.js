@@ -4,6 +4,7 @@ import { Typography, Divider, Box } from "@mui/material";
 import "./MiniDashboard.css";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
+import env from "react-dotenv";
 
 // New Stuff
 import { calculateTaskDate } from "../Dashboard/Helpers";
@@ -30,7 +31,7 @@ const MiniDashboard = ({ dataTasks, userId }) => {
     if (uni !== undefined) {
       return;
     }
-    await fetch("http://localhost:5000/uni/get")
+    await fetch(env.BE_URL + "/uni/get")
       .then((res) => {
         return res.json();
       })
@@ -79,28 +80,8 @@ const MiniDashboard = ({ dataTasks, userId }) => {
       }
     }
 
-    // fetch("http://localhost:5000/users/getTasks", { credentials: "include" })
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-    //   .then((fetchedTasks) => {
-    //     try {
-    //       fetchedTasks = fetchedTasks.filter(
-    //         (task) =>
-    //           new Date(task.date * 1000) >=
-    //             new Date(dayjs(startDate, "DD/MM/YYYY")) &&
-    //           new Date(task.date * 1000) <=
-    //             new Date(dayjs(endDate, "DD/MM/YYYY"))
-    //       );
-    //       fetchedTasks = fetchedTasks.sort(
-    //         (a, b) => new Date(a.date) - new Date(b.date)
-    //       );
-    //     } catch {}
-    //     setDataTasks(fetchedTasks);
-    //     setTaskProgress(fetchedTasks);
-    //   });
     fetch(
-      `http://localhost:5000/users/weeklyDoomFactor?date=${
+      `${env.BE_URL}/users/weeklyDoomFactor?date=${
         new Date(dayjs(endDate, "DD/MM/YYYY")).getTime() / 1000
       }`,
       { credentials: "include" }
@@ -134,28 +115,7 @@ const MiniDashboard = ({ dataTasks, userId }) => {
     return weeklyDoom.prev - weeklyDoom.curr;
   };
 
-  ///////////////
-
-  // const [startDate, setStartDate] = useState(
-  //   dayjs(new Date()).format("DD/MM/YYYY")
-  // );
-  // const [endDate, setEndDate] = useState(
-  //   dayjs(new Date()).format("DD/MM/YYYY")
-  // );
   let currentWeek = 7;
-
-  // const getTaskStats = (str) => {
-  //   let num = 0;
-  //   for (let i in dataTasks) {
-  //     if (dataTasks[i].completed === true) {
-  //       num += 1;
-  //     }
-  //   }
-  //   if (str === "done") {
-  //     return num;
-  //   }
-  //   return dataTasks.length - num;
-  // };
 
   return (
     <div>

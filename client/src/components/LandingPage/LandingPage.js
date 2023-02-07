@@ -6,11 +6,7 @@ export default function LandingPage() {
   return (
     <>
       <div class="landing-container">
-        <img
-          src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/microsoft/310/skull_1f480.png"
-          alt="skull"
-          className="landing-skull"
-        ></img>
+        <h4 class="landing-skull">💀</h4>
         <Typography
           variant="h2"
           class="landing-title"

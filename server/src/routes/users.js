@@ -5,7 +5,9 @@ import { ObjectId } from "mongodb";
 import { verifyJWT } from "../middleware/verifyJWT.js";
 import { calculateTaskDate } from "./tasks.js";
 import { startOfWeek, endOfWeek } from "date-fns";
+import dotenv from "dotenv";
 
+dotenv.config();
 const router = express.Router();
 router.use(verifyJWT);
 
@@ -206,7 +208,7 @@ router.post("/uploadProfileImg", async (req, res, next) => {
       { _id: req.authUser._id },
       {
         $set: {
-          profileImg: `http://localhost:5000/${req.authUser.username}.png`,
+          profileImg: `${process.env.BE_URL}/${req.authUser.username}.png`,
         },
       }
     );
@@ -318,6 +320,9 @@ router.get("/getDoomRating", async (req, res, next) => {
       return res.status(400).send({ error: "Task not found. Invalid task id" });
     }
     console.log("Hello");
+    if (profileDocument.doomRating == undefined) {
+      profileDocument.doomRating = 0;
+    }
     console.log(profileDocument.doomRating.rating);
     console.log("yo");
     return res.send({

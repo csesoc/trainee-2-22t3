@@ -9,6 +9,7 @@ import "./Dashboard.css";
 import { calculateTaskDate } from "./Helpers";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import env from "react-dotenv";
 
 export default function Dashboard() {
   const [dataTasks, setDataTasks] = useState([]);
@@ -31,7 +32,7 @@ export default function Dashboard() {
     if (uni !== undefined) {
       return;
     }
-    await fetch("http://localhost:5000/uni/get")
+    await fetch(env.BE_URL + "/uni/get")
       .then((res) => {
         return res.json();
       })
@@ -94,7 +95,7 @@ export default function Dashboard() {
       }
     }
 
-    fetch("http://localhost:5000/users/getTasks", { credentials: "include" })
+    fetch(env.BE_URL + "/users/getTasks", { credentials: "include" })
       .then((res) => {
         return res.json();
       })
@@ -115,7 +116,7 @@ export default function Dashboard() {
         setTaskProgress(fetchedTasks);
       });
     fetch(
-      `http://localhost:5000/users/weeklyDoomFactor?date=${
+      `${env.BE_URL}/users/weeklyDoomFactor?date=${
         new Date(dayjs(endDate, "DD/MM/YYYY")).getTime() / 1000
       }`,
       { credentials: "include" }
@@ -135,7 +136,7 @@ export default function Dashboard() {
         continue;
       }
       if (taskProgress[i] === "deleted") {
-        fetch(`http://localhost:5000/tasks/delete?_id=${dataTasks[i]._id}`, {
+        fetch(`${env.BE_URL}/tasks/delete?_id=${dataTasks[i]._id}`, {
           method: "DELETE",
           headers: {
             "Content-type": "application/json",
@@ -147,7 +148,7 @@ export default function Dashboard() {
         if (taskProgress[i] === "done") {
           isComplete = true;
         }
-        fetch("http://localhost:5000/tasks/put", {
+        fetch(env.BE_URL + "/tasks/put", {
           method: "PUT",
           headers: {
             "Content-type": "application/json",

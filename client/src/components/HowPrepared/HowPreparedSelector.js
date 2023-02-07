@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import { IconButton } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "./HowPrepared.css";
+import env from "react-dotenv";
 
 const labels = {
   null: "hello",
@@ -52,7 +53,7 @@ const HowPreparedSelector = ({ userId, runUpdateTasks }) => {
     // setPressedSubmit(true);
     setNewValue(value);
     fetch(
-      "http://localhost:5000/users/setDoomRating",
+      env.BE_URL + "/users/setDoomRating",
       putHowPreparedSubmitRequestOptions
     )
       .then()
@@ -93,7 +94,7 @@ const HowPreparedSelector = ({ userId, runUpdateTasks }) => {
   useEffect(() => {
     if (userId !== undefined) {
       fetch(
-        `http://localhost:5000/tasks/getOtherDoomRating?userId=${userId}`,
+        `${env.BE_URL}/tasks/getOtherDoomRating?userId=${userId}`,
         getDoomRatingOptions
       )
         .then((res) => {
@@ -105,7 +106,7 @@ const HowPreparedSelector = ({ userId, runUpdateTasks }) => {
         .then(() => runUpdateTasks())
         .catch((error) => console.log(error));
     } else {
-      fetch(`http://localhost:5000/users/getDoomRating`, getDoomRatingOptions)
+      fetch(`${env.BE_URL}/users/getDoomRating`, getDoomRatingOptions)
         .then((res) => {
           return res.json();
         })

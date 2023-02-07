@@ -15,7 +15,6 @@ import BackgroundFireVideo from "../BackgroundFire/background fire.mp4";
 import ProfileSearchBar from "../DoomBuddies/ProfileSearchBar";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 export default function FriendList() {
   const [friends, setFriends] = useState([]);
 
@@ -27,7 +26,7 @@ export default function FriendList() {
 
   useEffect(() => {
     const getUsers = async () => {
-      const response = await fetch("http://localhost:5000/users/notFriends/get", {
+      const response = await fetch(process.env.REACT_APP_BE_URL + "/users/notFriends/get", {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -42,7 +41,7 @@ export default function FriendList() {
 
 
   const addFriend = async (_id) => {
-    const response = await fetch(("http://localhost:5000/users/friends/post"), {
+    const response = await fetch((process.env.REACT_APP_BE_URL + "/users/friends/post"), {
       method: "POST",
       headers: {
         "Content-type": "application/json",

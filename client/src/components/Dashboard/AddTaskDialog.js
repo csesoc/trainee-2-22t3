@@ -4,6 +4,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from 'dayjs';
 import { useEffect, useState } from "react";
 import './Dashboard.css';
+import env from "react-dotenv";
 
 export function AddTaskDialog(taskDialog, setTaskDialog, taskType, startDate, week, term) {
 
@@ -43,7 +44,7 @@ export function AddTaskDialog(taskDialog, setTaskDialog, taskType, startDate, we
     let taskDate = dayjs(startDate, "DD/MM/YYYY") + (day * 1000 * 60 * 60 * 24);
     taskDate += 1000 * 60 * ((60 * new Date(time).getHours()) + new Date(time).getMinutes());
     const date = new Date(taskDate);
-    fetch('http://localhost:5000/tasks/post', {
+    fetch(env.BE_URL + '/tasks/post', {
       method: "POST",
       headers: {
         "Content-type": "application/json",

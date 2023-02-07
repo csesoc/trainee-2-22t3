@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import "./CourseAdd.css";
 import { Link } from "react-router-dom";
+import env from "react-dotenv";
 
 const names = ["asdf", "bvdsa"];
 
@@ -21,7 +22,7 @@ const CourseAdd = () => {
   const [errorMsg, setErrorMsg] = useState(false);
   useEffect(() => {
     const getCourses = async () => {
-      const response = await fetch("http://localhost:5000/courses/get", {
+      const response = await fetch(env.BE_URL + "/courses/get", {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -42,7 +43,7 @@ const CourseAdd = () => {
 
   const handleAddCourse = async () => {
     console.log(course);
-    fetch("http://localhost:5000/users/addCourse", {
+    fetch(env.BE_URL + "/users/addCourse", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

@@ -17,8 +17,9 @@ body {
 }
 
 .landing-skull {
-  width: 15vw;
-  height: auto;
+  font-size: 10rem;
+  margin-bottom: 10px;
+  margin-top: 0px;
 }
 
 .landing-title {

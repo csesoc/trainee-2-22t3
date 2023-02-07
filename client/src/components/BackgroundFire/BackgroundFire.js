@@ -21,30 +21,6 @@ const BackgroundFire = ({ isShown, id, doomFactor }) => {
     }
   }, [isShown]);
 
-  // const [doomFactor, setDoomFactor] = useState(0);
-  // const getRequestOptions = {
-  //   method: "GET",
-  //   credentials: "include",
-  // };
-  // useEffect(() => {
-  //   if (id === undefined) {
-  //     fetch(`http://localhost:5000/users/doomFactor`, getRequestOptions)
-  //       .then((res) => {
-  //         return res.json();
-  //       })
-  //       .then((data) => setDoomFactor(data.doomFactor));
-  //   } else {
-  //     fetch(
-  //       `http://localhost:5000/tasks/doomFactor?userId=${id}`,
-  //       getRequestOptions
-  //     )
-  //       .then((res) => {
-  //         return res.json();
-  //       })
-  //       .then((data) => setDoomFactor(data.doomFactor));
-  //   }
-  // }, []);
-
   return (
     <div>
       <div className="background-fire-class-profile-tracker">

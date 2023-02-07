@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import UndoIcon from "@mui/icons-material/Undo";
 
 import "./ProgressTrackerStyling.css";
+import env from "react-dotenv";
 
 const ProgressDropdownListElement = ({
   _id,
@@ -40,7 +41,7 @@ const ProgressDropdownListElement = ({
       credentials: "include",
     };
 
-    fetch("http://localhost:5000/tasks/put", putRequestOptions)
+    fetch(env.BE_URL + "/tasks/put", putRequestOptions)
       .then(() => runUpdateTasks())
       .catch((error) => console.log(error));
   };
@@ -54,7 +55,7 @@ const ProgressDropdownListElement = ({
       credentials: "include",
     };
 
-    fetch(`http://localhost:5000/tasks/delete?_id=${_id}`, deleteRequestOptions)
+    fetch(`${env.BE_URL}/tasks/delete?_id=${_id}`, deleteRequestOptions)
       .then(() => runUpdateTasks())
       .catch((error) => console.log(error));
   };

@@ -13,6 +13,7 @@ import { Divider, Fade, Typography } from "@mui/material";
 import ProfileSearchBar from "./DoomBuddies/ProfileSearchBar";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
+import env from "react-dotenv";
 
 const ProfileWrapper = () => {
   const [dataTasks, setDataTasks] = useState([]);
@@ -40,7 +41,7 @@ const ProfileWrapper = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (id !== undefined) {
-      fetch("http://localhost:5000/users/getAuthUserId", {
+      fetch(env.BE_URL + "/users/getAuthUserId", {
         credentials: "include",
       })
         .then((res) => {
@@ -58,7 +59,7 @@ const ProfileWrapper = () => {
 
   useEffect(() => {
     if (id === undefined) {
-      fetch("http://localhost:5000/users/getTasks", {
+      fetch(env.BE_URL + "/users/getTasks", {
         credentials: "include",
       })
         .then((res) => {
@@ -71,7 +72,7 @@ const ProfileWrapper = () => {
         })
         .catch((error) => console.log(error));
     } else {
-      fetch(`http://localhost:5000/tasks/get/${id}`, {
+        fetch(`${env.BE_URL}/tasks/get/${id}`, {
         credentials: "include",
       })
         .then((res) => {
@@ -99,14 +100,14 @@ const ProfileWrapper = () => {
   };
   useEffect(() => {
     if (id === undefined) {
-      fetch(`http://localhost:5000/users/doomFactor`, getRequestOptions)
+      fetch(`${env.BE_URL}/users/doomFactor`, getRequestOptions)
         .then((res) => {
           return res.json();
         })
         .then((data) => setDoomFactor(data.doomFactor));
     } else {
       fetch(
-        `http://localhost:5000/tasks/doomFactor?userId=${id}`,
+        `${env.BE_URL}/tasks/doomFactor?userId=${id}`,
         getRequestOptions
       )
         .then((res) => {
@@ -123,14 +124,14 @@ const ProfileWrapper = () => {
   const [profileUsername, setProfileUsername] = useState("Loading...");
   useEffect(() => {
     if (id === undefined) {
-      fetch(`http://localhost:5000/users/getUsername`, getRequestOptions)
+      fetch(`${env.BE_URL}/users/getUsername`, getRequestOptions)
         .then((res) => {
           return res.json();
         })
         .then((data) => setProfileUsername(data.username));
     } else {
       fetch(
-        `http://localhost:5000/tasks/getOtherUsername?userId=${id}`,
+        `${env.BE_URL}/tasks/getOtherUsername?userId=${id}`,
         getRequestOptions
       )
         .then((res) => {

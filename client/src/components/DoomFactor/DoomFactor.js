@@ -7,7 +7,7 @@ import "./DoomFactor.css";
 import zIndex from "@mui/material/styles/zIndex";
 import FireVideo from "../BackgroundFire/background fire.mp4";
 import FireEmbersVideo from "./doom factor view background fire embers.mp4";
-
+import env from "react-dotenv";
 import {
   Dialog,
   DialogTitle,
@@ -55,13 +55,6 @@ const DoomFactor = ({
   const handleCloseOptionMenu = () => {
     setIsShownOptionMenu(false);
   };
-  // useEffect(() => {
-  //   fetch("http://localhost:5000/tasks/doomFactor")
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((data) => console.log(data));
-  // }, []);
 
   const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -97,7 +90,7 @@ const DoomFactor = ({
       body: formData,
     };
     fetch(
-      "http://localhost:5000/users/uploadProfileImg",
+      env.BE_URL + "/users/uploadProfileImg",
       postProfileImgRequestOptions
     )
       .then(() => runUpdateCounter())
@@ -112,7 +105,7 @@ const DoomFactor = ({
     console.log(updateCounterProfileWrapper);
     if (id === undefined) {
       fetch(
-        `http://localhost:5000/users/getProfileImg`,
+        `${env.BE_URL}/users/getProfileImg`,
         getProfileImgRequestOptions
       )
         .then((res) => {
@@ -125,7 +118,7 @@ const DoomFactor = ({
         .catch((error) => console.log(error));
     } else {
       fetch(
-        `http://localhost:5000/tasks/getOtherProfileImg?userId=${id}`,
+        `${env.BE_URL}/tasks/getOtherProfileImg?userId=${id}`,
         getProfileImgRequestOptions
       )
         .then((res) => {

@@ -13,6 +13,7 @@ import BackgroundFireVideo from "../BackgroundFire/background fire.mp4";
 import ProfileSearchBar from "../DoomBuddies/ProfileSearchBar";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import env from "react-dotenv";
 
 export default function FriendList() {
   const [friends, setFriends] = useState([]);
@@ -25,7 +26,7 @@ export default function FriendList() {
 
   useEffect(() => {
     const fetchFriends = async () => {
-      const response = await fetch(("http://localhost:5000/users/friends/get"), {
+      const response = await fetch((env.BE_URL + "/users/friends/get"), {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -39,7 +40,7 @@ export default function FriendList() {
   }, [friends]);
 
   const removeFriend = async (_id) => {
-    const response = await fetch(("http://localhost:5000/users/friends/delete"), {
+    const response = await fetch((env.BE_URL + "/users/friends/delete"), {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",

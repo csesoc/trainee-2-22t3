@@ -31,11 +31,11 @@ export default function ProfileSearchBar({
 
   useEffect(() => {
     const getUsers = async () => {
-      let link = "http://localhost:5000/users/notFriends/get";
+      let link = process.env.REACT_APP_BE_URL + "/users/notFriends/get";
       if (notFriends) {
-        link = "http://localhost:5000/users/notFriends/get";
+        link = process.env.REACT_APP_BE_URL + "/users/notFriends/get";
       } else {
-        link = "http://localhost:5000/users/getUsers";
+        link = process.env.REACT_APP_BE_URL + "/users/getUsers";
       }
       const response = await fetch(link, {
         method: "GET",
@@ -51,7 +51,7 @@ export default function ProfileSearchBar({
   }, []);
 
   const getFriends = async () => {
-    const response = await fetch("http://localhost:5000/users/friends/get", {
+    const response = await fetch(process.env.REACT_APP_BE_URL + "/users/friends/get", {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -119,7 +119,7 @@ export default function ProfileSearchBar({
       setFilteredResults([]);
     }
     console.log(filteredResults);
-    // If MenuItem is selected, then it should navigate to page "http://localhost:3000/tracker/$id" i.e. that user's profile page
+    // If MenuItem is selected, then it should navigate to page "${env.BE_URL}/tracker/$id" i.e. that user's profile page
     // Where $id refers to the id of the person clicked on,
   };
 
@@ -134,6 +134,7 @@ export default function ProfileSearchBar({
         <TextField
           variant="outlined"
           autoComplete="off"
+          placeholder="Search fellow doomers"
           onChange={handleChange}
           onClick={(e) => {
             setAnchorEl(e.currentTarget);

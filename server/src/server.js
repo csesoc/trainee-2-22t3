@@ -10,6 +10,9 @@ import { verifyJWT } from "./middleware/verifyJWT.js";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config();
 // Setup app
 const app = express();
 
@@ -18,7 +21,7 @@ app.use(express.json());
 // NOTE: origin url needs to change if frontend url changes.
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.FE_URL,
     credentials: true,
   })
 );
