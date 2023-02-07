@@ -92,9 +92,9 @@ export default function FriendList() {
     <>
       <div className="return-profile"> 
         <Button 
-          href="/tracker"
           sx={{ fontWeight: "normal" }}
-          className="profile-button" 
+          className="profile-button"
+          onClick={() => navigate("/tracker")}
         >
           <ListItemIcon>
             <PersonIcon className="profile-icon" color="info"></PersonIcon>
@@ -117,10 +117,10 @@ export default function FriendList() {
         />
         <ProfileSearchBar currentFriends={false} notFriends={true}></ProfileSearchBar>
         <Button 
-          href="/friends"
           sx={{ fontWeight: "normal" }}
           variant="contained"
-          className="friend-button black-button" 
+          className="friend-button black-button"
+          onClick={() => navigate("/friends")}
         >
           All Friends
         </Button>

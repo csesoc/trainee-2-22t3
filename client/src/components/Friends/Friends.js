@@ -24,6 +24,7 @@ export default function FriendList() {
     navigate(`/tracker/${friend}`);
   }
 
+
   useEffect(() => {
     const fetchFriends = async () => {
       const response = await fetch((env.BE_URL + "/users/friends/get"), {
@@ -89,9 +90,9 @@ export default function FriendList() {
     <>
       <div className="return-profile"> 
         <Button 
-          href="/tracker"
           sx={{ fontWeight: "normal" }}
-          className="profile-button" 
+          className="profile-button"
+          onClick={() => navigate("/tracker")}
         >
           <ListItemIcon>
             <PersonIcon className="profile-icon" color="info"></PersonIcon>
@@ -114,10 +115,10 @@ export default function FriendList() {
         />
         <ProfileSearchBar currentFriends={true} notFriends={false}></ProfileSearchBar>
         <Button 
-          href="/friends/add"
           sx={{ fontWeight: "normal" }}
           variant="contained"
           className="friend-button white-button" 
+          onClick={() => navigate("/friends/add")}
         >
           Add Friend
         </Button>
